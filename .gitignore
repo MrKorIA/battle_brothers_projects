@@ -11,3 +11,6 @@
 *.zip
 desktop.ini
 Thumbs.db
+
+# Текст коммита для вкладки Commit IDE (пишет агент)
+.commit-msg.txt

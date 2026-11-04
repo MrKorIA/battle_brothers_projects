@@ -1,3 +1,3 @@
 @echo off
-REM Обертка для IDEA: запускает build.sh через Git Bash
-"C:\Program Files\Git\bin\bash.exe" "%~dp0build.sh"
+REM Обертка для IDEA: упаковывает мод через общий build.sh монорепозитория
+"C:\Program Files\Git\bin\bash.exe" "%~dp0..\build.sh" "mod_More_Heads.zip" "%~dp0."
