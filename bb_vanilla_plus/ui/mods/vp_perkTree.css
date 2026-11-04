@@ -1,0 +1,15 @@
+/*.turnsequencebar-module .top-container .skills-container {
+    position: relative;
+    left: -14rem;
+    outline: 1px solid red;
+}
+*/
+
+/* Demonologist perk tree styling. */
+
+/* Perks closed off by the Path of Blood / Path of the Demon choice: dimmed and washed out
+   so the player reads them as "not on this build", distinct from merely tier-locked perks. */
+.l-perk-container.demon-blocked .perk-image-layer {
+    opacity: 0.3;
+    filter: grayscale(100%);
+}
