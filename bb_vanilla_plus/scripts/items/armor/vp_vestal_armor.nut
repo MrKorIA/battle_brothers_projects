@@ -38,22 +38,18 @@ this.vp_vestal_armor <- this.inherit("scripts/items/armor/named/named_armor", {
 		return result;
 	}
 
-	function onEquip()
+	// Women only: the sprites are fitted to a female body. The vestal background herself is
+	// always allowed. The actual refusal happens in the item_container equip hook
+	// (mod_vanilla_plus/hooks/items/item_container.nut), so the ban is enforced everywhere -
+	// inventory screen, tactical swaps and AI alike.
+	function isForbiddenFor( _actor )
 	{
-//		local actor = this.getContainer().getActor();
-        this.armor.onEquip();
-        local actor = this.getContainer().getActor();
-        if (!actor.getSkills().hasSkill("vp.vestal.background"))
-        {
-            local body_brush = actor.getSprite("body").getBrush().Name
-            if (body_brush != "bust_naked_body_7869" && body_brush != "bust_naked_body_7870" && body_brush.find("bust_female_") == null)
-            {
-                this.armor.onUnequip();
-                this.World.Assets.getStash().makeEmptySlots(1);
-                this.World.Assets.getStash().add(this);
-            }
-
-        }
+		if (_actor.getSkills().hasSkill("vp.vestal.background"))
+		{
+			return false;
+		}
+		local body_brush = _actor.getSprite("body").getBrush().Name;
+		return body_brush != "bust_naked_body_7869" && body_brush != "bust_naked_body_7870" && body_brush.find("bust_female_") == null;
 	}
 
 });

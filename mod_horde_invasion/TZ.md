@@ -2,14 +2,19 @@
 
 > Источник истины по составу мода. Вопросы, требующие решения/уточнения, помечены `[ВОПРОС]`.
 > Референсы ванили — распакованные скрипты: `Z:\GameMods\Battle Brothers\mods\!project\data_014` (далее `data_014`).
+> Мод разрабатывается внутри монорепозитория `battle_brothers_projects` (см. корневой `AGENTS.md`).
 
 ## 1. Общие сведения
 
 - **Название кризиса:** «Нашествие Желёной Орды».
 - **Тип:** полноценный кризис игры (в один ряд с Зеленокожими/Нежитью/Священной войной), выбираемый при старте кампании в том же интерфейсе.
-- **Каталог мода:** `Z:\GameMods\Battle Brothers\mods\mod_horde_invasion` (создан, скелет подготовлен).
-- **Структура:** по образцу bb_vanilla_plus (хуки через мод-систему, см. AGENTS.md).
-- **Обязательные зависимости:** `mod_Jurchen`, `Scourge of God` (оба установлены рядом).
+- **Каталог мода:** `Z:\GameMods\Battle Brothers\mods\battle_brothers_projects\mod_horde_invasion`.
+- **Сборка:** `build.bat` мода → тонкая обёртка корневого `build.sh` → `mod_horde_invasion.zip` в
+  `Z:\SteamLibrary\steamapps\common\Battle Brothers\data` (каталог игры переопределяется через `BB_DATA`).
+  Автозапуск сборки ЗАПРЕЩЁН — только по явной просьбе, при закрытой игре (иначе «Corrupted archive»).
+- **Текущее состояние:** скелет в монорепозитории создан (`scripts/` и `mod_horde_invasion/hooks/` пусты, кода нет).
+- **Структура:** по образцу bb_vanilla_plus (хуки через мод-систему, см. `AGENTS.md` мода).
+- **Обязательные зависимости** (каталоги монорепозитория): `mod_Jurchen/`, `mod_Scourge_of_God/`.
 - Помощь заказчика минимальная: устройство кризисов в игре нужно исследовать самостоятельно (фаза 0).
 
 ## 2. Лор и тексты
@@ -20,7 +25,7 @@
 - **Текст предупреждения о кризисе** (со смыслом): великий хан орды захватил столицу чучженей и теперь
   расширяет империю, сметая всё на пути. Подаётся через рассказы беженцев.
 - **Текст проигрыша орды** (поражение кризиса): великий хан сгинул в походе, и две фракции вновь раздроблены.
-- Все тексты — по правилам `docs/texts/` (генерация → отдельный проход валидации).
+- Все тексты — по правилам корневого `docs/texts/` (генерация → отдельный проход валидации).
 
 ## 3. Фракции и альянсы
 
@@ -33,7 +38,7 @@
 - На время кризиса генерировать **дополнительно 10 camp** (мировых лагерей).
 - Шаблоны тактических карт лагерей — по примеру `mod_Jurchen/scripts/mapgen/templates/tactical/locations`.
 - Охрана баз и рейдеры — **объединённым составом** обеих фракций: тропы из
-  `Scourge of God/scripts/!mods_preload/!config/spawnlist_mgl.nut` и
+  `mod_Scourge_of_God/scripts/!mods_preload/!config/spawnlist_mgl.nut` и
   `mod_Jurchen/scripts/!mods_preload/!config/spawnlist_jin.nut`.
 
 ## 5. Войска орды — три типа отрядов
@@ -50,19 +55,19 @@
 
 - Новый юнит, база — `mod_Jurchen/scripts/entity/tactical/humans/nomad_centurion.nut` (сделать чуть сильнее).
 - **Доспехи:** из номадского центуриона (его комплект).
-- **Оружие:** любое именное из `mod_Jurchen/scripts/items/weapons/named` или
-  `Scourge of God/scripts/items/weapons/named`.
+- **Оружие:** любое именное из `mod_Jurchen/scripts/items/weapons/named/` или
+  `mod_Scourge_of_God/scripts/items/weapons/named/`.
 - Всегда в единственном экземпляре, только в отрядах Defenders.
 
 ## 7. Контракты кризиса
 
 Адаптировать готовые ванильные (сменить войска, переписать тексты под реалии орды; логика контрактов ванильная):
 
-1. `data_014/.../contracts/free_greenskin_prisoners_contract.nut`
-2. `data_014/.../contracts/decisive_battle_contract.nut`
-3. `data_014/.../contracts/break_greenskin_siege_contract.nut`
-4. `data_014/.../contracts/last_stand_contract.nut`
-5. `data_014/.../contracts/root_out_undead_contract.nut`
+1. `data_014/scripts/contracts/contracts/free_greenskin_prisoners_contract.nut`
+2. `data_014/scripts/contracts/contracts/decisive_battle_contract.nut`
+3. `data_014/scripts/contracts/contracts/break_greenskin_siege_contract.nut`
+4. `data_014/scripts/contracts/contracts/last_stand_contract.nut`
+5. `data_014/scripts/contracts/contracts/root_out_undead_contract.nut`
 
 **6. Новый контракт «Порох орды»** (с нуля; референс выбрать самостоятельно на основании накопленного опыта):
 - Сюжет: обнаружен большой склад бочек с порохом орды. Наниматель даёт `data_014/scripts/items/tools/fire_bomb_item.nut`
@@ -70,7 +75,7 @@
 - Поле боя: сгенерировать **~10 бочек с порохом** (`mod_Jurchen/scripts/entity/tactical/objective/barrel_of_gunpowder.nut`),
   разместить **у спавна врага, за его спиной** — к бочкам надо прорываться с боем.
 - Постоянные подкрепления врага — по образцу
-  `zmod_davkul_rising-russian/scripts/skills/actives/summon_reinforcements_skill.nut`.
+  `!project/zmod_davkul_rising-russian/scripts/skills/actives/summon_reinforcements_skill.nut`.
 - Нужно отслеживать, взорваны бочки или нет.
 - **Цель миссии — не победить, а взорвать бочки и отступить.** В тексте контракта об этом написать честно.
 - Переопределить **Defeat**: анализ — отступили ли с взорванным складом. Не выполнили → контракт остаётся
@@ -88,15 +93,19 @@
 ## 10. Фазы реализации
 
 0. **Исследование (рекон):** устройство кризисов в ванили (структура crisis config, faction types, спавн партий,
-   амбиции кризисов, конец кризиса), устройство Jurchen/Mgl (spawnlists, archetypes, camps). Отчёт + решение `[ВОПРОС]` по фракции.
+   амбиции кризисов, конец кризиса), устройство Jurchen/Mgl (spawnlists, archetypes, camps). Отчёт + решение `[ВОПРОС-1]` по фракции.
 1. **Каркас мода:** регистрация, хук альянсов, заготовка конфига кризиса. Игра грузится, кризис виден в списке.
 2. **Лагеря и отряды:** 10 camp, три типа отрядов, скорости, archetypes, генерал.
 3. **Контракты 1–5** (адаптация).
 4. **Контракт «Порох орды»** (новый: поле боя, подкрепления, кастомный Defeat).
 5. **Амбиция + финализация кризиса** (победа/поражение, тексты).
-6. **Полировка текстов** (валидация по docs/texts), чек-листы, игровой тест заказчиком.
+6. **Полировка текстов** (валидация по корневому `docs/texts/`), чек-листы, игровой тест заказчиком.
+
+Каждая фаза заканчивается: правки .nut прогнаны через `tools/nut_check.py`, сборка по запросу, игровая проверка.
 
 ## 11. Реестр референсов
+
+Пути относительно монорепозитория `battle_brothers_projects/`, если не указано иное.
 
 | Что | Путь |
 |---|---|
@@ -108,11 +117,12 @@
 | Подкрепления (эталон) | `mods/!project/zmod_davkul_rising-russian/scripts/skills/actives/summon_reinforcements_skill.nut` |
 | Бочки пороха | `mod_Jurchen/scripts/entity/tactical/objective/barrel_of_gunpowder.nut` |
 | База генерала | `mod_Jurchen/scripts/entity/tactical/humans/nomad_centurion.nut` |
-| Spawnlists | `mod_Jurchen/scripts/!mods_preload/!config/spawnlist_jin.nut`, `Scourge of God-486-0-1-1643807750/scripts/!mods_preload/!config/spawnlist_mgl.nut` |
+| Spawnlists | `mod_Jurchen/scripts/!mods_preload/!config/spawnlist_jin.nut`, `mod_Scourge_of_God/scripts/!mods_preload/!config/spawnlist_mgl.nut` |
 | Лагерные шаблоны | `mod_Jurchen/scripts/mapgen/templates/tactical/locations/` |
-| Именное оружие | `mod_Jurchen/scripts/items/weapons/named/`, `Scourge of God-486-0-1-1643807750/scripts/items/weapons/named/` |
+| Именное оружие | `mod_Jurchen/scripts/items/weapons/named/`, `mod_Scourge_of_God/scripts/items/weapons/named/` |
 | Огненная бомба | `data_014/scripts/items/tools/fire_bomb_item.nut` |
-| Боевая часть (гайд/чек-листы) | `docs/locations/` |
+| Структура мода-хука (образец) | `bb_vanilla_plus/mod_vanilla_plus/` |
+| Боевая часть (гайд/чек-листы) | корневой `docs/locations/` монорепозитория |
 
 ## 12. Открытые вопросы
 
@@ -120,3 +130,22 @@
 - `[ВОПРОС-2]` Имя/ID босса «Генерал» (модовское `mgl_general_...`?).
 - `[ВОПРОС-3]` Где именно размещаются 10 camp: вместо/поверх обычных лагерей кризиса, по всей карте или в регионе?
 - `[ВОПРОС-4]` Кто наниматель кризисных контрактов — обычные поселения (как в ванильных кризисах)?
+
+## 13. Старт разработки в новых реалиях (чек-лист заказчика)
+
+Монорепозиторий объединил все моды и общую инфраструктуру. Чтобы стартануть глобальную разработку:
+
+1. **Одна сессия — одна задача.** Даём агенту один шаг из фаз (§10), начиная с фазы 0. Работа строго
+   последовательно, без фоновых агентов (см. корневой `AGENTS.md`).
+2. **Фаза 0 — рекон.** Просим агента исследовать устройство кризисов ванили по `data_014`
+   (`scripts/factions/crisis/`, crisis-конфиги, спавн партий, амбиции, экран выбора кризиса) и устройство
+   зависимостей (`mod_Jurchen`, `mod_Scourge_of_God`). Итог — отчёт + закрытие `[ВОПРОС-1]`.
+3. **Общие правила уже централизованы** — читать корневой `AGENTS.md` (жёсткое правило API, ловушки,
+   соглашения по гиту) и корневые `docs/` (тексты, локации, предыстории) перед соответствующими задачами.
+   Локальная папка `docs/` в моде удалена как дубликат.
+4. **Скелет уже на месте:** каталоги `scripts/` и `mod_horde_invasion/hooks/` созданы, `build.bat` настроен.
+   Ничего инициализировать не нужно — сразу кодим фазу 1 по образцу `bb_vanilla_plus/mod_vanilla_plus/`.
+5. **Сборка:** только вручную по запросу (`build.bat` мода, игра закрыта). Автосборка запрещена.
+6. **Контроль качества:** после правок .nut — `python tools/nut_check.py <файлы>`; тексты — генерация
+   и валидация отдельными проходами по `docs/texts/`.
+7. **Git:** коммиты/пуш — только по явной просьбе; текст коммита агент пишет в `.commit-msg.txt` в корне репо.
