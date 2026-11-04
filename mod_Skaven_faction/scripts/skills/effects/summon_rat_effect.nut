@@ -1,0 +1,63 @@
+this.summon_rat_effect <- this.inherit("scripts/skills/skill", {
+	m = {
+		TurnsLeft = 2
+	},
+	function create()
+	{
+		this.m.ID = "effects.summon_rat";
+		this.m.Name = "Призыв крысы";
+		this.m.Description = "";
+		this.m.Icon = "skills/summon_rat_effect_01.png";
+		this.m.IconMini = "summon_rat_effect_01_mini";
+		this.m.Overlay = "";
+		this.m.Type = this.Const.SkillType.StatusEffect;
+		this.m.IsActive = false;
+		this.m.IsRemovedAfterBattle = true;
+	}
+
+	function onAdded()
+	{
+		local actor = this.getContainer().getActor();
+		local candidates = [];
+		local myTile = actor.getTile();
+
+			for( local i = 0; i < 6; i = ++i )
+			{
+				if (!myTile.hasNextTile(i))
+				{
+				}
+				else
+				{
+					local nextTile = myTile.getNextTile(i);
+
+					if (nextTile.IsEmpty && this.Math.abs(myTile.Level - nextTile.Level) <= 1)
+					{
+						candidates.push(nextTile);
+					}
+				}
+			}
+
+			if (candidates.len() != 0)
+			{
+				local spawnTile = candidates[this.Math.rand(0, candidates.len() - 1)];
+				local sapling = this.Tactical.spawnEntity("scripts/entity/tactical/enemies/ratswarm", spawnTile.Coords);
+				sapling.setFaction(actor.getFaction());
+				sapling.riseFromGround();
+
+                for( local i = 0; i < this.Const.Tactical.PlagueParticles.len(); i = ++i )
+                {
+                    this.Tactical.spawnParticleEffect(true, this.Const.Tactical.RaiseFromGroundParticles[i].Brushes, spawnTile, this.Const.Tactical.RaiseFromGroundParticles[i].Delay, this.Const.Tactical.RaiseFromGroundParticles[i].Quantity, this.Const.Tactical.RaiseFromGroundParticles[i].LifeTimeQuantity, this.Const.Tactical.RaiseFromGroundParticles[i].SpawnRate, this.Const.Tactical.RaiseFromGroundParticles[i].Stages);
+                }
+			}
+	}
+
+	function onTurnStart()
+	{
+		if (--this.m.TurnsLeft <= 0)
+		{
+			this.removeSelf();
+		}
+	}
+
+});
+

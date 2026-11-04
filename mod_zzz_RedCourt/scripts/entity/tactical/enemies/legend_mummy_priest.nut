@@ -1,0 +1,64 @@
+this.legend_mummy_priest <- this.inherit("scripts/entity/tactical/legend_mummy", {
+	m = {},
+	function create()
+	{
+		this.m.Type = this.Const.EntityType.LegendMummyPriest;
+		this.legend_mummy.create();
+		this.m.XP = this.Const.Tactical.Actor.LegendMummyPriest.XP;
+		this.m.ResurrectionValue = 2.0;
+		this.m.ResurrectWithScript = "scripts/entity/tactical/enemies/legend_mummy_priest";
+		this.m.AIAgent = this.new("scripts/ai/tactical/agents/legend_mummy_queen_agent");
+		this.m.AIAgent.setActor(this);
+	}
+
+	function onInit()
+	{
+		this.legend_mummy.onInit();
+		this.getSprite("body").setBrush("bust_skeleton_body_02");
+		this.setDirty(true);
+		local b = this.m.BaseProperties;
+		b.setValues(this.Const.Tactical.Actor.LegendMummyPriest);
+		b.TargetAttractionMult = 3.0;
+		b.IsAffectedByNight = false;
+		b.IsAffectedByInjuries = false;
+		b.IsImmuneToBleeding = true;
+		b.IsImmuneToPoison = true;
+		this.m.ActionPoints = b.ActionPoints;
+		this.m.Hitpoints = b.Hitpoints;
+		this.m.CurrentProperties = clone b;
+		this.m.ActionPointCosts = this.Const.DefaultMovementAPCost;
+		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
+		this.m.Skills.add(this.new("scripts/skills/perks/perk_hold_out"));
+		this.m.Skills.add(this.new("scripts/skills/perks/perk_coup_de_grace"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_crippling_strikes"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_fast_adaption"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_underdog"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_berserk"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_anticipation"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_head_hunter"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_bloodbath"));
+        this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_carnage"));
+        this.m.Skills.add(this.new("scripts/skills/special/double_grip"));
+		if (this.World.getTime().Days >= 50)
+		{
+		    this.m.Skills.add(this.new("scripts/skills/perks/perk_battle_forged"));
+		}
+
+	}
+
+	function assignRandomEquipment() {
+        this.m.Items.equip(this.new("scripts/items/weapons/ancient/legend_kopis"));
+        this.m.Items.equip(this.new("scripts/items/armor/ancient/legend_mummy_dress"));
+
+        local helmet = ::MSU.Class.WeightedContainer([
+            [1, "scripts/items/helmets/ancient/legend_mummy_headband"],
+            [1, "scripts/items/helmets/ancient/legend_mummy_crown"]
+        ]).roll();
+
+        this.m.Items.equip(this.new(helmet));
+
+	}
+
+});
+

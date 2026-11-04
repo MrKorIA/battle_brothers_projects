@@ -1,0 +1,13 @@
+# Default ignored files
+.idea
+*.png
+*.brush
+*.ogg
+*.wav
+
+
+# Build artifacts
+.build/
+*.zip
+desktop.ini
+Thumbs.db
