@@ -5,8 +5,8 @@ this.sb_frenzy_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_frenzy_skill";
-		this.m.Name = "28. Злое безумие";
-		this.m.Description = "Похищает силу союзников, чтобы стать сильнее. Эффект длится до конца боя.";
+		this.m.Name = "Злое безумие";
+		this.m.Description = "Похищает силу у союзников, чтобы стать сильнее. Эффект длится до конца боя.";
 		this.m.Icon = "ui/xx73.png";
 		this.m.IconDisabled = "ui/xx73_sw.png";
 		this.m.SoundOnUse = [
@@ -34,25 +34,25 @@ this.sb_frenzy_skill <- this.inherit("scripts/skills/skill", {
 			id = 4,
 			type = "text",
 			icon = "ui/icons/vision.png",
-			text = "Дальность " + this.getMaxRange() + " плитки"
+			text = "Дальность " + this.getMaxRange() + " клетки"
 		});
 		ret.push({
 			id = 5,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "[color=#8f1e1e]Целевой союзник[/color] : -50% ко всем характеристикам. Статус боевого духа становится \'Сломлен\'."
+			text = "[color=#8f1e1e]Союзник[/color]: -50% ко всем характеристикам. Боевого дух становится \'Сломлен\'."
 		});
 		ret.push({
 			id = 6,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "[color=#135213]Self[/color] : +15% ко всем характеристикам. +30% урона при атаке врагов в радиусе 1 клетки."
+			text = "[color=#135213]Персонаж[/color]: +15% ко всем характеристикам. +30% урона при атаке врагов в радиусе 1 клетки."
 		});
 		ret.push({
 			id = 7,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Можно использовать [color=#8f1e1e]" + this.m.Skillcharge + "[/color] еще раз в этом бою."
+			text = "Можно использовать [color=#8f1e1e]" + this.m.Skillcharge + "[/color] раз в бою."
 		});
 		return ret;
 	}

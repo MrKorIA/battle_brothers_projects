@@ -4,7 +4,7 @@ this.sb_demon_effect <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "effects.sb_demon_effect";
 		this.m.Name = "Демонизация";
-		this.m.Description = "Этот персонаж демонизирует себя с помощью злого колдовства и обретает великие способности. Но после битвы с этим персонажем могут произойти ужасные вещи.";
+		this.m.Description = "Этот персонаж трансформируется в демона с помощью злого колдовства и обретает великую силу. Но после битвы получает тяжёлые травмы.";
 		this.m.Icon = "skills/status_effect_84.png";
 		this.m.IconMini = "status_effect_84_mini";
 		this.m.SoundOnUse = [
@@ -139,9 +139,81 @@ this.sb_demon_effect <- this.inherit("scripts/skills/skill", {
 		actor.getBaseProperties().Armor[this.Const.BodyPart.Body] = 0;
 		actor.getBaseProperties().ArmorMax[this.Const.BodyPart.Head] = 0;
 		actor.getBaseProperties().ArmorMax[this.Const.BodyPart.Body] = 0;
-		if (this.Math.rand(1, 100) <= 21)
+		local injuries = [
+			{
+				ID = "injury.broken_arm",
+				Threshold = 0.0,
+				Script = "injury/broken_arm_injury"
+			},
+			{
+				ID = "injury.broken_leg",
+				Threshold = 0.0,
+				Script = "injury/broken_leg_injury"
+			},
+			{
+				ID = "injury.broken_ribs",
+				Threshold = 0.0,
+				Script = "injury/broken_ribs_injury"
+			},
+			{
+				ID = "injury.crushed_windpipe",
+				Threshold = 0.0,
+				Script = "injury/crushed_windpipe_injury"
+			},
+			{
+				ID = "injury.cut_achilles_tendon",
+				Threshold = 0.0,
+				Script = "injury/cut_achilles_tendon_injury"
+			},
+			{
+				ID = "injury.dislocated_shoulder",
+				Threshold = 0.0,
+				Script = "injury/dislocated_shoulder_injury"
+			},
+			{
+				ID = "injury.fractured_elbow",
+				Threshold = 0.0,
+				Script = "injury/fractured_elbow_injury"
+			},
+			{
+				ID = "injury.fractured_ribs",
+				Threshold = 0.0,
+				Script = "injury/fractured_ribs_injury"
+			},
+			{
+				ID = "injury.injured_knee_cap",
+				Threshold = 0.0,
+				Script = "injury/injured_knee_cap_injury"
+			},
+			{
+				ID = "injury.fractured_hand",
+				Threshold = 0.0,
+				Script = "injury/fractured_hand_injury"
+			},
+			{
+				ID = "injury.exposed_ribs",
+				Threshold = 0.0,
+				Script = "injury/exposed_ribs_injury"
+			},
+			{
+				ID = "injury.fractured_skull",
+				Threshold = 0.0,
+				Script = "injury/fractured_skull_injury"
+			}
+		];
+		local roll = this.Math.rand(1, 100);
+		if (roll <= 30)
 		{
-			actor.kill(actor, this, this.Const.FatalityType.Decapitated);
+			actor.addInjury(injuries);
+			actor.addInjury(injuries);
+		}
+		else if (roll <= 90)
+		{
+			actor.addInjury(injuries);
+		}
+		else
+		{
+			actor.setHitpoints(this.Math.max(1, actor.getHitpoints() - this.Math.rand(20, 40)));
 		}
 		this.removeSelf();
 	}

@@ -5,8 +5,8 @@ this.sb_pull2_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_pull2_skill";
-		this.m.Name = "49. Хватка Бездны";
-		this.m.Description = "Притягивает к себе удаленную вражескую цель и связывает ее щупальцами.";
+		this.m.Name = "Хватка Бездны";
+		this.m.Description = "Притягивает к себе врага и обездвиживает её щупальцами.";
 		this.m.Icon = "ui/xx72.png";
 		this.m.IconDisabled = "ui/xx72_sw.png";
 		this.m.Overlay = "active_149";
@@ -50,13 +50,13 @@ this.sb_pull2_skill <- this.inherit("scripts/skills/skill", {
 			id = 5,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Воздействие на цель: Невозможность двигаться. Удаляет стену щитов /стену копий / ответный удар. -50% к защите в ближнем и дальнем бою. -70% к шансу попасть по врагам. Получает 10 ~ 15 единиц урона за ход. (Этот урон навсегда парализует врагов, а не убивает их)."
+			text = "Цель не может двигаться, сбивает \'стену щитов\'/\'стену копий\'/\'ответный удар\'. -50% к защите в ближнем и дальнем бою. -70% к шансу попадания. Получает 10 ~ 15 единиц урона за ход. (Этот урон парализует врага, а не убивает его)."
 		});
 		ret.push({
 			id = 6,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Можно использовать ещё [color=#8f1e1e]" + this.m.Skillcharge + "[/color] раз(а) в этом бою."
+			text = "Можно использовать ещё [color=#8f1e1e]" + this.m.Skillcharge + "[/color] раз в этом бою."
 		});
 		return ret;
 	}

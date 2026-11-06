@@ -3,9 +3,9 @@ this.sbp_maso_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sbp_maso_skill";
-		this.m.Name = "96. Мазохизм (пассивный)";
+		this.m.Name = "Мазохизм";
 		this.m.Icon = "ui/xxp11.png";
-		this.m.Description = "Этот персонаж наслаждается своей болью и становится сильнее по мере получения урона.";
+		this.m.Description = "Этот персонаж наслаждается своей болью и становится сильнее при получения урона.";
 		this.m.Type = this.Const.SkillType.StatusEffect;
 		this.m.Order = this.Const.SkillOrder.VeryLast + 100;
 		this.m.IsActive = false;
@@ -32,7 +32,7 @@ this.sbp_maso_skill <- this.inherit("scripts/skills/skill", {
 			id = 3,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Ваш урон увеличивается на 120% пропорционально потерянному здоровью."
+			text = "Ваш урон увеличивается на 120% пропорционально потерянному ОЗ."
 		});
 		ret.push({
 			id = 4,
@@ -40,12 +40,12 @@ this.sbp_maso_skill <- this.inherit("scripts/skills/skill", {
 			icon = "ui/icons/special.png",
 			text = "Когда у вас кровотечение: +5 к навыку ближнего и дальнего боя"
 		});
-		ret.push({
-			id = 5,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Когда ваш бэкграунд \'Бичеватель\': +5 к навыку ближнего и дальнего боя"
-		});
+//		ret.push({
+//			id = 5,
+//			type = "text",
+//			icon = "ui/icons/special.png",
+//			text = "Когда ваш бэкграунд \'Бичеватель\': +5 к навыку ближнего и дальнего боя"
+//		});
 		return ret;
 	}
 

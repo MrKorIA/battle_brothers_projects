@@ -3,9 +3,9 @@ this.sbp_counter_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sbp_counter_skill";
-		this.m.Name = "86. Адаптивный преобразователь (пассивный)";
+		this.m.Name = "Адаптивный преобразователь";
 		this.m.Icon = "ui/xxp15.png";
-		this.m.Description = "Получите бонус к максимальной усталости, навыку ближнего боя и навыку дальнего боя пропорционально защите от дальних атак.";
+		this.m.Description = "Получите бонус к максимальной выносливости, навыку ближнего боя и навыку дальнего боя пропорционально защите от дальних атак.";
 		this.m.Type = this.Const.SkillType.StatusEffect;
 		this.m.Order = this.Const.SkillOrder.VeryLast + 100;
 		this.m.IsActive = false;

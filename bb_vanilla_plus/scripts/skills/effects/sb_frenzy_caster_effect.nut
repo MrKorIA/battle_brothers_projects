@@ -3,7 +3,7 @@ this.sb_frenzy_caster_effect <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "effects.sb_frenzy_caster_effect";
-		this.m.Name = "Безумная ярость (Кастер)";
+		this.m.Name = "Безумная ярость";
 		this.m.Description = "+15% ко всем характеристикам. +30% урона при атаке врагов в пределах 1 клетки. Этот эффект действует до конца боя.";
 		this.m.Icon = "ui/perks/perk_36.png";
 		this.m.IconMini = "perk_36_mini";

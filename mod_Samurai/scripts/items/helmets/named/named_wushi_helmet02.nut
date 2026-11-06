@@ -8,7 +8,7 @@ this.named_wushi_helmet02 <- this.inherit("scripts/items/helmets/named/named_hel
 		this.m.Name = "Шлем ужаса";
 		this.m.ShowOnCharacter = true;
 		this.m.HideHair = true;
-		this.m.HideBeard = true;
+		this.m.HideBeard = false;
 		this.m.Variant = 1;
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;

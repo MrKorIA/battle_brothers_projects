@@ -54,10 +54,10 @@
         else if (_entity != null && _entity.getSkills().hasSkill("vp.vestal.background"))
         {
             local perks = ::Const.Perks.Perks.map(@(row) clone row);
-            perks[2] = perks[2].filter(@(_, p) p.ID != "perk.taunt");
+            local allowedShamanMasteries = {};
+            foreach (w in ["mace" "hammer" "flail" "sword" "spear" "polearm"])
             perks[3] = perks[3].filter(@(_, p) p.ID in allowedMasteries);
             perks[5] = perks[5].filter(@(_, p) p.ID != "perk.berserk");
-            perks[5] = perks[5].filter(@(_, p) p.ID != "perk.battle_forged");
             perks[6] = perks[6].filter(@(_, p) p.ID != "perk.killing_frenzy");
 
             foreach (perk in ::Const.Perks.Vestal) {
@@ -68,11 +68,10 @@
         else if (_entity != null && _entity.getSkills().hasSkill("vp.demon.background"))
         {
             local perks = ::Const.Perks.Perks.map(@(row) clone row);
-            perks[2] = perks[2].filter(@(_, p) p.ID != "perk.taunt");
+            local allowedShamanMasteries = {};
+            foreach (w in ["mace" "hammer" "cleaver" "flail" "axe" "sword" "dagger" "polearm" "crossbow" "throwing"])
+                allowedShamanMasteries["perk.mastery." + w] <- true;
             perks[3] = perks[3].filter(@(_, p) p.ID in allowedMasteries);
-            perks[5] = perks[5].filter(@(_, p) p.ID != "perk.berserk");
-            perks[5] = perks[5].filter(@(_, p) p.ID != "perk.battle_forged");
-            perks[6] = perks[6].filter(@(_, p) p.ID != "perk.killing_frenzy");
 
             foreach (perk in ::Const.Perks.Demon) {
                 // Clone so the per-entity demon_blocked flag never leaks onto the shared perk definition.

@@ -34,7 +34,7 @@ addPerk({
     ID = "perk.vp.demon"
     Script = "scripts/skills/perks/perk_vp_demon"
     Name = "Демонизировать"
-    Tooltip = "Обретает огромную силу посредством злого колдовства. Но с большой силой приходит и большая ответственность."
+    Tooltip = "Обретает огромную силу посредством злого колдовства. Но трансформация может приводить к травмам тела."
             + "\n" + red("Внимание: выбор этого навыка навсегда закроет \'Путь крови\'.")
     Icon = "perks/perk_vp_demon.png"
     IconDisabled = "perks/perk_vp_demon_sw.png"
@@ -44,7 +44,7 @@ addPerk({
     ID = "perk.vp.pull"
     Script = "scripts/skills/perks/perk_vp_pull"
     Name = "Хватка Бездны"
-    Tooltip = "Притягивает к себе удалённую вражескую цель и связывает её щупальцами."
+    Tooltip = "Притягивает к себе врага и обездвиживает её щупальцами."
             + "\n" + red("Этот навык — часть \'Пути демона\'; ветка несовместима с \'Путём крови\'.")
     Icon = "perks/perk_vp_pull.png"
     IconDisabled = "perks/perk_vp_pull_sw.png"
@@ -54,7 +54,7 @@ addPerk({
     ID = "perk.vp.maso"
     Script = "scripts/skills/perks/perk_vp_maso"
     Name = "Мазохизм"
-    Tooltip = "Этот персонаж наслаждается собственной болью и становится сильнее по мере получения урона."
+    Tooltip = "Этот персонаж наслаждается собственной болью и становится сильнее при получения урона."
             + "\n" + red("Этот навык — часть \'Пути демона\'; ветка несовместима с \'Путём крови\'.")
     Icon = "perks/perk_vp_maso.png"
     IconDisabled = "perks/perk_vp_maso_sw.png"
@@ -64,7 +64,7 @@ addPerk({
     ID = "perk.vp.frenzy"
     Script = "scripts/skills/perks/perk_vp_frenzy"
     Name = "Злое безумие"
-    Tooltip = "Похищает силу союзников, чтобы стать сильнее. Эффект длится до конца боя."
+    Tooltip = "Похищает силу у союзников, чтобы стать сильнее. Эффект длится до конца боя."
             + "\n" + red("Этот навык — часть \'Пути демона\'; ветка несовместима с \'Путём крови\'.")
     Icon = "perks/perk_vp_frenzy.png"
     IconDisabled = "perks/perk_vp_frenzy_sw.png"
@@ -116,7 +116,7 @@ addPerk({
     ID = "perk.vp.sumfiend"
     Script = "scripts/skills/perks/perk_vp_sumfiend"
     Name = "Призвать демона"
-    Tooltip = "Призывает мощного монстра на ограниченное время."
+    Tooltip = "Призывает мощного демона на ограниченное время."
             + "\n" + red("Этот навык — часть \'Пути крови\'; ветка несовместима с \'Путём демона\'.")
     Icon = "perks/perk_vp_sumfiend.png"
     IconDisabled = "perks/perk_vp_sumfiend_sw.png"

@@ -5,8 +5,8 @@ this.sb_bloodlust_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_bloodlust_skill";
-		this.m.Name = "9. Жажда крови";
-		this.m.Description = "Увеличивает боевую мощь с помощью жажды крови. Можно использовать на себя или союзников. При применении умения заклинатель теряет [color=" + this.Const.UI.Color.NegativeValue + "]10[/color] Здоровье.";
+		this.m.Name = "Жажда крови";
+		this.m.Description = "Увеличивает боевую мощь с помощью жажды крови. Можно использовать на себя или союзников. При применении умения заклинатель теряет [color=" + this.Const.UI.Color.NegativeValue + "]10[/color] ОЗ.";
 		this.m.Icon = "ui/xx38.png";
 		this.m.IconDisabled = "ui/xx38_sw.png";
 		this.m.SoundOnUse = [
@@ -51,7 +51,7 @@ this.sb_bloodlust_skill <- this.inherit("scripts/skills/skill", {
 				id = 4,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+20%[/color] Урон в ближнем бою, [color=" + this.Const.UI.Color.PositiveValue + "]+5[/color] Навык ближнего боя"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+20%[/color] к наносимому урону в ближнем бою, [color=" + this.Const.UI.Color.PositiveValue + "]+5[/color] к навыку ближнего боя"
 			},
 			{
 				id = 5,

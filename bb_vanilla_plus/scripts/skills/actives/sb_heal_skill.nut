@@ -5,8 +5,8 @@ this.sb_heal_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_heal_skill";
-		this.m.Name = "33. Магическое исцеление";
-		this.m.Description = "Восстанавливает здоровье, броню и шлем дружественной цели.";
+		this.m.Name = "Магическое исцеление";
+		this.m.Description = "Восстанавливает здоровье, броню тела и шлема дружественной цели.";
 		this.m.Icon = "ui/xx8.png";
 		this.m.IconDisabled = "ui/xx8_sw.png";
 		this.m.SoundOnUse = [
@@ -37,7 +37,7 @@ this.sb_heal_skill <- this.inherit("scripts/skills/skill", {
 			id = 4,
 			type = "text",
 			icon = "ui/icons/vision.png",
-			text = "Дальность " + this.getMaxRange() + " плитки"
+			text = "Дальность " + this.getMaxRange() + " клетки"
 		});
 		ret.push({
 			id = 5,

@@ -6,7 +6,7 @@ this.sb_bloodletting_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_bloodletting_skill";
-		this.m.Name = "8. Кровопускание";
+		this.m.Name = "Кровопускание";
 		this.m.Description = "Исцелите себя или союзника с помощью кровопускания";
 		this.m.Icon = "ui/xx64.png";
 		this.m.IconDisabled = "ui/xx64_sw.png";
@@ -35,19 +35,19 @@ this.sb_bloodletting_skill <- this.inherit("scripts/skills/skill", {
 			id = 4,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Восстановить [color=" + this.Const.UI.Color.PositiveValue + "]0~50[/color] здоровье"
+			text = "Восстановить [color=" + this.Const.UI.Color.PositiveValue + "]0~50[/color] ОЗ"
 		});
 		ret.push({
 			id = 5,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Снимает эффекты отравления/опьянения/похмелья. Даёт случайный урон от эффекта кровотечения."
+			text = "Снимает эффекты \'Отравления\'/\'Опьянения\'/\'Похмелья\'. Наносит цели случайный урон от эффекта кровотечения."
 		});
 		ret.push({
 			id = 6,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Перезарядка: 5 ходов \nПерезарядка: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] ход"
+			text = "Перезарядка: 5 ходов\nПерезарядка: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] ход(а)"
 		});
 		return ret;
 	}

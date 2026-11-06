@@ -6,8 +6,8 @@ this.sb_drainblood_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_drainblood_skill";
-		this.m.Name = "19. Слить кровь";
-		this.m.Description = "Наложите заклинание на кровоточащую цель, чтобы нанести урон и восстановить усталость заклинателя. Этот эффект усиливается при накоплении кровотечения у цели..";
+		this.m.Name = "Слить кровь";
+		this.m.Description = "Накладывает заклинание на кровоточащую цель, чтобы нанести урон и восстановить усталость заклинателя. Этот эффект усиливается при накоплении кровотечения у цели..";
 		this.m.Icon = "ui/xx63.png";
 		this.m.IconDisabled = "ui/xx63_sw.png";
 		this.m.SoundOnUse = [
@@ -46,13 +46,13 @@ this.sb_drainblood_skill <- this.inherit("scripts/skills/skill", {
 			id = 4,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Наносит 30 ед. урона за каждый стак кровотечения и восстанавливает 15 ед. усталости заклинателя."
+			text = "Наносит 30 урона за каждый эффект кровотечения и восстанавливает 15 ед. усталости заклинателя."
 		});
 		ret.push({
 			id = 6,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Перезарядка: 2 хода \nПерезарядка: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] ход"
+			text = "Перезарядка: 2 хода \nПерезарядка: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] ход(а)"
 		});
 		return ret;
 	}

@@ -5,8 +5,8 @@ this.sb_demon_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_demon_skill";
-		this.m.Name = "17. Демонизировать";
-		this.m.Description = "Обретает огромную силу посредством злого колдовства. Но с большой силой приходит и большая ответственность.";
+		this.m.Name = "Демонизация";
+		this.m.Description = "Обретает огромную силу посредством злого колдовства. Но трансформация не проходит для тела бесследно.";
 		this.m.Icon = "ui/xx27.png";
 		this.m.IconDisabled = "ui/xx27_sw.png";
 		this.m.SoundOnUse = [
@@ -35,19 +35,13 @@ this.sb_demon_skill <- this.inherit("scripts/skills/skill", {
 			id = 3,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "+100 HP. +50% к урону. Достигает полного состояния. Броня и шлем выпадают или ломаются, оставшаяся прочность образует живую броню."
-		});
-		ret.push({
-			id = 4,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Если у вас есть навык Военное преступление (73): еще больше увеличивает урон от этого навыка."
+			text = "+100 HP. +50% к урону. Броня и шлем выпадают или ломаются, оставшаяся прочность образует живую броню."
 		});
 		ret.push({
 			id = 5,
 			type = "text",
 			icon = "ui/tooltips/warning.png",
-			text = "Этот навык используется путем выбора себя в качестве цели. [color=" + this.Const.UI.Color.NegativeValue + "]После битвы с этим персонажем могут произойти ужасные вещи.[/color]"
+			text = "Необходимо выбрать себя как цель. [color=" + this.Const.UI.Color.NegativeValue + "]После битвы персонаж будет травмирован.[/color]"
 		});
 		return ret;
 	}

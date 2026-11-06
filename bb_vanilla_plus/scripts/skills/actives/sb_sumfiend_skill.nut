@@ -6,7 +6,7 @@ this.sb_sumfiend_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.sb_sumfiend_skill";
-		this.m.Name = "65. Призвать демона";
+		this.m.Name = "Призвать демона";
 		this.m.Description = "Призывает мощного монстра на ограниченное время.";
 		this.m.Icon = "ui/xx16.png";
 		this.m.IconDisabled = "ui/xx16_sw.png";
@@ -53,13 +53,13 @@ this.sb_sumfiend_skill <- this.inherit("scripts/skills/skill", {
 				id = 4,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Перезарядка: 9 ходов (Призванное существо существует в течение 8 ходов) \nПерезарядка: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] ход"
+				text = "Перезарядка: 9 ходов (Призванное существо существует в течение 8 ходов) \nПерезарядка: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] ход(а)"
 			},
 			{
 				id = 5,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Когда уровень заклинателя 10 или выше: +10 к урону, +10 к навыку ближнего боя, +200 к здоровью"
+				text = "Когда уровень заклинателя 10 или выше: +10 к урону, +10 к навыку ближнего боя, +200 к ОЗ призываемого демона"
 			}
 		];
 		return ret;
@@ -87,7 +87,7 @@ this.sb_sumfiend_skill <- this.inherit("scripts/skills/skill", {
 			entity.getBaseProperties().MeleeSkill += 10;
 			entity.getBaseProperties().Hitpoints += 200;
 			entity.getSprite("body").setBrush("bust_eyemon_02");
-			entity.setName("Abyssal Fiend");
+			entity.setName("Исчадие из бездны");
 		}
 		for( local i = 0; i < this.Const.Tactical.RaiseUndeadParticles.len(); i = ++i )
 		{
