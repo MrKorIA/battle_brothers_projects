@@ -106,6 +106,12 @@ davkul_rising (`!project/zmod_davkul_rising-russian`).
   автоматически — только по явной просьбе пользователя, при закрытой игре (иначе «Corrupted archive»).
 - Скрипт упаковывает существующие игровые папки мода (brushes/gfx/music/scripts/sounds/ui + каталог хуков mod_*/zmod_*)
   и кладёт zip с заменой в `Z:\SteamLibrary\steamapps\common\Battle Brothers\data`.
+- Сборка с ресурсами — общий `build_brushes.sh` + тонкий `build_brushes.bat` в каждом моде. Алгоритм:
+  для каждого `<name>.brush` из `brushes/` мода ищем одноимённый каталог с `metadata.xml` в
+  `Z:\GameMods\Battle Brothers\mods\bbros\bin` (есть каталог = спрайты правились в редакторе) →
+  `bbrusher.exe pack --gfxPath <bbros>\gfx <bbros>\bin\<name>.brush <bbros>\bin\<name>` →
+  копия `<name>.brush` в `brushes/` мода и `<name>.png` в `gfx/` мода (с заменой, gfx создаётся) →
+  обычная сборка через `build.sh`. Каталог bbros переопределяется через `BB_BROS`.
 
 ## Правила ведения задач
 
@@ -114,6 +120,8 @@ davkul_rising (`!project/zmod_davkul_rising-russian`).
   то, что агент сам сломал и починил в рамках задачи (например, кавычки/слэши в bat-обёртках).
 - Если что-то не получилось с первой итерации и этому есть чему учиться — урок заносим в правила
   (этот файл или профиль мода), а не в текст коммита.
+- Генерация .bat через `printf` в git bash: `\\b` в форматной строке съедается как backspace —
+  пути с `\bin\` ломаются молча. Писать пути отдельным аргументом через `%s` (либо heredoc).
 - Запрещено запускать фоновых агентов (background agents) — работаем строго последовательно:
   один агент за раз, дожидаемся результата. Фоновые агенты на текущий момент нестабильны
   (отвалы по таймауту).
