@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>BB Sprite Editor</title>
+<script>
+// i18n: реестр языков; словари — в assets/lang_*.js (должны грузиться ДО основного скрипта)
+var LANGS = {}, LANG_CODE = "ru", LANG = null;
+function registerLang(code, dict) { LANGS[code] = dict; }
+function t(key, params) {
+  var s = (LANG && LANG[key]) || key;
+  if (params) for (var k in params) s = s.split("{" + k + "}").join(params[k]);
+  return s;
+}
+try { LANG_CODE = localStorage.getItem("bbse_lang") || "ru"; } catch (e) {}
+</script>
+<script src="assets/lang_ru.js"></script>
+<script src="assets/lang_en.js"></script>
+<style>
+  :root { --bg:#2b2b2b; --panel:#383838; --border:#4a4a4a; --text:#ddd; --accent:#c9a227; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:13px/1.4 Segoe UI, Arial, sans-serif;
+         display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+  #toolbar { display:flex; gap:8px; align-items:center; padding:6px 10px; background:var(--panel);
+             border-bottom:1px solid var(--border); flex:0 0 auto; flex-wrap:wrap; }
+  #main { display:flex; flex:1; min-height:0; }
+  #left { width:280px; flex:0 0 auto; background:var(--panel); border-right:1px solid var(--border);
+          display:flex; flex-direction:column; min-height:0; }
+  #right { width:300px; flex:0 0 auto; background:var(--panel); border-left:1px solid var(--border);
+           display:flex; flex-direction:column; min-height:0; }
+  #stageWrap { flex:1; min-width:0; position:relative; }
+  canvas { display:block; width:100%; height:100%; cursor:crosshair; }
+  .panel-h { padding:6px 10px; font-weight:bold; border-bottom:1px solid var(--border); flex:0 0 auto; }
+  .scroll { overflow-y:auto; flex:1; min-height:0; }
+  button { background:#4a4a4a; color:var(--text); border:1px solid #5a5a5a; padding:3px 10px;
+           cursor:pointer; border-radius:3px; font-size:12px; }
+  button:hover { background:#5a5a5a; }
+  button:disabled { opacity:.4; cursor:default; }
+  button.primary { background:var(--accent); color:#222; border-color:var(--accent); font-weight:bold; }
+  input[type=text], input[type=number] { background:#222; color:var(--text); border:1px solid var(--border);
+           padding:3px 6px; border-radius:3px; font-size:12px; width:100%; }
+  input[type=number] { width:58px; }
+  .sprite-item { padding:3px 10px; cursor:pointer; white-space:nowrap; overflow:hidden;
+                 text-overflow:ellipsis; }
+  .sprite-item:hover { background:#444; }
+  .sprite-item .dir { color:#888; font-size:11px; }
+  .stage-item { padding:4px 10px; cursor:pointer; display:flex; gap:6px; align-items:center; }
+  .stage-item.sel { background:#4d4d2a; }
+  .stage-item:hover { background:#444; }
+  .stage-item .name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .stage-item button { padding:0 5px; font-size:11px; }
+  .props { padding:8px 10px; display:grid; grid-template-columns:auto 1fr auto; gap:5px 8px;
+           align-items:center; border-bottom:1px solid var(--border); }
+  .props label { color:#aaa; }
+  .row { display:flex; gap:6px; align-items:center; }
+  #status { color:#aaa; padding:6px 10px; border-top:1px solid var(--border); flex:0 0 auto;
+            white-space:pre-wrap; }
+  #hint { position:absolute; left:10px; bottom:10px; background:rgba(0,0,0,.55); padding:6px 10px;
+          border-radius:4px; pointer-events:none; font-size:12px; max-width:60%; }
+  .drop-active::after { content:var(--drop-text, "Drop to load"); position:absolute; inset:0;
+          background:rgba(201,162,39,.15); border:3px dashed var(--accent); display:flex;
+          align-items:center; justify-content:center; font-size:20px; color:var(--accent);
+          pointer-events:none; z-index:10; }
+  a { color:var(--accent); }
+  .modified { color:var(--accent); }
+</style>
+</head>
+<body>
+<div id="toolbar">
+  <b>BB Sprite Editor</b>
+  <button id="btnOpenPng" data-i18n-tt="tt_open" title="">Открыть PNG…</button>
+  <label style="display:flex;gap:4px;align-items:center;user-select:none" data-i18n-tt="tt_doll" title="">
+    <input type="checkbox" id="chkDoll"><span data-i18n="chk_doll">кукла</span></label>
+  <label style="display:flex;gap:4px;align-items:center;user-select:none" data-i18n-tt="tt_dead" title="">
+    <input type="checkbox" id="chkDollDead"><span data-i18n="chk_dead">труп</span></label>
+  <label style="display:flex;gap:4px;align-items:center;user-select:none" data-i18n-tt="tt_tile" title="">
+    <input type="checkbox" id="chkTile"><span data-i18n="chk_tile">тайл</span></label>
+  <span id="brushInfo" style="color:#aaa" data-i18n="not_loaded">не загружено</span>
+  <span style="flex:1"></span>
+  <select id="selLang" title="language / язык" style="background:#4a4a4a;color:var(--text);border:1px solid #5a5a5a;border-radius:3px;padding:2px">
+    <option value="ru">RU</option><option value="en">EN</option>
+  </select>
+  <button id="btnSave" class="primary" disabled data-i18n="btn_save">Сохранить</button>
+  <button id="btnDownload" disabled data-i18n="btn_download">Скачать XML</button>
+  <button id="btnHelp">?</button>
+</div>
+<div id="main">
+  <div id="left">
+    <div class="panel-h" data-i18n="hdr_sprites">Спрайты кисти</div>
+    <div style="padding:6px 10px; flex:0 0 auto;"><input type="text" id="filter" data-i18n-ph="filter_ph" placeholder="фильтр…"></div>
+    <div class="scroll" id="spriteList"><div style="padding:10px;color:#888" data-i18n="empty_list">Откройте спрайт кнопкой «Открыть PNG…» или перетащите сюда PNG + metadata.xml.</div></div>
+  </div>
+  <div id="stageWrap">
+    <canvas id="stage"></canvas>
+    <div id="hint" data-i18n="hint">Клик — выбрать спрайт · Drag — двигать</div>
+  </div>
+  <div id="right">
+    <div class="panel-h" data-i18n="hdr_scene">Сцена (кукла)</div>
+    <div class="scroll" id="stageList" style="flex:0 0 auto; max-height:30%"></div>
+    <div class="panel-h" style="border-top:1px solid var(--border)" data-i18n="hdr_props">Свойства</div>
+    <div class="scroll" id="props"><div style="padding:10px;color:#888" data-i18n="no_selection">Спрайт не выбран</div></div>
+    <div id="status"></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ================= Модель ================= */
+const COORD_ATTRS = ["left","right","top","bottom","offsetX","offsetY"];
+let brushes = [];              // загруженные кисти: {key,name,xmlFh,xmlText,sprites,byId,dirty,fromDrop,shift}
+let sprites = [];              // ОТКРЫТЫЕ спрайты (левая панель) — только то, что загрузил пользователь
+let pngMap = new Map();        // spriteId -> кисть (привязка из «Открыть PNG…»)
+let stage = [];                // спрайты на сцене: {spr, visible, opacity, orig, part}
+let selected = null;
+let dropFiles = new Map();     // путь в нижнем регистре -> File (drag&drop fallback)
+let images = new Map();        // brushKey|id -> HTMLImageElement | Promise | "error"
+let lastDrawOrder = [];        // индексы stage в порядке отрисовки (для hit-test)
+let brushSeq = 0;
+
+/* Базовые куклы: bust_naked_body_00 + bust_head_02 (entity_0), живые и _dead.
+   Мировые координаты (y вверх, offset аддитивно). У naked_body_00 в brush нет left/right —
+   центрировано по ширине PNG. Ассеты лежат рядом: tools/assets/. */
+const DOLL_SETS = {
+  live: [
+    { src: "assets/doll_body.png", l: -39, r: 39, t: -13, b: 45 },
+    { src: "assets/doll_head.png", l: -22, r: 32, t: 13,  b: 83 },
+  ],
+  dead: [
+    { src: "assets/doll_body_dead.png", l: -59, r: 72, t: -47, b: 63 },
+    { src: "assets/doll_head_dead.png", l: -39, r: 21, t: -49, b: 11 },
+  ],
+};
+for (const k in DOLL_SETS)
+  DOLL_SETS[k].forEach(d => { d.img = new Image(); d.img.src = d.src; });
+// кукла для статичных объектов: тайл (grass_01) центрируется на pivot; объекты anchor'ятся
+// в центре тайла — спрайты object_1 ложатся без подгонки.
+const TILE_IMG = new Image(); TILE_IMG.src = "assets/tile_grass.png";
+
+/* ================= Загрузка ================= */
+const $ = id => document.getElementById(id);
+const status = m => { $("status").textContent = m; };
+// i18n: активный язык + статика + переключатель
+LANG = LANGS[LANG_CODE] || LANGS.ru;
+document.title = t("app_title");
+(function applyStaticLang() {
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-tt]").forEach(el => { el.title = t(el.dataset.i18nTt); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.documentElement.style.setProperty("--drop-text", '"' + t("drop_hint") + '"');
+})();
+$("selLang").value = LANG_CODE;
+$("selLang").onchange = () => {
+  try { localStorage.setItem("bbse_lang", $("selLang").value); } catch (e) {}
+  location.reload();
+};
+
+function normPath(p) { return p.replace(/\\/g, "/").replace(/^\.?\//, "").toLowerCase(); }
+
+function parseBrush(text, xmlFh, fromDrop) {
+  const brush = { key: "b" + (brushSeq++), name: "brush", xmlFh: xmlFh || null, xmlText: text,
+                  sprites: [], byId: new Map(), dirty: new Set(), fromDrop: !!fromDrop };
+  const m0 = text.slice(0, 200).match(/<brush name="([^"]+)"/);
+  if (m0) brush.name = m0[1].replace(/^gfx\//, "").replace(/\.png$/, "");
+  const re = /<sprite\s+([^>]*?)\/>/g;
+  let m;
+  while ((m = re.exec(text))) {
+    const attrs = {};
+    const are = /([\w-]+)="([^"]*)"/g;
+    let a;
+    while ((a = are.exec(m[1]))) attrs[a[1]] = a[2];
+    if (!attrs.id) continue;
+    const spr = { id: attrs.id, attrs, img: attrs.img || "", present: new Set(Object.keys(attrs)), _brush: brush };
+    for (const c of COORD_ATTRS) if (!(c in attrs)) attrs[c] = "0";
+    brush.sprites.push(spr);
+    if (!brush.byId.has(spr.id)) brush.byId.set(spr.id, spr);
+    // дубли координатных атрибутов (последствия старого бага с дописыванием) — помечаем:
+    // одно сохранение пересоберёт тег и почистит файл
+    for (const c of COORD_ATTRS)
+      if (m[0].split(" " + c + "=\"").length - 1 > 1) { brush.dirty.add(spr.id); brush.dupCount = (brush.dupCount || 0) + 1; break; }
+  }
+  brushes.push(brush);
+  $("btnSave").disabled = $("btnDownload").disabled = false;
+  return brush;
+}
+function totalDirty() { let n = 0; for (const b of brushes) n += b.dirty.size; return n; }
+// открыть спрайт в левой панели (показываем только то, что пользователь открыл)
+function openSprite(spr, blob) {
+  if (blob && !images.has(spr._brush.key + "|" + spr.id)) {
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => { // размеры PNG нужны, чтобы вывести отсутствующие края rect'а
+      spr._pngW = img.naturalWidth; spr._pngH = img.naturalHeight;
+      scheduleRedraw();
+    };
+    img.src = url;
+    images.set(spr._brush.key + "|" + spr.id, img);
+  }
+  if (!sprites.includes(spr)) { sprites.push(spr); renderSpriteList(); }
+}
+
+/* ---------- открытие по одному PNG + его XML, без папок ----------
+   1-й диалог: PNG. 2-й диалог: XML кисти (metadata.xml) — хендл файла даёт и координаты,
+   и запись при сохранении. Картинки спрайтов — из выбранных PNG. Левая панель показывает
+   ТОЛЬКО открытое. Пара png→кисть в pngMap: повторный PNG из той же кисти — без диалогов. */
+// найти кисть для spriteId: сначала явная привязка (pngMap), затем сверка по ВСЕМ загруженным xml
+function findBrushForSprite(spriteId) {
+  let brush = pngMap.get(spriteId);
+  if (brush) return brush;
+  for (const b of brushes) if (b.byId.has(spriteId)) { pngMap.set(spriteId, b); return b; }
+  return null;
+}
+// подтянуть СВЕЖИЙ xml кисти с диска (объекты спрайтов обновляются на месте — stage не ломается).
+// Защита: если в редакторе есть несохранённые правки по кисти — свежее НЕ подтягиваем.
+async function refreshBrushFromDisk(brush) {
+  if (!brush.xmlFh) return;
+  let text;
+  try { text = await (await brush.xmlFh.getFile()).text(); } catch (e) { return; }
+  if (text === brush.xmlText) return;
+  if (brush.dirty.size) {
+    status(t("st_dirty_refresh", { name: brush.name }));
+    return;
+  }
+  const seen = new Set();
+  const re = /<sprite\s+([^>]*?)\/>/g;
+  let m;
+  while ((m = re.exec(text))) {
+    const attrs = {};
+    const are = /([\w-]+)="([^"]*)"/g;
+    let a;
+    while ((a = are.exec(m[1]))) attrs[a[1]] = a[2];
+    if (!attrs.id || seen.has(attrs.id)) continue;
+    seen.add(attrs.id);
+    let spr = brush.byId.get(attrs.id);
+    if (!spr) {
+      spr = { id: attrs.id, attrs, img: attrs.img || "", present: new Set(Object.keys(attrs)), _brush: brush };
+      brush.sprites.push(spr);
+      brush.byId.set(attrs.id, spr);
+    } else {
+      spr.attrs = attrs;
+      spr.img = attrs.img || "";
+      spr.present = new Set(Object.keys(attrs));
+    }
+    for (const c of COORD_ATTRS) if (!(c in attrs)) attrs[c] = "0";
+  }
+  for (const [id, spr] of brush.byId) if (!seen.has(id)) brush.byId.delete(id);
+  brush.xmlText = text;
+  for (const it of stage) if (it.spr._brush === brush) it.orig = null; // переснимем снапшоты
+}
+// последняя точка файловых диалогов в рамках сессии (startIn — папка последнего выбора)
+let lastPickerLoc = null;
+async function pickFile(types) {
+  try {
+    const [fh] = await showOpenFilePicker(lastPickerLoc ? { types, startIn: lastPickerLoc } : { types });
+    lastPickerLoc = fh;
+    return fh;
+  } catch (e) {
+    if (e && e.name === "AbortError") return null; // пользователь отменил
+    if (!lastPickerLoc) return null;
+    try {
+      const [fh] = await showOpenFilePicker({ types }); // fallback без startIn
+      lastPickerLoc = fh;
+      return fh;
+    } catch (e2) { return null; } // отмена и повторная ошибка — без диалога дальше
+  }
+}
+
+async function openPng() {
+  if (!window.showOpenFilePicker) {
+    status(t("err_no_chrome")); return;
+  }
+  const pngFh = await pickFile([{ description: "PNG", accept: { "image/png": [".png"] } }]);
+  if (!pngFh) return; // отмена
+  const spriteId = pngFh.name.replace(/\.png$/i, "");
+  let brush = findBrushForSprite(spriteId);
+  if (brush) await refreshBrushFromDisk(brush); // работаем со свежими данными xml
+  if (!brush) {
+    const xmlFh = await pickFile([{ description: "Brush XML", accept: { "text/xml": [".xml"] } }]);
+    if (!xmlFh) return; // отмена
+    // тот же xml-файл уже загружен? — тогда это та же кисть
+    brush = null;
+    for (const b of brushes) {
+      if (!b.xmlFh) continue;
+      try { if (await b.xmlFh.isSameEntry(xmlFh)) { brush = b; break; } } catch (e) {}
+    }
+    if (!brush) {
+      const text = await (await xmlFh.getFile()).text();
+      if (text.indexOf('id="' + spriteId + '"') === -1) {
+        status(t("err_no_sprite_in_xml", { file: xmlFh.name, id: spriteId }));
+        return;
+      }
+      brush = parseBrush(text, xmlFh, false);
+    }
+    pngMap.set(spriteId, brush);
+  }
+  const spr = brush.byId.get(spriteId);
+  if (!spr) { status(t("err_sprite_not_found", { id: spriteId, name: brush.name })); return; }
+  openSprite(spr, await pngFh.getFile());
+  addToStage(spr);
+}
+
+async function getImage(spr) {
+  const key = spr._brush.key + "|" + spr.id;
+  if (images.has(key)) return images.get(key);
+  if (spr._brush.fromDrop) {
+    const f = dropFiles.get(normPath(spr.img)) || dropFiles.get(normPath(spr.img).split("/").pop());
+    if (f) { openSprite(spr, f); return images.get(key); }
+  }
+  return "error";
+}
+
+/* Drag & drop */
+const stageWrap = $("stageWrap");
+window.addEventListener("dragover", e => { e.preventDefault(); stageWrap.classList.add("drop-active"); });
+window.addEventListener("dragleave", e => { if (e.target === document) stageWrap.classList.remove("drop-active"); });
+window.addEventListener("drop", async e => {
+  e.preventDefault(); stageWrap.classList.remove("drop-active");
+  const files = [...e.dataTransfer.files];
+  let xmlFile = null;
+  for (const f of files) {
+    const lower = f.name.toLowerCase();
+    if ((lower === "metadata.xml" || lower === "sprites.xml") && !xmlFile) xmlFile = f;
+  }
+  for (const f of files) {
+    if (f.type === "image/png" || f.name.toLowerCase().endsWith(".png")) {
+      const rel = (f.webkitRelativePath || f.name).replace(/^.*?[\/\\]/, ""); // отрезаем корень, если он есть
+      dropFiles.set(normPath(rel), f);
+      dropFiles.set(normPath(f.name), f); // и по basename
+    }
+  }
+  if (xmlFile) {
+    const text = await xmlFile.text();
+    const b = parseBrush(text, null, true);
+    $("brushInfo").textContent = t("drop_brushes") + ": " + brushes.map(x => x.name).join(", ");
+    // в левую панель — только спрайты, чьи PNG реально есть в dropFiles
+    let n = 0;
+    for (const spr of b.sprites) {
+      const f = dropFiles.get(normPath(spr.img)) || dropFiles.get(normPath(spr.img).split("/").pop());
+      if (f) { openSprite(spr, f); pngMap.set(spr.id, b); n++; }
+    }
+    status(t("drop_sprites_with_imgs", { name: b.name, n: n }));
+  } else if (dropFiles.size) {
+    status(t("drop_wait_xml", { n: dropFiles.size }));
+  }
+});
+$("btnOpenPng").onclick = openPng;
+$("chkDoll").onchange = () => { if ($("chkDoll").checked) { $("chkDollDead").checked = false; $("chkTile").checked = false; } scheduleRedraw(); };
+$("chkDollDead").onchange = () => { if ($("chkDollDead").checked) { $("chkDoll").checked = false; $("chkTile").checked = false; } scheduleRedraw(); };
+$("chkTile").onchange = () => { if ($("chkTile").checked) { $("chkDoll").checked = false; $("chkDollDead").checked = false; } scheduleRedraw(); };
+
+/* ================= Список спрайтов кисти ================= */
+function renderSpriteList() {
+  const q = $("filter").value.toLowerCase();
+  const el = $("spriteList");
+  el.innerHTML = "";
+  const frag = document.createDocumentFragment();
+  for (const spr of sprites) {
+    if (q && !spr.id.toLowerCase().includes(q) && !spr.img.toLowerCase().includes(q)) continue;
+    const d = document.createElement("div");
+    d.className = "sprite-item";
+    const dir = spr.img.replace(/\\/g, "/").split("/").slice(0, -1).join("/");
+    d.innerHTML = '<span class="dir">[' + escapeHtml(spr._brush.name) + '] ' + (dir ? dir + "/ " : "") + "</span>" + escapeHtml(spr.id);
+    d.title = spr._brush.name + " · " + spr.id + "  (" + spr.attrs.width + "x" + spr.attrs.height + ")";
+    d.onclick = async () => { await refreshBrushFromDisk(spr._brush); addToStage(spr); };
+    frag.appendChild(d);
+  }
+  el.appendChild(frag);
+}
+$("filter").oninput = renderSpriteList;
+function escapeHtml(s) { return s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+/* ================= Сцена ================= */
+// автоопределение типа детали (в моддах по пути/имени не всегда понятно — можно сменить в свойствах)
+function guessPart(spr) {
+  const s = (spr.id + "|" + spr.img).toLowerCase();
+  if (s.includes("upgrade") || s.includes("armor_up")) return "armor_up"; // раньше armor!
+  if (s.includes("helmet")) return "helmet";
+  if (s.includes("weapon")) return "weapon";
+  if (s.includes("armor") || s.includes("armour")) return "armor";
+  return "";
+}
+const PART_NAMES = { "": t("part_none"), helmet: t("part_helmet"), armor: t("part_armor"), armor_up: t("part_up"), weapon: t("part_weapon") };
+
+function addToStage(spr) {
+  if (!spr || stage.some(s => s.spr === spr)) return;
+  stage.push({ spr, visible: true, opacity: 1, orig: null, part: guessPart(spr), snap: [0, 0] });
+  renderStageList(); scheduleRedraw();
+}
+function removeFromStage(i) { stage.splice(i, 1); if (selected === i) selected = null; else if (selected > i) selected--; renderStageList(); scheduleRedraw(); renderProps(); }
+function moveStage(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= stage.length) return;
+  [stage[i], stage[j]] = [stage[j], stage[i]];
+  selected = j; renderStageList(); scheduleRedraw();
+}
+function renderStageList() {
+  const el = $("stageList");
+  el.innerHTML = "";
+  stage.forEach((s, i) => {
+    const d = document.createElement("div");
+    d.className = "stage-item" + (selected === i ? " sel" : "");
+    const mark = isDirty(s.spr) ? ' <span class="modified">*</span>' : "";
+    const pmark = s.part ? ' <span style="color:#7a9">[' + PART_NAMES[s.part] + "]</span>" : "";
+    d.innerHTML = '<input type="checkbox" ' + (s.visible ? "checked" : "") + ' title="' + t("vis") + '">' +
+      '<span class="name">' + escapeHtml(s.spr.id) + pmark + mark + "</span>";
+    d.querySelector("input").onclick = e => { e.stopPropagation(); s.visible = e.target.checked; scheduleRedraw(); };
+    const bUp = mkBtn("▲", () => moveStage(i, -1), t("tt_up"));
+    const bDn = mkBtn("▼", () => moveStage(i, +1), t("tt_down"));
+    const bDel = mkBtn("✕", () => removeFromStage(i), t("tt_del"));
+    d.append(bUp, bDn, bDel);
+    d.onclick = () => { selected = i; renderStageList(); scheduleRedraw(); renderProps(); };
+    el.appendChild(d);
+  });
+}
+function mkBtn(t, fn, title) { const b = document.createElement("button"); b.textContent = t; b.title = title; b.onclick = e => { e.stopPropagation(); fn(); }; return b; }
+function isDirty(spr) { return spr._brush.dirty.has(spr.id); }
+// z-градация слоёв (как в игре): тело куклы ниже всех, голова куклы — над доспехами
+// и _back-улучшениями, шлем/_front/прочее — над головой куклы.
+function zOf(s) {
+  switch (s.part) {
+    case "armor": return 10;
+    case "armor_up": return /back/i.test(s.spr.id + "|" + s.spr.img) ? 20 : 50;
+    case "helmet": return 40;
+    default: return 60; // none/weapon/прочее — верхний ярус
+  }
+}
+
+/* ================= Свойства ================= */
+function renderProps() {
+  const el = $("props");
+  if (selected === null || selected >= stage.length) { el.innerHTML = '<div style="padding:10px;color:#888">' + t("no_selection") + "</div>"; return; }
+  const s = stage[selected], a = s.spr.attrs;
+  el.innerHTML = "";
+  const grid = document.createElement("div");
+  grid.className = "props";
+  // поля показывают ЭФФЕКТИВНЫЙ rect (с выводом отсутствующих краёв из PNG), правка пишет rect
+  const rect0 = honestRect(s.spr);
+  const addRow = (label, idx) => {
+    const lab = document.createElement("label"); lab.textContent = label;
+    const inp = document.createElement("input");
+    inp.type = "number"; inp.value = Math.round(rect0[idx]);
+    const apply = val => {
+      const rect = spriteRect(s);
+      rect[idx] = Math.round(+val || 0);
+      setRectAttrs(s.spr, rect);
+      scheduleRedraw();
+    };
+    inp.onchange = () => apply(inp.value);
+    const nud = document.createElement("div"); nud.className = "row";
+    nud.append(mkBtn("-", () => { inp.value = +inp.value - 1; apply(inp.value); }, "-1"),
+               mkBtn("+", () => { inp.value = +inp.value + 1; apply(inp.value); }, "+1"));
+    grid.append(lab, inp, nud);
+  };
+  addRow("left", 0); addRow("right", 2);
+  addRow("top", 1);  addRow("bottom", 3);
+  const addAttrRow = (label, attr) => { // offset'ы — сдвиг точки привязки (итог = координаты + offset)
+    const lab = document.createElement("label"); lab.textContent = label;
+    const inp = document.createElement("input");
+    inp.type = "number"; inp.value = a[attr];
+    inp.title = t("prop_offset_tip");
+    inp.onchange = () => { setAttr(s.spr, attr, inp.value); scheduleRedraw(); };
+    const nud = document.createElement("div"); nud.className = "row";
+    nud.append(mkBtn("-", () => { inp.value = +inp.value - 1; inp.onchange(); }, "-1"),
+               mkBtn("+", () => { inp.value = +inp.value + 1; inp.onchange(); }, "+1"));
+    grid.append(lab, inp, nud);
+  };
+  addAttrRow("offsetX", "offsetX"); addAttrRow("offsetY", "offsetY");
+  const wlab = document.createElement("div"); wlab.style.gridColumn = "1 / 4"; wlab.style.color = "#888";
+  wlab.textContent = "кадр: " + a.width + "x" + a.height + " · png: " + s.spr.img.replace(/\\/g, "/").split("/").pop();
+  grid.appendChild(wlab);
+  const olab = document.createElement("label"); olab.textContent = t("prop_opacity");
+  const oinp = document.createElement("input"); oinp.type = "range"; oinp.min = 5; oinp.max = 100; oinp.value = s.opacity * 100;
+  oinp.oninput = () => { s.opacity = oinp.value / 100; scheduleRedraw(); };
+  grid.append(olab, oinp, document.createElement("div"));
+  // ВИЗУАЛЬНЫЙ СЛОЙ: только z-порядок отрисовки. Смена слоя НЕ двигает спрайт, в XML не пишется.
+  const tlab = document.createElement("label");
+  tlab.textContent = t("prop_layer");
+  tlab.title = t("tt_layer");
+  const twrap = document.createElement("div"); twrap.className = "row"; twrap.style.flexWrap = "wrap";
+  for (const key of Object.keys(PART_NAMES)) {
+    const lb = document.createElement("label");
+    lb.style.cssText = "display:flex;gap:3px;align-items:center;white-space:nowrap";
+    const rb = document.createElement("input");
+    rb.type = "radio"; rb.name = "part"; rb.value = key; rb.checked = s.part === key;
+    rb.title = t("tt_layer");
+    rb.onchange = () => { s.part = key; renderStageList(); scheduleRedraw(); };
+    lb.append(rb, document.createTextNode(PART_NAMES[key]));
+    twrap.appendChild(lb);
+  }
+  grid.append(tlab, twrap, document.createElement("div"));
+  const lhint = document.createElement("div");
+  lhint.style.cssText = "grid-column:1 / 4;color:#888;font-size:11px";
+  lhint.textContent = t("layer_hint");
+  grid.append(lhint);
+  // кнопка принудительного снапа ТОЛЬКО этого спрайта на часть куклы (по выбранному типу)
+  const snapWrap = document.createElement("div");
+  snapWrap.style.cssText = "grid-column:1 / 4;display:flex;gap:6px;align-items:center";
+  snapWrap.append(
+    mkBtn(t("btn_snap"), () => {
+      if (s.part && snapToDoll(s, s.part)) renderProps();
+      else status(t("snap_no_target"));
+    }, t("tt_snap")),
+    (() => { const sp = document.createElement("span");
+             sp.style.color = "#888"; sp.textContent = "snap: [" + (s.snap || [0, 0]).join(", ") + "]";
+             return sp; })());
+  grid.append(snapWrap);
+  el.appendChild(grid);
+  const btns = document.createElement("div"); btns.className = "row"; btns.style.padding = "8px 10px";
+  btns.append(
+    mkBtn(t("btn_copy"), () => copyCoords(s), t("tt_copy")),
+    mkBtn(t("btn_paste"), () => { pasteCoords(s); renderStageList(); }, t("tt_paste")),
+    mkBtn(t("btn_reset"), () => {
+      resetSprite(s);
+      renderStageList(); scheduleRedraw(); renderProps();
+    }, t("tt_reset")));
+  if (!s.orig) { s.orig = Object.assign({}, s.spr.attrs); s.origPresent = new Set(s.spr.present); }
+  el.appendChild(btns);
+}
+// копипаста координат: настроил чистый спрайт -> вставил в _damaged/_dead вариант
+let coordClipboard = null;
+function copyCoords(s) {
+  const a = s.spr.attrs;
+  coordClipboard = COORD_ATTRS.map(c => a[c]);
+  status(t("st_coords_copied", { v: coordClipboard.join(", ") }));
+}
+function pasteCoords(s) {
+  if (!coordClipboard) { status(t("st_no_clipboard")); return; }
+  const spr = s.spr;
+  COORD_ATTRS.forEach((c, i) => setAttr(spr, c, coordClipboard[i]));
+  for (const c of ["left", "right", "top", "bottom"]) spr.present.add(c);
+  s.snap = [0, 0];
+  scheduleRedraw(); renderProps();
+}
+function setAttr(spr, attr, val) {
+  val = String(Math.round(+val || 0));
+  if (spr.attrs[attr] !== val) { spr.attrs[attr] = val; spr._brush.dirty.add(spr.id); renderStageList(); updateSaveState(); }
+}
+// полный откат спрайта: координаты И набор присутствующих атрибутов -> как при загрузке,
+// snap -> 0. present важен: иначе у спрайтов с опущенными краями сбросится выводка из PNG.
+function resetSprite(s) {
+  if (s.orig) {
+    for (const c of COORD_ATTRS) s.spr.attrs[c] = s.orig[c];
+    s.spr.present = new Set(s.origPresent || []);
+    s.spr._brush.dirty.delete(s.spr.id);
+  }
+  s.snap = [0, 0];
+}
+function updateSaveState() {
+  const n = totalDirty();
+  const anyFh = brushes.some(b => b.dirty.size && b.xmlFh);
+  $("btnSave").disabled = n === 0;
+  status(t("st_brushes_line", { list: brushes.map(b => b.name).join(", ") || t("st_none_loaded") }) +
+         "\n" + t("st_changed_line", { n: n }) +
+         (anyFh ? "\n" + t("st_save_xml_disk") : "\n" + t("st_save_xml_dl")));
+}
+function nudge(dx, dy) {
+  if (selected === null || selected >= stage.length) return;
+  const rect = spriteRect(stage[selected]); // display-rect (WYSIWYG: пишется как есть)
+  rect[0] += dx; rect[2] += dx; rect[1] += dy; rect[3] += dy;
+  setRectAttrs(stage[selected].spr, rect);
+  scheduleRedraw(); renderProps();
+}
+window.addEventListener("keydown", e => {
+  const tag = document.activeElement && document.activeElement.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA") return;
+  const step = e.shiftKey ? 10 : 1;
+  if (e.key === "ArrowLeft")  { nudge(-step, 0); e.preventDefault(); }
+  if (e.key === "ArrowRight") { nudge(step, 0);  e.preventDefault(); }
+  if (e.key === "ArrowUp")    { nudge(0, step);  e.preventDefault(); }   // y вверх = мировой +Y
+  if (e.key === "ArrowDown")  { nudge(0, -step); e.preventDefault(); }
+  if (e.key === "Delete" && selected !== null) { removeFromStage(selected); }
+});
+
+/* ================= Canvas ================= */
+const canvas = $("stage"), ctx = canvas.getContext("2d");
+let zoom = 2, panX = 0, panY = 0, needsRedraw = true;
+function resize() { canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; needsRedraw = true; }
+window.addEventListener("resize", resize);
+
+// мировые координаты: pivot (0,0), ось Y вверх (проверено по портретам: base снизу, голова сверху).
+// Спрайт рисуется так: world rect = (left+offsetX, top+offsetY, right+offsetX, bottom+offsetY),
+// PNG ставится в этот rect без поворота ("top" кисти = нижний визуальный край изображения).
+function toScreen(x, y) { return [canvas.width / 2 + panX + x * zoom, canvas.height / 2 + panY - y * zoom]; }
+function toWorld(sx, sy) { return [(sx - canvas.width / 2 - panX) / zoom, -(sy - canvas.height / 2 - panY) / zoom]; }
+
+// "Честный" rect: атрибуты + offset'ы. Отсутствующие края ВЫВОДЯТСЯ из размеров PNG
+// (у части спрайтов в brush left/right/top/bottom опущены — движок держит их через размер картинки):
+//   оба края оси отсутствуют -> центр на anchor'е; один отсутствует -> край = известный ± размер PNG.
+function honestRect(spr) {
+  const a = spr.attrs, p = spr.present;
+  const w = spr._pngW || 0, h = spr._pngH || 0;
+  let l, r, t, b;
+  if (!p.has("left") && !p.has("right")) { l = w ? -w / 2 : 0; r = w ? w / 2 : 0; }
+  else if (!p.has("right")) { l = +a.left; r = l + w; }
+  else if (!p.has("left")) { r = +a.right; l = r - w; }
+  else { l = +a.left; r = +a.right; }
+  if (!p.has("top") && !p.has("bottom")) { t = h ? -h / 2 : 0; b = h ? h / 2 : 0; }
+  else if (!p.has("bottom")) { t = +a.top; b = t + h; }
+  else if (!p.has("top")) { b = +a.bottom; t = b - h; }
+  else { t = +a.top; b = +a.bottom; }
+  const ox = +a.offsetX || 0, oy = +a.offsetY || 0;
+  return [l + ox, t + oy, r + ox, b + oy];
+}
+function spriteRect(s) { // честный rect + показательный снап ЭТОГО элемента сцены
+  const [l0, t0, r0, b0] = honestRect(s.spr);
+  const sh = s.snap || [0, 0];
+  return [l0 + sh[0], t0 + sh[1], r0 + sh[0], b0 + sh[1]];
+}
+// записать display-rect обратно в атрибуты (offset'ы вычитаются; отсутствующие края
+// материализуются и ПОМЕЧАЮТСЯ как присутствующие — иначе выводка из PNG продолжит
+// их игнорировать). Любая ручная правка отменяет показательный snap (иначе он двоится).
+function setRectAttrs(spr, rect) {
+  const [l, t, r, b] = rect;
+  const ox = +spr.attrs.offsetX || 0, oy = +spr.attrs.offsetY || 0;
+  setAttr(spr, "left", Math.round(l - ox)); setAttr(spr, "right", Math.round(r - ox));
+  setAttr(spr, "top", Math.round(t - oy)); setAttr(spr, "bottom", Math.round(b - oy));
+  spr.present.add("left"); spr.present.add("right");
+  spr.present.add("top");  spr.present.add("bottom");
+  const si = stage.find(x => x.spr === spr);
+  if (si) si.snap = [0, 0];
+}
+// "Прыгнуть на куклу": ПЕРЕСТАВЛЯЕТ ТОЛЬКО ЭТОТ спрайт (snap элемента сцены, в XML не пишется).
+// Цели — живая кукла: тело DOLL_SETS.live[0], голова [1].
+const PART_SNAP = { helmet: 1, armor: 0, armor_up: 0 }; // тип -> индекс части куклы
+function snapToDoll(s, partKey) {
+  const idx = PART_SNAP[partKey];
+  if (idx === undefined) return false;
+  const tgt = DOLL_SETS.live[idx];
+  const [l0, , r0, b0] = honestRect(s.spr);
+  const dx = Math.round((tgt.l + tgt.r) / 2 - (l0 + r0) / 2), dy = Math.round(tgt.b - b0);
+  // порог: спрайт уже совпадает с куклой (vanilla) — snap не нужен, иначе микродёрганье
+  if (Math.abs(dx) + Math.abs(dy) <= 3) { status(t("snap_already")); return false; }
+  s.snap = [dx, dy];
+  scheduleRedraw();
+  return true;
+}
+
+function frame() { if (needsRedraw) { needsRedraw = false; drawScene(); } requestAnimationFrame(frame); }
+async function drawScene() {
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // сетка 10 единиц
+  ctx.strokeStyle = "rgba(0,0,0,.06)"; ctx.lineWidth = 1;
+  const [gx0, gy1] = toWorld(0, 0), [gx1, gy0] = toWorld(canvas.width, canvas.height);
+  ctx.beginPath();
+  for (let x = Math.floor(gx0 / 10) * 10; x <= gx1; x += 10) { const [sx] = toScreen(x, 0); ctx.moveTo(sx, 0); ctx.lineTo(sx, canvas.height); }
+  for (let y = Math.floor(gy0 / 10) * 10; y <= gy1; y += 10) { const [, sy] = toScreen(0, y); ctx.moveTo(0, sy); ctx.lineTo(canvas.width, sy); }
+  ctx.stroke();
+  // pivot
+  const [px, py] = toScreen(0, 0);
+  ctx.strokeStyle = "rgba(200,60,60,.8)"; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(px - 12, py); ctx.lineTo(px + 12, py); ctx.moveTo(px, py - 12); ctx.lineTo(px, py + 12); ctx.stroke();
+  // сборка draw-списка с z-градацией: кукла (тело z0 / голова z30) перемежается со спрайтами.
+  // Ярусы: доспех 10, улучшение _back 20, голова куклы 30, шлем 40, улучшение _front/прочее 60.
+  // Режим «тайл»: вместо куклы тайл центрируется на pivot и лежит под всеми спрайтами.
+  const items = [];
+  const dollKey = $("chkDoll").checked ? "live" : $("chkDollDead").checked ? "dead" : null;
+  if ($("chkTile").checked && TILE_IMG.complete && TILE_IMG.naturalWidth) {
+    const tw = TILE_IMG.naturalWidth, th = TILE_IMG.naturalHeight;
+    const [tx] = toScreen(-tw / 2, 0);
+    const [, ty] = toScreen(0, th / 2); // верхний экранный край (y-up)
+    ctx.drawImage(TILE_IMG, tx, ty, tw * zoom, th * zoom);
+  } else if (dollKey) {
+    items.push({ z: 0, doll: DOLL_SETS[dollKey][0] });
+    items.push({ z: 30, doll: DOLL_SETS[dollKey][1] });
+  }
+  for (let i = 0; i < stage.length; i++)
+    if (stage[i].visible) items.push({ z: zOf(stage[i]), i, s: stage[i] });
+  items.sort((a, b) => a.z - b.z); // Array.sort стабилен: внутри яруса — порядок списка
+  lastDrawOrder = [];
+  for (const it of items) {
+    if (it.doll) {
+      const d = it.doll;
+      if (!d.img.complete || !d.img.naturalWidth) continue;
+      const [sx] = toScreen(d.l, 0);
+      const [, sy] = toScreen(0, d.b);
+      ctx.drawImage(d.img, sx, sy, (d.r - d.l) * zoom, (d.b - d.t) * zoom);
+      continue;
+    }
+    lastDrawOrder.push(it.i);
+    const s = it.s;
+    const [l, t, r, b] = spriteRect(s); // t < b в мировых координатах (y вверх)
+    const [sx] = toScreen(l, 0);
+    const [, sy] = toScreen(0, b); // верхний экранный край картинки
+    const w = (r - l) * zoom, h = (b - t) * zoom;
+    const img = await getImage(s.spr);
+    ctx.save();
+    ctx.globalAlpha = s.opacity;
+    if (img && img !== "loading" && img !== "error") ctx.drawImage(img, sx, sy, w, h);
+    else {
+      ctx.fillStyle = img === "error" ? "rgba(255,0,0,.15)" : "rgba(0,0,255,.10)";
+      ctx.fillRect(sx, sy, w, h);
+    }
+    ctx.restore();
+    if (selected === it.i) {
+      ctx.strokeStyle = "#c9a227"; ctx.lineWidth = 1.5; ctx.setLineDash([4, 3]);
+      ctx.strokeRect(sx, sy, w, h); ctx.setLineDash([]);
+    }
+  }
+}
+function scheduleRedraw() { needsRedraw = true; }
+requestAnimationFrame(frame); resize(); scheduleRedraw();
+
+/* --- мышь --- */
+let dragMode = null, dragStart = null, origRect = null;
+canvas.addEventListener("mousedown", e => {
+  if (e.button === 1) { dragMode = "pan"; dragStart = [e.offsetX - panX, e.offsetY - panY]; e.preventDefault(); return; }
+  if (e.button !== 0) return;
+  const [wx, wy] = toWorld(e.offsetX, e.offsetY);
+  for (let k = lastDrawOrder.length - 1; k >= 0; k--) { // сверху вниз в порядке отрисовки
+    const i = lastDrawOrder[k];
+    const [l, t, r, b] = spriteRect(stage[i]);
+    if (wx >= l && wx <= r && wy >= t && wy <= b) {
+      selected = i; renderStageList(); renderProps(); scheduleRedraw();
+      dragMode = "move"; dragStart = [wx, wy]; origRect = spriteRect(stage[i]);
+      return;
+    }
+  }
+  selected = null; renderStageList(); renderProps(); scheduleRedraw();
+});
+window.addEventListener("mousemove", e => {
+  if (!dragMode) return;
+  if (dragMode === "pan") { panX = e.offsetX === undefined ? panX : e.clientX - canvas.getBoundingClientRect().left - dragStart[0]; panY = e.clientY - canvas.getBoundingClientRect().top - dragStart[1]; scheduleRedraw(); return; }
+  if (dragMode === "move" && selected !== null) {
+    const r = canvas.getBoundingClientRect();
+    const [wx, wy] = toWorld(e.clientX - r.left, e.clientY - r.top);
+    const dx = Math.round(wx - dragStart[0]), dy = Math.round(wy - dragStart[1]);
+    // пишем display-rect с момента захвата — без накопления ошибок; snap включается в запись
+    setRectAttrs(stage[selected].spr, [origRect[0] + dx, origRect[1] + dy, origRect[2] + dx, origRect[3] + dy]);
+    renderProps(); scheduleRedraw();
+  }
+});
+window.addEventListener("mouseup", () => { dragMode = null; origRect = null; });
+canvas.addEventListener("wheel", e => { e.preventDefault(); zoom = Math.min(10, Math.max(0.25, zoom * (e.deltaY < 0 ? 1.1 : 0.9))); scheduleRedraw(); }, { passive: false });
+
+/* ================= Сохранение ================= */
+// заменить значение атрибута НА МЕСТЕ (порядок атрибутов сохраняется);
+// лишние вхождения (дубли от старого бага с дописыванием) удаляются; отсутствующий — дописывается в конец.
+function setCoordAttr(tag, name, value) {
+  const needle = " " + name + "=\"";
+  let i = tag.indexOf(needle);
+  if (i === -1) return tag.replace(/\s*\/>$/, " " + name + "=\"" + value + "\"/>");
+  const vstart = i + needle.length;
+  let out = tag.slice(0, vstart) + value + tag.slice(tag.indexOf("\"", vstart));
+  // вырезать дубли — поиск ТОЛЬКО после первого вхождения
+  let from = vstart + String(value).length + 1;
+  for (i = out.indexOf(needle, from); i !== -1; i = out.indexOf(needle, from)) {
+    const ve = out.indexOf("\"", i + needle.length);
+    out = out.slice(0, i) + out.slice(ve + 1);
+    from = i;
+  }
+  return out;
+}
+function buildXml(brush) {
+  return brush.xmlText.replace(/<sprite\s+[^>]*?\/>/g, tag => {
+    const idm = tag.match(/\bid="([^"]*)"/);
+    if (!idm || !brush.dirty.has(idm[1])) return tag;
+    const spr = brush.byId.get(idm[1]);
+    let out = tag;
+    for (const c of COORD_ATTRS)
+      if (c in spr.attrs && spr.attrs[c] !== undefined && (spr.present.has(c) || spr.attrs[c] !== "0"))
+        out = setCoordAttr(out, c, spr.attrs[c]);
+    return out;
+  });
+}
+async function save() {
+  const dirtyBrushes = brushes.filter(b => b.dirty.size);
+  if (!dirtyBrushes.length) return;
+  let saved = [], downloaded = [];
+  for (const b of dirtyBrushes) {
+    const text = buildXml(b);
+    if (b.xmlFh) {
+      try {
+        if (await b.xmlFh.queryPermission({ mode: "readwrite" }) !== "granted")
+          await b.xmlFh.requestPermission({ mode: "readwrite" });
+        const w = await b.xmlFh.createWritable();
+        await w.write(text); await w.close();
+        b.xmlText = text; b.dirty.clear(); saved.push(b.name);
+        continue;
+      } catch (e) { status(t("err_write", { name: b.name, msg: e.message })); }
+    }
+    downloadXml(text, "metadata_" + b.name + ".xml");
+    b.xmlText = text; b.dirty.clear(); downloaded.push(b.name);
+  }
+  renderStageList(); updateSaveState();
+  if (saved.length)
+    status(t("st_saved_disk", { names: saved.join(", ") }));
+  else if (downloaded.length)
+    status(t("st_saved_download", { names: downloaded.join(", ") }));
+}
+function downloadXml(text, name) {
+  const blob = new Blob([text], { type: "text/xml" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name || "metadata.xml";
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+$("btnSave").onclick = save;
+$("btnDownload").onclick = () => {
+  for (const b of brushes) if (b.dirty.size) downloadXml(buildXml(b), "metadata_" + b.name + ".xml");
+};
+$("btnHelp").onclick = () => alert(t("help"));
+</script>
+</body>
+</html>
