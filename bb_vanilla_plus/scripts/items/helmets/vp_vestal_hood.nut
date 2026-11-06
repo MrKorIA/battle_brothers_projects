@@ -13,7 +13,7 @@ this.vp_vestal_hood <- this.inherit("scripts/items/helmets/helmet", {
 		this.m.HideCorpseHead = false;
 		this.m.HideHair = true;
 		this.m.HideBeard = false;
-		this.m.Variant = 00;
+		this.m.Variant = this.Math.rand(1, 3);
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorLeatherImpact;
 		this.m.InventorySound = this.Const.Sound.ClothEquip;
@@ -26,12 +26,12 @@ this.vp_vestal_hood <- this.inherit("scripts/items/helmets/helmet", {
 
 	function updateVariant()
 	{
-		local variant = this.m.Variant
-		this.m.Sprite = "vestal_hood";
-		this.m.SpriteDamaged = "vestal_hood_damaged";
-		this.m.SpriteCorpse = "vestal_hood_dead";
+		local variant = this.m.Variant > 9 ? this.m.Variant : "0" + this.m.Variant;
+		this.m.Sprite = "vestal_hood_" + variant;
+		this.m.SpriteDamaged = "vestal_hood_" + variant + "_damaged";
+		this.m.SpriteCorpse = "vestal_hood_" + variant + "_dead";
 		this.m.IconLarge = "";
-		this.m.Icon = "helmets/vestal_hood.png";
+		this.m.Icon = "helmets/vestal_hood_" + variant + ".png";
 	}
 
 });

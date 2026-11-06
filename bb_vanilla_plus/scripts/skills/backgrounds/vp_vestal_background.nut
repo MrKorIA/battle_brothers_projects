@@ -134,8 +134,15 @@ this.vp_vestal_background <- this.inherit("scripts/skills/backgrounds/character_
     function onAddEquipment()
     {
         local items = this.getContainer().getActor().getItems();
-        items.equip(::new("scripts/items/armor/vp_vestal_armor"));
-        items.equip(::new("scripts/items/helmets/vp_vestal_hood"));
+        local variant = this.Math.rand(1, 3);
+        local item = this.new("scripts/items/armor/vp_vestal_armor");
+		item.m.Variant = variant;
+		item.updateVariant();
+        items.equip(item);
+        local item = this.new("scripts/items/helmets/vp_vestal_hood");
+		item.m.Variant = variant;
+		item.updateVariant();
+        items.equip(item);
 
         local weapon = ::MSU.Class.WeightedContainer().addMany(1, [
             "bludgeon",

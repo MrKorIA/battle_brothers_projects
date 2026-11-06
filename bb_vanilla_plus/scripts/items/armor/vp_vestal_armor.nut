@@ -6,7 +6,7 @@ this.vp_vestal_armor <- this.inherit("scripts/items/armor/named/named_armor", {
 		this.m.ID = "armor.body.vp_vestal_armor";
 		this.m.Name = "Броня защитницы света";
 		this.m.Description = "Тяжёлая броня идеально подогнанная на женское тело. Мужчине облачиться в неё невозможно.";
-		this.m.Variant = 00;
+		this.m.Variant = this.Math.rand(1, 3);
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorHalfplateImpact;
 		this.m.InventorySound = this.Const.Sound.ArmorHalfplateImpact;
@@ -18,12 +18,12 @@ this.vp_vestal_armor <- this.inherit("scripts/items/armor/named/named_armor", {
 
 	function updateVariant()
 	{
-		local variant = this.m.Variant
-		this.m.Sprite = "vestal_body_armor";
-		this.m.SpriteDamaged = "vestal_body_armor_damaged";
-		this.m.SpriteCorpse = "vestal_body_armor_dead";
-		this.m.IconLarge = "armor/vestal_body_armor_L.png";
-		this.m.Icon = "armor/vestal_body_armor.png";
+		local variant = this.m.Variant > 9 ? this.m.Variant : "0" + this.m.Variant;
+		this.m.Sprite = "vestal_body_armor_" + variant;
+		this.m.SpriteDamaged = "vestal_body_armor_" + variant + "_damaged";
+		this.m.SpriteCorpse = "vestal_body_armor_" + variant + "_dead";
+		this.m.IconLarge = "armor/vestal_body_armor_" + variant + "_L.png";
+		this.m.Icon = "armor/vestal_body_armor_" + variant + ".png";
 	}
 
 	function getTooltip()
