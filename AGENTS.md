@@ -109,7 +109,7 @@ davkul_rising (`!project/zmod_davkul_rising-russian`).
 - Сборка с ресурсами — общий `build_brushes.sh` + тонкий `build_brushes.bat` в каждом моде. Алгоритм:
   для каждого `<name>.brush` из `brushes/` мода ищем одноимённый каталог с `metadata.xml` в
   `Z:\GameMods\Battle Brothers\mods\bbros\bin` (есть каталог = спрайты правились в редакторе) →
-  `bbrusher.exe pack --gfxPath <bbros>\gfx <bbros>\bin\<name>.brush <bbros>\bin\<name>` →
+  `bbrusher.exe pack <bbros>\bin\<name>.brush <bbros>\bin\<name>` (БЕЗ --gfxPath, см. ловушку ниже) →
   копия `<name>.brush` в `brushes/` мода и `<name>.png` в `gfx/` мода (с заменой, gfx создаётся) →
   обычная сборка через `build.sh`. Каталог bbros переопределяется через `BB_BROS`.
 
@@ -122,6 +122,11 @@ davkul_rising (`!project/zmod_davkul_rising-russian`).
   (этот файл или профиль мода), а не в текст коммита.
 - Генерация .bat через `printf` в git bash: `\\b` в форматной строке съедается как backspace —
   пути с `\bin\` ломаются молча. Писать пути отдельным аргументом через `%s` (либо heredoc).
+- **bbrusher pack: НЕ передавать `--gfxPath`.** brush-файл хранит путь к листу (`gfx/<name>.png`),
+  и pack резолвит его относительно родителя каталога с brush. Для `<bbros>\bin\<name>.brush`
+  дефолт даёт `<bbros>\gfx\<name>.png`. Если передать `--gfxPath <bbros>\gfx`, путь сдвоится
+  и png молча улетит в `<bbros>\gfx\gfx\` — мод соберётся со СТАРЫМ png (копия идёт из
+  `<bbros>\gfx`). От cwd не зависит.
 - Запрещено запускать фоновых агентов (background agents) — работаем строго последовательно:
   один агент за раз, дожидаемся результата. Фоновые агенты на текущий момент нестабильны
   (отвалы по таймауту).

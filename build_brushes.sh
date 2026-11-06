@@ -7,8 +7,10 @@
 #   1. Для каждого <name>.brush из <мод>/brushes ищем одноимённый каталог
 #      в <bbros>/bin (каталог с metadata.xml = спрайты правились в редакторе);
 #   2. По каждому совпадению запускаем bbrusher.exe pack:
-#        bbrusher.exe pack --gfxPath <bbros>/gfx <bbros>/bin/<name>.brush <bbros>/bin/<name>
-#      (спрайт-лист <name>.png пишется в <bbros>/gfx);
+#        bbrusher.exe pack <bbros>/bin/<name>.brush <bbros>/bin/<name>
+#      (без --gfxPath! brush хранит путь "gfx/<name>.png", bbrusher резолвит его
+#       относительно родителя каталога с brush = <bbros>, итог: <bbros>/gfx/<name>.png.
+#       Если передать --gfxPath <bbros>/gfx, png улетит в <bbros>/gfx/gfx/ — молча);
 #   3. <name>.brush копируем с заменой в <мод>/brushes, <name>.png — в <мод>/gfx;
 #   4. Обычная сборка мода через build.sh.
 # Каталог bbros можно переопределить через BB_BROS.
@@ -55,7 +57,6 @@ if [ -d "$ROOT/brushes" ]; then
         fi
         echo "==> Сборка спрайтов: $name"
         "$BBRUSHER" pack \
-            --gfxPath "$(cygpath -w "$BBROS/gfx")" \
             "$(cygpath -w "$BBROS/bin/$name.brush")" \
             "$(cygpath -w "$SRC_DIR")"
         if [ ! -f "$BBROS/gfx/$name.png" ]; then
