@@ -47,6 +47,13 @@ def check(path):
     print(path + ": OK")
     return True
 
-ok = check(r"bb_vanilla_plus/scripts/items/armor/vp_vestal_armor.nut")
-ok = check(r"bb_vanilla_plus/mod_vanilla_plus/hooks/items/item_container.nut") and ok
-sys.exit(0 if ok else 1)
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        ok = True
+        for path in sys.argv[1:]:
+            ok = check(path) and ok
+        sys.exit(0 if ok else 1)
+    # демо-проверки по умолчанию (обратная совместимость)
+    ok = check(r"bb_vanilla_plus/scripts/items/armor/vp_vestal_armor.nut")
+    ok = check(r"bb_vanilla_plus/mod_vanilla_plus/hooks/items/item_container.nut") and ok
+    sys.exit(0 if ok else 1)

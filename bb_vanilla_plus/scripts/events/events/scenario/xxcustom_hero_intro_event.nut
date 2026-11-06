@@ -467,6 +467,133 @@ this.xxcustom_hero_intro_event <- this.inherit("scripts/events/event", {
 					xxlonexx.setStartValuesEx([
 						"xxhero_male_background"
 					]);
+
+					// === Тестовый суперотряд: аватар + 11 бойцов, 13 уровень, именная экипировка ===
+					local horde_bgs = [
+						"xxhero_female_background",
+						"xxhero_elf_background",
+						"xxhero_undead_background",
+						"xxhero_baku_background",
+						"xxhero_orc_background",
+						"xxhero_goblin_background",
+						"xxhero_lizard_background",
+						"xxherocrimson_background",
+						"xxherohighelf_background",
+						"xxheroroyal_background",
+						"xxheroroc_background"
+					];
+					local horde_bros = [xxlonexx];
+					foreach (bg in horde_bgs)
+					{
+						local b = roster.create("scripts/entity/tactical/player");
+						b.setStartValuesEx([
+							bg
+						]);
+						horde_bros.push(b);
+					}
+
+					// роли: 0-5 — щит/одноручное, 6-7 — двуручники, 8 — биллхук, 9-10 — лучники, 11 — арбалетчик
+					local horde_oh = ["named_sword", "named_mace", "named_axe", "named_warhammer", "named_cleaver", "named_khopesh"];
+					local horde_sh = ["named_full_metal_heater_shield", "named_lindwurm_shield", "named_wing_shield", "named_bandit_kite_shield", "named_dragon_shield", "named_sipar_shield"];
+					local horde_th = ["named_greataxe", "named_greatsword", "named_billhook"];
+					local horde_ar = ["black_and_gold_armor", "lindwurm_armor", "green_coat_of_plates_armor", "named_golden_lamellar_armor"];
+					local horde_hm = ["lindwurm_helmet", "named_nordic_helmet_with_closed_mail", "wolf_helmet", "golden_feathers_helmet", "named_steppe_helmet_with_mail", "heraldic_mail_helmet"];
+
+					foreach (idx, b in horde_bros)
+					{
+						b.getSkills().removeByID("trait.survivor");
+						b.getSkills().removeByID("trait.greedy");
+						b.getSkills().removeByID("trait.loyal");
+						b.getSkills().removeByID("trait.disloyal");
+						b.getSkills().add(this.new("scripts/skills/traits/player_character_trait"));
+						b.m.HireTime = this.Time.getVirtualTimeF();
+						b.m.Level = 13;
+						b.m.LevelUps = 0;
+						b.m.PerkPoints = 0;
+						local bp = b.getBaseProperties();
+						bp.Hitpoints += 30;
+						bp.Bravery += 20;
+						bp.Stamina += 30;
+						bp.MeleeSkill += 20;
+						bp.RangedSkill += 20;
+						bp.MeleeDefense += 15;
+						bp.RangedDefense += 15;
+						b.m.Talents = [];
+						b.m.Attributes = [];
+						local talents = b.getTalents();
+						talents.resize(this.Const.Attributes.COUNT, 0);
+						talents[this.Const.Attributes.Hitpoints] = 3;
+						talents[this.Const.Attributes.Bravery] = 3;
+						talents[this.Const.Attributes.Fatigue] = 3;
+						talents[this.Const.Attributes.MeleeSkill] = 3;
+						talents[this.Const.Attributes.RangedSkill] = 3;
+						talents[this.Const.Attributes.MeleeDefense] = 3;
+						talents[this.Const.Attributes.RangedDefense] = 3;
+						talents[this.Const.Attributes.Initiative] = 3;
+						b.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
+
+						local horde_perks;
+						if (idx <= 5)
+							horde_perks = ["perk_colossus", "perk_adrenalin", "perk_recover", "perk_steel_brow", "perk_hold_out", "perk_battle_forged", "perk_shield_expert", "perk_berserk", "perk_killing_frenzy", "perk_pathfinder"];
+						else if (idx <= 7)
+							horde_perks = ["perk_colossus", "perk_adrenalin", "perk_recover", "perk_steel_brow", "perk_hold_out", "perk_battle_forged", "perk_berserk", "perk_killing_frenzy", "perk_reach_advantage", "perk_pathfinder"];
+						else if (idx == 8)
+							horde_perks = ["perk_colossus", "perk_adrenalin", "perk_recover", "perk_steel_brow", "perk_hold_out", "perk_battle_forged", "perk_mastery_polearm", "perk_killing_frenzy", "perk_overwhelm", "perk_pathfinder"];
+						else if (idx <= 10)
+							horde_perks = ["perk_colossus", "perk_anticipation", "perk_dodge", "perk_relentless", "perk_adrenalin", "perk_recover", "perk_mastery_bow", "perk_bullseye", "perk_pathfinder", "perk_nine_lives"];
+						else
+							horde_perks = ["perk_colossus", "perk_anticipation", "perk_dodge", "perk_relentless", "perk_adrenalin", "perk_recover", "perk_mastery_crossbow", "perk_bullseye", "perk_pathfinder", "perk_nine_lives"];
+						foreach (p in horde_perks)
+							b.getSkills().add(this.new("scripts/skills/perks/" + p));
+
+						local items = b.getItems();
+						items.unequip(items.getItemAtSlot(this.Const.ItemSlot.Body));
+						items.unequip(items.getItemAtSlot(this.Const.ItemSlot.Head));
+						items.unequip(items.getItemAtSlot(this.Const.ItemSlot.Mainhand));
+						items.unequip(items.getItemAtSlot(this.Const.ItemSlot.Offhand));
+						items.unequip(items.getItemAtSlot(this.Const.ItemSlot.Ammo));
+						items.equip(this.new("scripts/items/armor/named/" + horde_ar[idx % horde_ar.len()]));
+						items.equip(this.new("scripts/items/helmets/named/" + horde_hm[idx % horde_hm.len()]));
+						if (idx <= 5)
+						{
+							items.equip(this.new("scripts/items/weapons/named/" + horde_oh[idx]));
+							items.equip(this.new("scripts/items/shields/named/" + horde_sh[idx]));
+						}
+						else if (idx <= 8)
+						{
+							items.equip(this.new("scripts/items/weapons/named/" + horde_th[idx - 6]));
+						}
+						else if (idx <= 10)
+						{
+							items.equip(this.new("scripts/items/weapons/named/named_warbow"));
+							items.equip(this.new("scripts/items/ammo/large_quiver_of_arrows"));
+						}
+						else
+						{
+							items.equip(this.new("scripts/items/weapons/named/named_crossbow"));
+							items.equip(this.new("scripts/items/ammo/large_quiver_of_bolts"));
+						}
+					}
+
+					xxlonexx.setPlaceInFormation(4);
+					xxlonexx.getFlags().set("IsPlayerCharacter", true);
+
+					local xxbrothers = this.World.getPlayerRoster().getAll();
+					foreach(zxz in xxbrothers)
+					{
+						if (zxz.getBackground().getID() == "background.beggar")
+						{
+							zxz.setName("DummyStarter");
+							if (this.Const.DLC.Desert)
+							{
+								zxz.getSkills().onDeath(this.Const.FatalityType.None);
+							}
+							this.World.getPlayerRoster().remove(zxz);
+							break;
+						}
+					}
+					this.World.Assets.getStash().add(this.new("scripts/items/misc/xxsbook_se"));
+					return 0;
 				}
 				else if (_event.m.Bought == 2)
 				{
