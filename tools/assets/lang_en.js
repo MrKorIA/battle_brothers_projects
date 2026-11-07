@@ -17,7 +17,7 @@ registerLang("en", {
   hdr_scene: "Stage (doll)",
   hdr_props: "Properties",
   no_selection: "No sprite selected",
-  hint: "Click — select · Drag — move · Wheel — zoom · Middle button — pan · Arrows — 1px (Shift — 10px)",
+  hint: "Click — select · Drag — move · Pull the yellow border — resize · Wheel — zoom · Middle button — pan · Arrows — 1px (Shift — 10px)",
   drop_hint: "Drop to load",
   err_no_chrome: "Opening by PNG requires Chrome/Edge.",
   err_no_sprite_in_xml: "ERROR: {file} has no sprite «{id}» — wrong brush.",
@@ -41,16 +41,12 @@ registerLang("en", {
   part_armor: "armor",
   part_up: "upgrade",
   part_weapon: "weapon",
-  btn_snap: "Snap to doll",
-  tt_snap: "move ONLY this sprite onto the doll part (preview only, not written to XML)",
   btn_reset: "Reset",
-  tt_reset: "restore original coordinates and snap",
+  tt_reset: "restore original coordinates",
   btn_copy: "Copy coords",
   tt_copy: "copy sprite coordinates (for _damaged/_dead variants)",
   btn_paste: "Paste coords",
   tt_paste: "apply copied coordinates to this sprite",
-  snap_no_target: "No doll target for this part (pick a type: helmet/armor/upgrade).",
-  snap_already: "Sprite is already in place (within a couple of pixels) — snap skipped.",
   st_coords_copied: "Coordinates copied: {v}",
   st_no_clipboard: "Copy coordinates first («Copy coords» button).",
   st_brushes_line: "Brushes: {list}",
@@ -70,12 +66,11 @@ registerLang("en", {
     "   z-order as in game: doll body → armor → upgrade _back → doll head → helmet →\n" +
     "   upgrade _front/other.\n" +
     "4) Layer (helmet/armor/upgrade/weapon): VISUAL switch — sets draw order only (as in\n" +
-    "   game), does NOT move the sprite and is not written to XML. The «Snap to doll» button\n" +
-    "   is a separate preview jump of ONLY this sprite onto a doll part (for foreign brushes;\n" +
-    "   not written to XML). «Copy coords»/«Paste» — transfer coordinates between variants\n" +
-    "   (clean ↔ _damaged ↔ _dead).\n" +
-    "5) Edit coordinates: drag, arrows, fields. Missing rect edges are derived from the PNG\n" +
-    "   size and materialize in XML once edited.\n" +
+    "   game), does NOT move the sprite and is not written to XML. «Copy coords»/«Paste» —\n" +
+    "   transfer coordinates between variants (clean ↔ _damaged ↔ _dead).\n" +
+    "5) Edit coordinates: drag moves the sprite; pull the yellow selection border to resize\n" +
+    "   (edges); arrows/fields/+/- for exact values. Missing rect edges are derived from the\n" +
+    "   PNG size and materialize in XML once edited.\n" +
     "6) «Save» — writes each brush into its own xml (drag&drop brushes via download).\n" +
     "   Pack:  bbrusher.exe pack entity_0.brush entity_0 --gfxPath <where to put gfx>\n\n" +
     "Coordinates: left/right/top/bottom — sprite rect relative to the pivot; offsetX/offsetY —\n" +

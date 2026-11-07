@@ -68,7 +68,7 @@ try { LANG_CODE = localStorage.getItem("bbse_lang") || "ru"; } catch (e) {}
 <body>
 <div id="toolbar">
   <b>BB Sprite Editor</b>
-  <button id="btnOpenPng" data-i18n-tt="tt_open" title="">Открыть PNG…</button>
+  <button id="btnOpenPng" data-i18n="btn_open" data-i18n-tt="tt_open" title="">Открыть PNG…</button>
   <label style="display:flex;gap:4px;align-items:center;user-select:none" data-i18n-tt="tt_doll" title="">
     <input type="checkbox" id="chkDoll"><span data-i18n="chk_doll">кукла</span></label>
   <label style="display:flex;gap:4px;align-items:center;user-select:none" data-i18n-tt="tt_dead" title="">
@@ -382,7 +382,7 @@ const PART_NAMES = { "": t("part_none"), helmet: t("part_helmet"), armor: t("par
 
 function addToStage(spr) {
   if (!spr || stage.some(s => s.spr === spr)) return;
-  stage.push({ spr, visible: true, opacity: 1, orig: null, part: guessPart(spr), snap: [0, 0] });
+  stage.push({ spr, visible: true, opacity: 1, orig: null, part: guessPart(spr) });
   renderStageList(); scheduleRedraw();
 }
 function removeFromStage(i) { stage.splice(i, 1); if (selected === i) selected = null; else if (selected > i) selected--; renderStageList(); scheduleRedraw(); renderProps(); }
@@ -491,18 +491,6 @@ function renderProps() {
   lhint.style.cssText = "grid-column:1 / 4;color:#888;font-size:11px";
   lhint.textContent = t("layer_hint");
   grid.append(lhint);
-  // кнопка принудительного снапа ТОЛЬКО этого спрайта на часть куклы (по выбранному типу)
-  const snapWrap = document.createElement("div");
-  snapWrap.style.cssText = "grid-column:1 / 4;display:flex;gap:6px;align-items:center";
-  snapWrap.append(
-    mkBtn(t("btn_snap"), () => {
-      if (s.part && snapToDoll(s, s.part)) renderProps();
-      else status(t("snap_no_target"));
-    }, t("tt_snap")),
-    (() => { const sp = document.createElement("span");
-             sp.style.color = "#888"; sp.textContent = "snap: [" + (s.snap || [0, 0]).join(", ") + "]";
-             return sp; })());
-  grid.append(snapWrap);
   el.appendChild(grid);
   const btns = document.createElement("div"); btns.className = "row"; btns.style.padding = "8px 10px";
   btns.append(
@@ -527,22 +515,20 @@ function pasteCoords(s) {
   const spr = s.spr;
   COORD_ATTRS.forEach((c, i) => setAttr(spr, c, coordClipboard[i]));
   for (const c of ["left", "right", "top", "bottom"]) spr.present.add(c);
-  s.snap = [0, 0];
   scheduleRedraw(); renderProps();
 }
 function setAttr(spr, attr, val) {
   val = String(Math.round(+val || 0));
   if (spr.attrs[attr] !== val) { spr.attrs[attr] = val; spr._brush.dirty.add(spr.id); renderStageList(); updateSaveState(); }
 }
-// полный откат спрайта: координаты И набор присутствующих атрибутов -> как при загрузке,
-// snap -> 0. present важен: иначе у спрайтов с опущенными краями сбросится выводка из PNG.
+// полный откат спрайта: координаты И набор присутствующих атрибутов -> как при загрузке.
+// present важен: иначе у спрайтов с опущенными краями сбросится выводка из PNG.
 function resetSprite(s) {
   if (s.orig) {
     for (const c of COORD_ATTRS) s.spr.attrs[c] = s.orig[c];
     s.spr.present = new Set(s.origPresent || []);
     s.spr._brush.dirty.delete(s.spr.id);
   }
-  s.snap = [0, 0];
 }
 function updateSaveState() {
   const n = totalDirty();
@@ -600,14 +586,12 @@ function honestRect(spr) {
   const ox = +a.offsetX || 0, oy = +a.offsetY || 0;
   return [l + ox, t + oy, r + ox, b + oy];
 }
-function spriteRect(s) { // честный rect + показательный снап ЭТОГО элемента сцены
-  const [l0, t0, r0, b0] = honestRect(s.spr);
-  const sh = s.snap || [0, 0];
-  return [l0 + sh[0], t0 + sh[1], r0 + sh[0], b0 + sh[1]];
+function spriteRect(s) { // rect элемента сцены (сейчас = честный rect; обёртка для единообразия)
+  return honestRect(s.spr);
 }
 // записать display-rect обратно в атрибуты (offset'ы вычитаются; отсутствующие края
 // материализуются и ПОМЕЧАЮТСЯ как присутствующие — иначе выводка из PNG продолжит
-// их игнорировать). Любая ручная правка отменяет показательный snap (иначе он двоится).
+// их игнорировать).
 function setRectAttrs(spr, rect) {
   const [l, t, r, b] = rect;
   const ox = +spr.attrs.offsetX || 0, oy = +spr.attrs.offsetY || 0;
@@ -615,23 +599,16 @@ function setRectAttrs(spr, rect) {
   setAttr(spr, "top", Math.round(t - oy)); setAttr(spr, "bottom", Math.round(b - oy));
   spr.present.add("left"); spr.present.add("right");
   spr.present.add("top");  spr.present.add("bottom");
-  const si = stage.find(x => x.spr === spr);
-  if (si) si.snap = [0, 0];
 }
-// "Прыгнуть на куклу": ПЕРЕСТАВЛЯЕТ ТОЛЬКО ЭТОТ спрайт (snap элемента сцены, в XML не пишется).
-// Цели — живая кукла: тело DOLL_SETS.live[0], голова [1].
-const PART_SNAP = { helmet: 1, armor: 0, armor_up: 0 }; // тип -> индекс части куклы
-function snapToDoll(s, partKey) {
-  const idx = PART_SNAP[partKey];
-  if (idx === undefined) return false;
-  const tgt = DOLL_SETS.live[idx];
-  const [l0, , r0, b0] = honestRect(s.spr);
-  const dx = Math.round((tgt.l + tgt.r) / 2 - (l0 + r0) / 2), dy = Math.round(tgt.b - b0);
-  // порог: спрайт уже совпадает с куклой (vanilla) — snap не нужен, иначе микродёрганье
-  if (Math.abs(dx) + Math.abs(dy) <= 3) { status(t("snap_already")); return false; }
-  s.snap = [dx, dy];
-  scheduleRedraw();
-  return true;
+// ресайз выделенного спрайта за границы: rect [l,t,r,b] (мир, y вверх) + тянутые кромки.
+// Визуальный верх картинки = мировой b, визуальный низ = мировой t. Минимум 1px по каждой оси.
+function resizedRect(rect, edges, wx, wy) {
+  const out = rect.slice();
+  if (edges.right)  out[2] = Math.max(Math.round(wx), out[0] + 1);
+  if (edges.left)   out[0] = Math.min(Math.round(wx), out[2] - 1);
+  if (edges.top)    out[3] = Math.max(Math.round(wy), out[1] + 1);
+  if (edges.bottom) out[1] = Math.min(Math.round(wy), out[3] - 1);
+  return out;
 }
 
 function frame() { if (needsRedraw) { needsRedraw = false; drawScene(); } requestAnimationFrame(frame); }
@@ -701,10 +678,31 @@ function scheduleRedraw() { needsRedraw = true; }
 requestAnimationFrame(frame); resize(); scheduleRedraw();
 
 /* --- мышь --- */
-let dragMode = null, dragStart = null, origRect = null;
+let dragMode = null, dragStart = null, origRect = null, resizeEdges = null;
+const EDGE_TOL = 6; // px экрана для захвата границы выделенного спрайта
+// какие границы выделенного спрайта близки к экранной точке (для ресайза/курсора)
+function edgeHit(sx, sy) {
+  if (selected === null || selected >= stage.length || !stage[selected].visible) return null;
+  const [l, t, r, b] = spriteRect(stage[selected]);
+  const [x1, y1] = toScreen(l, b); // экранный левый-верхний угол
+  const [x2, y2] = toScreen(r, t); // экранный правый-нижний
+  const edges = {};
+  if (Math.abs(sy - y1) <= EDGE_TOL && sx >= x1 - EDGE_TOL && sx <= x2 + EDGE_TOL) edges.top = true;
+  if (Math.abs(sy - y2) <= EDGE_TOL && sx >= x1 - EDGE_TOL && sx <= x2 + EDGE_TOL) edges.bottom = true;
+  if (Math.abs(sx - x1) <= EDGE_TOL && sy >= y1 - EDGE_TOL && sy <= y2 + EDGE_TOL) edges.left = true;
+  if (Math.abs(sx - x2) <= EDGE_TOL && sy >= y1 - EDGE_TOL && sy <= y2 + EDGE_TOL) edges.right = true;
+  return Object.keys(edges).length ? edges : null;
+}
 canvas.addEventListener("mousedown", e => {
   if (e.button === 1) { dragMode = "pan"; dragStart = [e.offsetX - panX, e.offsetY - panY]; e.preventDefault(); return; }
   if (e.button !== 0) return;
+  // ресайз: наведение на границу ВЫДЕЛЕННОГО спрайта — тянем границу
+  const eh = edgeHit(e.offsetX, e.offsetY);
+  if (eh) {
+    dragMode = "resize"; resizeEdges = eh; origRect = spriteRect(stage[selected]);
+    canvas.style.cursor = (eh.left || eh.right) ? "ew-resize" : "ns-resize";
+    return;
+  }
   const [wx, wy] = toWorld(e.offsetX, e.offsetY);
   for (let k = lastDrawOrder.length - 1; k >= 0; k--) { // сверху вниз в порядке отрисовки
     const i = lastDrawOrder[k];
@@ -717,19 +715,32 @@ canvas.addEventListener("mousedown", e => {
   }
   selected = null; renderStageList(); renderProps(); scheduleRedraw();
 });
+// курсор-индикатор над границами выделенного спрайта
+canvas.addEventListener("mousemove", e => {
+  if (dragMode) return;
+  const eh = edgeHit(e.offsetX, e.offsetY);
+  canvas.style.cursor = eh ? ((eh.left || eh.right) ? "ew-resize" : "ns-resize") : "crosshair";
+});
 window.addEventListener("mousemove", e => {
   if (!dragMode) return;
   if (dragMode === "pan") { panX = e.offsetX === undefined ? panX : e.clientX - canvas.getBoundingClientRect().left - dragStart[0]; panY = e.clientY - canvas.getBoundingClientRect().top - dragStart[1]; scheduleRedraw(); return; }
+  if (dragMode === "resize" && selected !== null) {
+    const r2 = canvas.getBoundingClientRect();
+    const [wx, wy] = toWorld(e.clientX - r2.left, e.clientY - r2.top);
+    setRectAttrs(stage[selected].spr, resizedRect(origRect, resizeEdges, wx, wy));
+    renderProps(); scheduleRedraw();
+    return;
+  }
   if (dragMode === "move" && selected !== null) {
     const r = canvas.getBoundingClientRect();
     const [wx, wy] = toWorld(e.clientX - r.left, e.clientY - r.top);
     const dx = Math.round(wx - dragStart[0]), dy = Math.round(wy - dragStart[1]);
-    // пишем display-rect с момента захвата — без накопления ошибок; snap включается в запись
+    // пишем display-rect с момента захвата — без накопления ошибок
     setRectAttrs(stage[selected].spr, [origRect[0] + dx, origRect[1] + dy, origRect[2] + dx, origRect[3] + dy]);
     renderProps(); scheduleRedraw();
   }
 });
-window.addEventListener("mouseup", () => { dragMode = null; origRect = null; });
+window.addEventListener("mouseup", () => { dragMode = null; origRect = null; resizeEdges = null; canvas.style.cursor = "crosshair"; });
 canvas.addEventListener("wheel", e => { e.preventDefault(); zoom = Math.min(10, Math.max(0.25, zoom * (e.deltaY < 0 ? 1.1 : 0.9))); scheduleRedraw(); }, { passive: false });
 
 /* ================= Сохранение ================= */
