@@ -14,8 +14,18 @@
 | `AC_2-russian/` | `AC_2-russian.zip` | Animal Companions (рус.). Типы компаньонов 20–26 — существа bb_vanilla_plus |
 | `mod_necro-russian/`, `mod_Retired_Gladiator-russian/` и пр. | по имени каталога | Русификации/мелкие моды, адаптируются под задачи |
 
-Сторонние зависимости-референсы (НЕ коммитить сюда): ваниль `Z:\GameMods\Battle Brothers\mods\!project\data_014`,
-davkul_rising (`!project/zmod_davkul_rising-russian`).
+Сторонние зависимости-референсы (НЕ коммитить сюда): ваниль `Z:\GameMods\Battle Brothers\mods\!project\data_014`
+(полная декомпиляция скриптов + тексты из `data_001`–`data_022`), davkul_rising (`!project/zmod_davkul_rising-russian`).
+
+**Референс-ваниль `!project/data_014` актуальна** (с 2026-11-07): это полная декомпилированная
+распаковка скриптов игры (merged dump `scripts/` из архивов `data_001.dat`–`data_022.dat`,
+~3100 файлов `.nut`), а не только файлы локализации. Сигнатуры свежие — например, там
+`setEscortedEntity( _e, _fastEscort = false )` с двумя параметрами. Незнакомые методы/константы
+сверять напрямую grep'ом по определениям в этом каталоге.
+ЛОВУШКА ВРЕМЕНИ: при следующем обновлении игры референс снова расходится с установленной ванилью —
+сигнатуру из него при конфликте перепроверять по установленной игре: извлечь `scripts/.../X.cnut`
+из `data_001.dat` → `bbsq.exe -d` (XXTEA-расшифровка, bin лежит в `Z:\GameMods\Battle
+Brothers\mods\bbros\bin`) → `nutcracker.exe` (там же) даёт исходник.
 
 ## Жёсткое правило API
 
