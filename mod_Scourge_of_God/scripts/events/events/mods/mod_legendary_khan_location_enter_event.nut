@@ -68,13 +68,16 @@ this.mod_legendary_khan_location_enter_event <- ::inherit("scripts/events/event"
 						p.CombatID = "KhanTomb";
 						p.TerrainTemplate = "tactical.mgl_cave_ground"; // базовая каменная толща кургана (должна идти ПЕРЕД fill локации: патч стен красит только Type == 0)
 						p.LocationTemplate.Template[0] = "tactical.mgl_khan_tomb";
-						p.Music = ::Const.Music.UndeadTracks;
+						p.Music = ::Const.Music.MglTracks;
 						p.PlayerDeploymentType = ::Const.Tactical.DeploymentType.Custom; // братьев расставляем вручную в AfterDeploymentCallback (паттерн tutorial_contract)
 						p.EnemyDeploymentType = ::Const.Tactical.DeploymentType.Center;
 						p.IsWithoutAmbience = true; // событийный бой без мировой клетки: ambience по Tile не звать, погода задаётся в AfterDeploymentCallback (паттерн legend_mummy_enter_event)
 						p.Entities = [];
 
 						local f = ::World.FactionManager.getFactionOfType(::Const.FactionType.Zombies).getID();
+						local location = ::World.State.getLastLocation();
+						location.setFaction(f);
+						p.Parties.push(location);
 
 						local nicheCoords = [
 							[13, 22], [19, 22], [25, 22],

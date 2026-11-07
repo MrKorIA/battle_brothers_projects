@@ -13,6 +13,7 @@ this.mgl_khan_armor_effect <- this.inherit("scripts/skills/skill", {
 		this.m.IsActive = false;
 		this.m.IsStacking = false;
 		this.m.IsRemovedAfterBattle = false;
+		this.m.IsHidden = true;
 	}
 
 	function getTooltip()
@@ -38,7 +39,7 @@ this.mgl_khan_armor_effect <- this.inherit("scripts/skills/skill", {
 				id = 11,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "При получении удара рядом может явиться призрачный страж, сражающийся на вашей стороне (не чаще " + this.getMaxCharges() + " раз(а) за бой; Шлем Хана даёт ещё одного стража.)"
+				text = "При получении удара появляется призрачный страж, сражающийся на вашей стороне (не чаще " + this.getMaxCharges() + " раз(а) за бой; Шлем Хана даёт ещё одного стража.)"
 			}
 		];
 	}

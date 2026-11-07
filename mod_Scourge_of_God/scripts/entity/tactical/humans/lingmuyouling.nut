@@ -131,6 +131,7 @@ this.lingmuyouling <- this.inherit("scripts/entity/tactical/actor", {
 		b.IsIgnoringArmorOnAttack = true;
 		b.IsAffectedByNight = false;
 		b.IsAffectedByInjuries = false;
+		b.TargetAttractionMult = 0.1;
 
 		if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 140)
 		{
@@ -168,6 +169,19 @@ this.lingmuyouling <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(this.new("scripts/skills/racial/ghost_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/lingmu01_01"));
+	}
+
+	function onFactionChanged()
+	{
+		this.actor.onFactionChanged();
+		local flip = this.isAlliedWithPlayer();
+		this.getSprite("body").setHorizontalFlipping(flip);
+		this.getSprite("fog").setHorizontalFlipping(flip);
+		this.getSprite("head").setHorizontalFlipping(flip);
+		this.getSprite("socket").setHorizontalFlipping(flip);
+		this.getSprite("head").setHorizontalFlipping(flip);
+		this.getSprite("blur_1").setHorizontalFlipping(flip);
+		this.getSprite("blur_2").setHorizontalFlipping(flip);
 	}
 
 	function onRender()

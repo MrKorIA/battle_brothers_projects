@@ -19,7 +19,7 @@ this.lingmujiangshi <- this.inherit("scripts/entity/tactical/actor", {
 			"sounds/enemies/zombie_hurt_07.wav"
 		];
 		this.m.Sound[this.Const.Sound.ActorEvent.Idle] = [
-				"sounds/enemies/zombie_idle_01.wav",
+			"sounds/enemies/zombie_idle_01.wav",
 			"sounds/enemies/zombie_idle_02.wav",
 			"sounds/enemies/zombie_idle_03.wav",
 			"sounds/enemies/zombie_idle_04.wav",
@@ -219,6 +219,7 @@ this.lingmujiangshi <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_stalwart"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_hold_out"));
 		this.m.Skills.add(this.new("scripts/skills/racial/skeleton_racial"));
+		this.assignRandomEquipment();
 	}
 
 	function assignRandomEquipment()

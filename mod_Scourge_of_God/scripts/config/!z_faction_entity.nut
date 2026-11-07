@@ -24,7 +24,7 @@ addEntityType("Lingmujiangshi", "Мутировавший воин степи", 
 addEntityType("Lingmuyouling", "Страж гробницы", "стражей гробницы", "");
 addEntityType("Mumin", "Степной кочевник", "степных кочевников", "mumin_orientation");
 addEntityType("Wang", "Генерал гробницы", "генералов гробницы", "wang_orientation");
-addEntityType("Zibaogbl", "Берсерк", "берсерков", "yemanren_01_orientation");
+addEntityType("Zibaogbl", "Берсерк", "берсерков", "cunmin_orientation");
 
 ::Const.Strings.MglNames <- ["Барьял", "Багатур", "Амузигала", "Тумен" , "Тэмур", "Табудай", "Джиргадай", "Эркэ", "Илугей", "хара" ];
 ::Const.Strings.MglTitles <- ["Хадачин", "Ангчин", "Тогчи", "Ужасный", "Хоничин", "Хорчин", "Хшигтэн"];

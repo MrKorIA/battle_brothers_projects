@@ -36,6 +36,18 @@ p.Entities = [];                                  // при спавне вру�
   только `getLocalCombatProperties` при обычном бое на карте). Ваниль зовёт
   `setupAmbience(Tile)` под условием `!IsWithoutAmbience` → без флага краш/ошибка. Паттерн эталона
   (mummy): `IsWithoutAmbience = true`, погоду настраивать вручную в `AfterDeploymentCallback`.
+- ⚠️ **3. Добыча локации (`onDropLootForPlayer`: деньги, `dropTreasure`) собирается ТОЛЬКО по списку
+  `CombatInfo.Parties`** — `tactical_state.nut` дёргает его для каждой записи из `Parties`
+  (`getTroops().len() == 0 && isAlive() && !isAlliedWithPlayer() && isDroppingLoot() && playerKills > 0`).
+  У `getClone()` `Parties = []` — в событийном бое без пуша награда локации молча теряется (метод —
+  мёртвый код). Паттерн ванили (`artifact_reliquary_enter_event`, `abandoned_village_enter_event`):
+  `properties.Parties.push(_location)` И `location.setFaction(...)` — ОБЯЗАТЕЛЬНО ВМЕСТЕ: локация,
+  заспавненная без фракции (engine-дефолт 0), считается СОЮЗНОЙ игроку
+  (`world_entity.isAlliedWithPlayer` — фракция 0 = союзная), и условие `!party.isAlliedWithPlayer()`
+  в том же цикле молча отсечёт её. Обычные лагеря получают фракцию через
+  `_faction.addSettlement(camp, false)` в build_-action; уникальные локации её не получают —
+  ставить вручную в ивенте. Добыча попадает в экран результатов боя. Это НЕ про выдачу из экрана
+  события (там свои `stash().add`) и не про лут с тел врагов — он собирается всегда.
 - `Music`, `CombatID`, `EnemyDeploymentType` — по вкусу.
 
 ## 3. Пара шаблонов карты: Terrain + Location

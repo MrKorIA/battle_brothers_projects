@@ -4,7 +4,7 @@ this.named_mgl10_armor_01 <- this.inherit("scripts/items/armor/named/named_armor
 	{
 		this.named_armor.create();
 		this.m.ID = "armor.body.named_mgl10_armor_01";
-		this.m.Description = "Доспех Хана Великой Орды.";
+		this.m.Description = "Этот доспех когда-то покоился на плечах степного владыки, чьё имя до сих пор произносят шёпотом. Дух его гвардии ещё хранит присягу — и может явиться на зов, если владелец окажется в беде.";
 		this.m.Name = "Доспех Хана Великой Орды.";
 		this.m.Variant = 1;
 		this.updateVariant();
@@ -35,6 +35,25 @@ this.named_mgl10_armor_01 <- this.inherit("scripts/items/armor/named/named_armor
 		{
 			actor.getSkills().removeByID("effects.mgl_khan_armor");
 		}
+	}
+
+	function getTooltip()
+	{
+		local result = this.armor.getTooltip();
+		result.extend([
+			{
+				id = 10,
+				type = "text",
+				icon = "ui/icons/bravery.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+10[/color] к решимости"
+			},
+            {
+                id = 15,
+                type = "text",
+                icon = "ui/icons/special.png",
+                text = "При получении урона из любых источников появляется призрачный страж, который будет сражаться на стороне владельца доспехов"
+            }]);
+		return result;
 	}
 
 	function updateVariant()

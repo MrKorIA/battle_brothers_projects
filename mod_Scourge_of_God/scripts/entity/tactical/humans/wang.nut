@@ -269,6 +269,7 @@ this.wang <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/racial/vampire_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/wang01_02"));
 		this.m.Skills.add(this.new("scripts/skills/actives/wang01_03"));
+		this.assignRandomEquipment();
 	}
 
 	function grow( _instant = false )

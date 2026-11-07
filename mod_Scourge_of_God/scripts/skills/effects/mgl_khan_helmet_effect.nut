@@ -4,13 +4,14 @@ this.mgl_khan_helmet_effect <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "effects.mgl_khan_helmet";
 		this.m.Name = "Взгляд Хана";
-		this.m.Description = "Через прорези этого шлема мир видится яснее и смелее, словно сам владыка смотрит сквозь них вместе с вами. Рядом с его доспехом сила наследия полна.";
+		this.m.Description = "Через прорези этого шлема мир видится яснее и смелее, словно сам владыка смотрит сквозь них вместе с вами. Экипированный вместе с его доспехом наделяет полной силой наследия.";
 		this.m.Icon = "ui/perks/perk_28.png";
 		this.m.Type = this.Const.SkillType.StatusEffect;
 		this.m.Order = this.Const.SkillOrder.Any;
 		this.m.IsActive = false;
 		this.m.IsStacking = false;
 		this.m.IsRemovedAfterBattle = false;
+		this.m.IsHidden = true;
 	}
 
 	function getTooltip()

@@ -4,7 +4,7 @@
 	Hitpoints = 500,
 	Bravery = 80,
 	Stamina = 1000,
-	MeleeSkill = 60,
+	MeleeSkill = 65,
 	RangedSkill = 0,
 	MeleeDefense = 0,
 	RangedDefense = 0,
