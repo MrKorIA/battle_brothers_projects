@@ -98,28 +98,22 @@ this.wushi05 <- this.inherit("scripts/entity/tactical/human", {
 
 	function assignRandomEquipment()
 	{
-	    
 		local weapons = [
 		    "weapons/named/named_wushiweapon01",
-			
 		];
-        
-		
-		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 
-		
+		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 
 		local armor = [
 			"armor/named/named_wushi_armor02",
-			
 		];
 		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
 		local helmet = [
 			"helmets/named/named_wushi_helmet02",
-			
 		];
 		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
 	}
+
     function makeMiniboss()
 	{
 		if (!this.actor.makeMiniboss())
@@ -130,10 +124,7 @@ this.wushi05 <- this.inherit("scripts/entity/tactical/human", {
 		this.getSprite("miniboss").setBrush("bust_miniboss");
 		local weapons = [
 			"weapons/named/named_wushiweapon01"
-			
-			
 		];
-		
 
 		if (this.Math.rand(1, 100) <= 99)
 		{

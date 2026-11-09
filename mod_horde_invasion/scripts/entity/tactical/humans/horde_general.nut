@@ -59,27 +59,8 @@ this.horde_general <- this.inherit("scripts/entity/tactical/humans/nomad_centuri
 		];
 		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 
-		if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Offhand) == null && this.Math.rand(1, 100) <= 66)
-		{
-			local shields = [
-				"shields/oriental/southern_light_shield",
-				"shields/oriental/metal_round_shield"
-			];
-			this.m.Items.equip(this.new("scripts/items/" + shields[this.Math.rand(0, shields.len() - 1)]));
-		}
-
-		// Доспехи — комплект номадского центуриона (TZ §6)
-		local armor = [
-			"armor/oriental5_armor",
-			"armor/oriental6_armor"
-		];
-		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
-
-		local helmet = [
-			"helmets/tiefutu4_helmet",
-			"helmets/tiefutu9_helmet"
-		];
-		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
+		this.m.Items.equip(this.new("scripts/items/armor/horde_general_armor"));
+		this.m.Items.equip(this.new("scripts/items/helmets/horde_general_helmet"));
 	}
 
 	function makeMiniboss()

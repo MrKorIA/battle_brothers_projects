@@ -103,8 +103,7 @@ this.wushi04 <- this.inherit("scripts/entity/tactical/human", {
 		    "weapons/named/named_wushiweapon19",
 			
 		];
-        
-		
+
 		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 
 		this.m.Items.equip(this.new("scripts/items/ammo/quiver_of_arrows"));
@@ -120,6 +119,7 @@ this.wushi04 <- this.inherit("scripts/entity/tactical/human", {
 		];
 		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
 	}
+
     function makeMiniboss()
 	{
 		if (!this.actor.makeMiniboss())

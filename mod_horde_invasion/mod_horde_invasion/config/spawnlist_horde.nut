@@ -279,7 +279,7 @@ local function buildSpawnArray( _cfg )
 
     Archetypes = [
         {
-            Body = "figure_tiefutu_00",
+            Body = "figure_mgl_01",
             MovementSpeedMult = 1.1,
             Units = [
                 { Type = this.Const.World.Spawn.Troops.Mumin,         Weight = 100 },
@@ -314,12 +314,12 @@ local function buildSpawnArray( _cfg )
             ]
         },
         {
-            Body = "figure_tiefutu_01",
+            Body = "figure_tiefutu_00",
             MovementSpeedMult = 1.1,
             Units = [
                 { Type = this.Const.World.Spawn.Troops.NomadInfantry, Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.Mumin,         Weight = 80  },
-                { Type = this.Const.World.Spawn.Troops.Kehanweishi,   Weight = 30, MinR = 300, MaxCount = 1, BodyOverride = "figure_tiefutu_02" }
+                { Type = this.Const.World.Spawn.Troops.Kehanweishi,   Weight = 30, MinR = 300, MaxCount = 1, BodyOverride = "figure_mgl_01" }
             ]
         }
     ]
@@ -400,7 +400,7 @@ local function buildSpawnArray( _cfg )
                 { Type = this.Const.World.Spawn.Troops.NomadFireBlunderbuss, Weight = 70  },
                 { Type = this.Const.World.Spawn.Troops.Kehanweishi,          Weight = 30  },
                 { Type = this.Const.World.Spawn.Troops.Baihuzhang,           Weight = 30  },
-                { Type = this.Const.World.Spawn.Troops.HordeGeneral,         Weight = 40, MinR = 400, MaxCount = 1, BodyOverride = "figure_tiefutu_02", BodyPriority = 100 },
+                { Type = this.Const.World.Spawn.Troops.HordeGeneral,         Weight = 40, MinR = 400, MaxCount = 1, BodyOverride = "figure_horde_general", BodyPriority = 100 },
                 { Type = this.Const.World.Spawn.Troops.NomadHalberdMaster,   Weight = 25, MinR = 300, MaxCount = 1, BodyOverride = "figure_changjidashi_01", BodyPriority = 75 }
             ]
         },
@@ -410,9 +410,10 @@ local function buildSpawnArray( _cfg )
             Units = [
                 { Type = this.Const.World.Spawn.Troops.NomadIronPagoda,      Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.NomadFireBlunderbuss, Weight = 70  },
+                { Type = this.Const.World.Spawn.Troops.Kehanweishi,          Weight = 30  },
                 { Type = this.Const.World.Spawn.Troops.Baihuzhang,           Weight = 30  },
                 { Type = this.Const.World.Spawn.Troops.NomadCenturion,       Weight = 25, MaxCount = 1, BodyOverride = "figure_tiefutu_02", BodyPriority = 50 },
-                { Type = this.Const.World.Spawn.Troops.HordeGeneral,         Weight = 40, MinR = 400, MaxCount = 1, BodyOverride = "figure_tiefutu_02", BodyPriority = 100 },
+                { Type = this.Const.World.Spawn.Troops.HordeGeneral,         Weight = 40, MinR = 400, MaxCount = 1, BodyOverride = "figure_horde_general", BodyPriority = 100 },
                 { Type = this.Const.World.Spawn.Troops.NomadSpearMaster,     Weight = 30, MinR = 300, MaxCount = 1, BodyOverride = "figure_changmaodashi_01", BodyPriority = 75 }
             ]
         },
@@ -424,7 +425,7 @@ local function buildSpawnArray( _cfg )
                 { Type = this.Const.World.Spawn.Troops.NomadFireBlunderbuss, Weight = 80  },
                 { Type = this.Const.World.Spawn.Troops.Kehanweishi,          Weight = 30  },
                 { Type = this.Const.World.Spawn.Troops.Baihuzhang,           Weight = 30  },
-                { Type = this.Const.World.Spawn.Troops.HordeGeneral,         Weight = 40, MinR = 400, MaxCount = 1, BodyOverride = "figure_tiefutu_02", BodyPriority = 100 }
+                { Type = this.Const.World.Spawn.Troops.HordeGeneral,         Weight = 40, MinR = 400, MaxCount = 1, BodyOverride = "figure_horde_general", BodyPriority = 100 }
             ]
         }
     ]

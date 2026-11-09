@@ -19,7 +19,7 @@ local function addEntityType( _id, _name, _namePlural, _icon )
 	::Const.EntityIcon.push(_icon);
 }
 
-addEntityType("HordeGeneral", "Генерал Железной Орды", "генералы Железной Орды", "nomad_13_orientation");
+addEntityType("HordeGeneral", "Генерал Железной Орды", "генералы Железной Орды", "horde_general_orientation");
 
 ::Const.Tactical.Actor.HordeGeneral <- {
 	XP = 750,
