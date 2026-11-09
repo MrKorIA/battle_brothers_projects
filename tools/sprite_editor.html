@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>BB Sprite Editor</title>
@@ -12,7 +12,7 @@ function t(key, params) {
   if (params) for (var k in params) s = s.split("{" + k + "}").join(params[k]);
   return s;
 }
-try { LANG_CODE = localStorage.getItem("bbse_lang") || "ru"; } catch (e) {}
+try { LANG_CODE = localStorage.getItem("bbse_lang") || "en"; } catch (e) {}
 </script>
 <script src="assets/lang_ru.js"></script>
 <script src="assets/lang_en.js"></script>
@@ -147,6 +147,7 @@ document.title = t("app_title");
   document.querySelectorAll("[data-i18n-tt]").forEach(el => { el.title = t(el.dataset.i18nTt); });
   document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
   document.documentElement.style.setProperty("--drop-text", '"' + t("drop_hint") + '"');
+  document.documentElement.lang = LANG_CODE;
 })();
 $("selLang").value = LANG_CODE;
 $("selLang").onchange = () => {
@@ -158,7 +159,7 @@ function normPath(p) { return p.replace(/\\/g, "/").replace(/^\.?\//, "").toLowe
 
 function parseBrush(text, xmlFh, fromDrop) {
   const brush = { key: "b" + (brushSeq++), name: "brush", xmlFh: xmlFh || null, xmlText: text,
-                  sprites: [], byId: new Map(), dirty: new Set(), fromDrop: !!fromDrop };
+                  sprites: [], byId: new Map(), imgByBase: new Map(), dirty: new Set(), fromDrop: !!fromDrop };
   const m0 = text.slice(0, 200).match(/<brush name="([^"]+)"/);
   if (m0) brush.name = m0[1].replace(/^gfx\//, "").replace(/\.png$/, "");
   const re = /<sprite\s+([^>]*?)\/>/g;
@@ -173,6 +174,9 @@ function parseBrush(text, xmlFh, fromDrop) {
     for (const c of COORD_ATTRS) if (!(c in attrs)) attrs[c] = "0";
     brush.sprites.push(spr);
     if (!brush.byId.has(spr.id)) brush.byId.set(spr.id, spr);
+    // привязка PNG->спрайт по ИМЕНИ ФАЙЛА картинки (id может не совпадать с именем файла!)
+    const base = normPath(spr.img).split("/").pop();
+    if (base && !brush.imgByBase.has(base)) brush.imgByBase.set(base, spr);
     // дубли координатных атрибутов (последствия старого бага с дописыванием) — помечаем:
     // одно сохранение пересоберёт тег и почистит файл
     for (const c of COORD_ATTRS)
@@ -201,13 +205,14 @@ function openSprite(spr, blob) {
 /* ---------- открытие по одному PNG + его XML, без папок ----------
    1-й диалог: PNG. 2-й диалог: XML кисти (metadata.xml) — хендл файла даёт и координаты,
    и запись при сохранении. Картинки спрайтов — из выбранных PNG. Левая панель показывает
-   ТОЛЬКО открытое. Пара png→кисть в pngMap: повторный PNG из той же кисти — без диалогов. */
-// найти кисть для spriteId: сначала явная привязка (pngMap), затем сверка по ВСЕМ загруженным xml
-function findBrushForSprite(spriteId) {
-  let brush = pngMap.get(spriteId);
-  if (brush) return brush;
-  for (const b of brushes) if (b.byId.has(spriteId)) { pngMap.set(spriteId, b); return b; }
-  return null;
+   ТОЛЬКО открытое. Привязка png→кисть в pngMap по ИМЕНИ ФАЙЛА картинки (не по id спрайта —
+   id в brush может не совпадать с именем файла, резолв идёт через img). */
+// есть ли в тексте xml спрайт с картинкой basename?
+function textHasImg(text, pngBase) {
+  const re = /img="([^"]*)"/g;
+  let m;
+  while ((m = re.exec(text))) if (normPath(m[1]).split("/").pop() === pngBase) return true;
+  return false;
 }
 // подтянуть СВЕЖИЙ xml кисти с диска (объекты спрайтов обновляются на месте — stage не ломается).
 // Защита: если в редакторе есть несохранённые правки по кисти — свежее НЕ подтягиваем.
@@ -243,6 +248,12 @@ async function refreshBrushFromDisk(brush) {
     for (const c of COORD_ATTRS) if (!(c in attrs)) attrs[c] = "0";
   }
   for (const [id, spr] of brush.byId) if (!seen.has(id)) brush.byId.delete(id);
+  // перестроить привязку PNG->спрайт по имени файла картинки
+  brush.imgByBase.clear();
+  for (const spr of brush.byId.values()) {
+    const base = normPath(spr.img).split("/").pop();
+    if (base && !brush.imgByBase.has(base)) brush.imgByBase.set(base, spr);
+  }
   brush.xmlText = text;
   for (const it of stage) if (it.spr._brush === brush) it.orig = null; // переснимем снапшоты
 }
@@ -270,9 +281,10 @@ async function openPng() {
   }
   const pngFh = await pickFile([{ description: "PNG", accept: { "image/png": [".png"] } }]);
   if (!pngFh) return; // отмена
-  const spriteId = pngFh.name.replace(/\.png$/i, "");
-  let brush = findBrushForSprite(spriteId);
-  if (brush) await refreshBrushFromDisk(brush); // работаем со свежими данными xml
+  const pngBase = normPath(pngFh.name); // ключ привязки — ИМЯ ФАЙЛА картинки
+  let brush = pngMap.get(pngBase) || null;
+  if (!brush) for (const b of brushes) if (b.imgByBase.has(pngBase)) { brush = b; break; }
+  if (brush) { pngMap.set(pngBase, brush); await refreshBrushFromDisk(brush); } // свежие данные xml
   if (!brush) {
     const xmlFh = await pickFile([{ description: "Brush XML", accept: { "text/xml": [".xml"] } }]);
     if (!xmlFh) return; // отмена
@@ -284,16 +296,16 @@ async function openPng() {
     }
     if (!brush) {
       const text = await (await xmlFh.getFile()).text();
-      if (text.indexOf('id="' + spriteId + '"') === -1) {
-        status(t("err_no_sprite_in_xml", { file: xmlFh.name, id: spriteId }));
+      if (!textHasImg(text, pngBase)) {
+        status(t("err_no_img_in_xml", { file: xmlFh.name, img: pngFh.name }));
         return;
       }
       brush = parseBrush(text, xmlFh, false);
     }
-    pngMap.set(spriteId, brush);
+    pngMap.set(pngBase, brush);
   }
-  const spr = brush.byId.get(spriteId);
-  if (!spr) { status(t("err_sprite_not_found", { id: spriteId, name: brush.name })); return; }
+  const spr = brush.imgByBase.get(pngBase);
+  if (!spr) { status(t("err_sprite_not_found", { img: pngFh.name, name: brush.name })); return; }
   openSprite(spr, await pngFh.getFile());
   addToStage(spr);
 }
@@ -335,7 +347,7 @@ window.addEventListener("drop", async e => {
     let n = 0;
     for (const spr of b.sprites) {
       const f = dropFiles.get(normPath(spr.img)) || dropFiles.get(normPath(spr.img).split("/").pop());
-      if (f) { openSprite(spr, f); pngMap.set(spr.id, b); n++; }
+      if (f) { openSprite(spr, f); pngMap.set(normPath(spr.img).split("/").pop(), b); n++; }
     }
     status(t("drop_sprites_with_imgs", { name: b.name, n: n }));
   } else if (dropFiles.size) {
