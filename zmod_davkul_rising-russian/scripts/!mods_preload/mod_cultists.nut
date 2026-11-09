@@ -118,7 +118,7 @@ local modName = "mod_cultists"
 
 		local updateBuildings = o.updateBuildings
 		o.updateBuildings = function(){
-			updateBuildings()
+			updateBuildings();
 			local locations = this.World.EntityManager.getLocations();
 
 			foreach( v in locations )
@@ -131,7 +131,7 @@ local modName = "mod_cultists"
 			}
 		}
 
-		local onExecute = o.onExecute
+		local onExecute = o.onExecute;
 		o.onExecute = function(_faction){
 			if (this.m.BuildGrandCultistSite){
 				local camp;

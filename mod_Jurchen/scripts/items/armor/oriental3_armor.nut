@@ -13,8 +13,8 @@ this.oriental3_armor <- this.inherit("scripts/items/armor/armor", {
 		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.InventorySound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.Value = 2500;
-		this.m.Condition = 200;
-		this.m.ConditionMax = 200;
+		this.m.Condition = 240;
+		this.m.ConditionMax = 240;
 		this.m.StaminaModifier = -24;
 	}
 

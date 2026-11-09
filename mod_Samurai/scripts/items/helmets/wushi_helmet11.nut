@@ -12,7 +12,7 @@ this.wushi_helmet11 <- this.inherit("scripts/items/helmets/helmet", {
 		this.m.HideHair = true;
 		this.m.HideBeard = true;
 		this.m.IsDroppedAsLoot = true;
-		this.m.Variant = 1;
+		this.m.Variant = this.Math.rand(1, 2));
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorLeatherImpact;
 		this.m.InventorySound = this.Const.Sound.ClothEquip;
