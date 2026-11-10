@@ -71,6 +71,11 @@ this.send_horde_army_action <- this.inherit("scripts/factions/faction_action", {
 				continue;
 			}
 
+			if (_faction.isAlliedWith(s.getFaction()))
+			{
+				continue;
+			}
+
 			local d = myTile.getDistanceTo(s.getTile());
 
 			if (s.hasSituation("situation.razed"))

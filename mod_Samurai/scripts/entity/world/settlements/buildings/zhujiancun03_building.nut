@@ -174,62 +174,56 @@ this.zhujiancun03_building <- this.inherit("scripts/entity/world/settlements/bui
 		}
 	}
 
-//	function onUpdateShopList()
-//	{
-//		local list = [
-//
-//			{
-//				R = 0,
-//				P = 0.75,
-//				S = "supplies/ground_grains_item"
-//			},
-//			{
-//				R = 10,
-//				P = 0.75,
-//				S = "supplies/medicine_item"
-//			},
-//			{
-//				R = 10,
-//				P = 0.75,
-//				S = "supplies/ammo_item"
-//			},
-//			{
-//				R = 10,
-//				P = 0.75,
-//				S = "supplies/armor_parts_item"
-//			}
-//		];
-//
-//		this.m.Settlement.onUpdateShopList(this.m.ID, list);
-//		this.fillStash(list, this.m.Stash, 1.25, false);
-//	}
-
 	function getDefaultShopList()
 	{
 		local list = [
-
 			{
 				R = 0,
 				P = 0.75,
 				S = "supplies/ground_grains_item"
 			},
 			{
-				R = 10,
+				R = 0,
 				P = 0.75,
 				S = "supplies/medicine_item"
-			},
-			{
-				R = 10,
-				P = 0.75,
-				S = "supplies/ammo_item"
-			},
-			{
-				R = 10,
-				P = 0.75,
-				S = "supplies/armor_parts_item"
 			}
 		];
+		local regular = [
+			{ R = 0, P = 1.5, S = "misc/unhold_hide_item" },
+			{ R = 0, P = 1.5, S = "misc/spider_silk_item" },
+			{ R = 0, P = 1.5, S = "misc/poison_gland_item" },
+			{ R = 0, P = 1.5, S = "misc/glowing_resin_item" },
+			{ R = 0, P = 1.5, S = "misc/serpent_skin_item" },
+			{ R = 0, P = 1.5, S = "misc/hyena_fur_item" },
+			{ R = 0, P = 0.9, S = "trade/silk_item" },
+			{ R = 0, P = 0.9, S = "trade/spices_item" },
+			{ R = 0, P = 0.9, S = "trade/incense_item" },
+			{ R = 0, P = 0.9, S = "trade/dies_item" },
+			{ R = 0, P = 0.9, S = "trade/cloth_rolls_item" },
+			{ R = 0, P = 1.5, S = "misc/paint_set_item" },
+			{ R = 0, P = 1.5, S = "misc/paint_remover_item" },
+			{ R = 0, P = 1.5, S = "misc/paint_black_item" },
+			{ R = 0, P = 1.5, S = "misc/paint_red_item" },
+			{ R = 0, P = 1.5, S = "misc/paint_orange_red_item" },
+			{ R = 0, P = 1.5, S = "misc/paint_white_blue_item" },
+			{ R = 0, P = 1.5, S = "misc/paint_white_green_yellow_item" }
+		];
+		local rare = [
+			{ R = 0, P = 1.5, S = "misc/lindwurm_scales_item" },
+			{ R = 0, P = 1.5, S = "misc/vampire_dust_item" },
+			{ R = 0, P = 1.5, S = "misc/kraken_horn_plate_item" },
+			{ R = 0, P = 1.5, S = "misc/heart_of_the_forest_item" }
+		];
+		local count = this.Math.rand(2, 3);
 
+		for( local i = 0; i < count; i = ++i )
+		{
+			local index = this.Math.rand(0, regular.len() - 1);
+			list.push(regular[index]);
+			regular.remove(index);
+		}
+
+		list.push(rare[this.Math.rand(0, rare.len() - 1)]);
 		return list;
 	}
 

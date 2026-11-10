@@ -30,12 +30,47 @@
     		this.m.Factions.push(zhujiancun_faction);
     	}}.createZhujiancunFaction;
 
+        q.updateZhujiancunAlliances <- { function updateZhujiancunAlliances()
+        {
+            local zhujiancun = this.getFactionOfType(::Const.FactionType.Zhujiancun);
+
+            if (zhujiancun == null)
+            {
+                return false;
+            }
+
+            if (::mods_getRegisteredMod("mod_jin") != null)
+            {
+                local jurchen = this.getFactionOfType(::Const.FactionType.Jurchen);
+
+                if (jurchen != null)
+                {
+                    zhujiancun.addAlly(jurchen.getID());
+                    jurchen.addAlly(zhujiancun.getID());
+                }
+            }
+
+            if (::mods_getRegisteredMod("mod_mgl") != null)
+            {
+                local mgl = this.getFactionOfType(::Const.FactionType.Mgl);
+
+                if (mgl != null)
+                {
+                    zhujiancun.addAlly(mgl.getID());
+                    mgl.addAlly(zhujiancun.getID());
+                }
+            }
+
+            return true;
+        }}.updateZhujiancunAlliances;
+
     	q.createAlliances = @(__original) { function createAlliances()
     	{
     		this.createWushiFaction();
     		this.createZhujiancunFaction();
 
     		__original();
+			this.updateZhujiancunAlliances();
 
     	}}.createAlliances;
 
@@ -53,6 +88,36 @@
     	}}.runSimulation;
 
     });
+
+	::Wushi.HooksMod.hook("scripts/ai/world/orders/destroy_order", function(q) {
+		q.onExecute = @(__original) function( _entity, _hasChanged )
+		{
+			local target = this.World.getEntityByID(this.m.TargetID);
+
+			if (target != null && "ClassName" in target && target.ClassName == "zhujiancun")
+			{
+				this.getController().popOrder();
+				return true;
+			}
+
+			return __original(_entity, _hasChanged);
+		}
+	});
+
+	::Wushi.HooksMod.hook("scripts/ai/world/orders/convert_order", function(q) {
+		q.onExecute = @(__original) function( _entity, _hasChanged )
+		{
+			local target = this.World.getEntityByID(this.m.TargetID);
+
+			if (target != null && "ClassName" in target && target.ClassName == "zhujiancun")
+			{
+				this.getController().popOrder();
+				return true;
+			}
+
+			return __original(_entity, _hasChanged);
+		}
+	});
 
     ::MSU.Table.merge(::Const.Music, {
         WushiTracks = [
@@ -125,6 +190,11 @@
     		o.update = function(_worldState)
     		{
     			update(_worldState)
+
+                if (!this.World.Flags.get("ZhujiancunAlliancesInitialized") && this.World.FactionManager.updateZhujiancunAlliances())
+                {
+                    this.World.Flags.set("ZhujiancunAlliancesInitialized", true);
+                }
     			if (!this.World.Flags.get("spawned_zhujiancun"))
     			{
                     local disallowedTerrain;
@@ -267,7 +337,7 @@
     				{
     					camp = this.World.spawnLocation("scripts/entity/world/settlements/zhujiancun", tile.Coords);
     					this.World.uncoverFogOfWar(camp.getTile().Pos, 1200);
-    					camp.setDiscovered(true);
+						if (!this.World.isUsingFogOfWar()) camp.setDiscovered(true);
     				}
     				if (camp != null)
     				{

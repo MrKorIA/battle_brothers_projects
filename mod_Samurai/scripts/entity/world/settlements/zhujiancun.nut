@@ -34,7 +34,6 @@ this.zhujiancun <- this.inherit("scripts/entity/world/settlement", {
 		this.m.Banner = this.World.Assets.getBannerID();
 		this.m.IsShowingBanner = true;
 		this.getFlags().set("IsSecondaryBase", true);
-//		this.m.IsActive = true;
         this.m.OnEnterCallback = function( _settlement ) {};
 		this.m.IsVisited = true;
 		this.m.IsAttackable = false;
@@ -44,10 +43,6 @@ this.zhujiancun <- this.inherit("scripts/entity/world/settlement", {
 		this.m.IsScalingDefenders = false;
 		this.m.IsShowingLabel = true;
 		this.m.IsShowingBanner = true;
-		this.addBuilding(this.new("scripts/entity/world/settlements/buildings/zhujiancun_building"), 5);
-		this.addBuilding(this.new("scripts/entity/world/settlements/buildings/zhujiancun01_building"), 2);
-		this.addBuilding(this.new("scripts/entity/world/settlements/buildings/zhujiancun02_building"), 1);
-		this.addBuilding(this.new("scripts/entity/world/settlements/buildings/zhujiancun03_building"), 4);
 	}
 
 	function onInit()
@@ -60,10 +55,11 @@ this.zhujiancun <- this.inherit("scripts/entity/world/settlement", {
 	function onEnter()
 	{
 		this.location.onEnter();
+		this.updateBuildings();
+		this.updateQuests();
 		this.updateRoster();
 		this.updateShop();
 		this.Math.seedRandom(this.Time.getRealTime());
-//		this.m.IsVisited = false;
 		return true;
 	}
 
@@ -89,7 +85,95 @@ this.zhujiancun <- this.inherit("scripts/entity/world/settlement", {
 
 	function getContracts()
 	{
-		return [];
+		return this.settlement.getContracts();
+	}
+
+	function updateQuests()
+	{
+		local stage = this.getFlags().getAsInt("ZhujiancunStage");
+
+		if (stage >= 4)
+		{
+			return;
+		}
+
+		local nextContractTime = this.getFlags().getAsFloat("ZhujiancunNextContractTime");
+
+		if (nextContractTime > 0 && this.Time.getVirtualTimeF() < nextContractTime)
+		{
+			return;
+		}
+
+		local faction = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Zhujiancun);
+
+		foreach( contract in faction.getContracts() )
+		{
+			if (contract.getType() == "contract.zhujiancun" && contract.getHome() != null && !contract.getHome().isNull() && contract.getHome().getID() == this.getID())
+			{
+				return;
+			}
+		}
+
+		local contract = this.new("scripts/contracts/contracts/zhujiancun_contract");
+		contract.setStage(stage + 1);
+		contract.setHome(this);
+		contract.setOrigin(this);
+		contract.setFaction(faction.getID());
+
+		if (faction.getRoster().getSize() == 0)
+		{
+			faction.onUpdateRoster();
+		}
+
+		contract.setEmployerID(faction.getRandomCharacter().getID());
+
+		this.World.Contracts.addContract(contract);
+		contract.m.TimeOut = 0.0;
+	}
+
+	function updateBuildings()
+	{
+		local stage = this.getFlags().getAsInt("ZhujiancunStage");
+		local slots = [2, 5, 1, 4];
+		local buildings = [
+			"scripts/entity/world/settlements/buildings/zhujiancun01_building",
+			"scripts/entity/world/settlements/buildings/zhujiancun_building",
+			"scripts/entity/world/settlements/buildings/zhujiancun02_building",
+			"scripts/entity/world/settlements/buildings/zhujiancun03_building"
+		];
+
+		for( local i = 0; i < buildings.len(); i = ++i )
+		{
+			if (stage > i)
+			{
+				if (this.m.Buildings[slots[i]] == null)
+				{
+					this.addBuilding(this.new(buildings[i]), slots[i]);
+				}
+			}
+			else
+			{
+				this.m.Buildings[slots[i]] = null;
+			}
+		}
+	}
+
+	function completeContractStage( _stage )
+	{
+		if (_stage != this.getFlags().getAsInt("ZhujiancunStage") + 1)
+		{
+			return;
+		}
+
+		this.getFlags().set("ZhujiancunStage", _stage);
+		this.getFlags().set("ZhujiancunNextContractTime", _stage < 4 ? this.Time.getVirtualTimeF() + this.World.getTime().SecondsPerDay * 10.0 : 0.0);
+		this.updateBuildings();
+		this.updateShop(true);
+
+		if (_stage == 2)
+		{
+			this.updateRoster(true);
+		}
 	}
 
 	function getFactionOfType( _type )
@@ -157,6 +241,12 @@ this.zhujiancun <- this.inherit("scripts/entity/world/settlement", {
         }
         this.World.Assets.getOrigin().onUpdateHiringRoster(roster);
     }
+
+	function onDeserialize( _in )
+	{
+		this.settlement.onDeserialize(_in);
+		this.updateBuildings();
+	}
 
 });
 

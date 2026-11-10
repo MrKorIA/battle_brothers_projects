@@ -101,6 +101,18 @@ addFaction(
 	]
 );
 
+if (::mods_getRegisteredMod("mod_jin") != null && "Jurchen" in ::Const.Faction)
+{
+	::Const.FactionAlliance[::Const.Faction.Zhujiancun].push(::Const.Faction.Jurchen);
+	::Const.FactionAlliance[::Const.Faction.Jurchen].push(::Const.Faction.Zhujiancun);
+}
+
+if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
+{
+	::Const.FactionAlliance[::Const.Faction.Zhujiancun].push(::Const.Faction.Mgl);
+	::Const.FactionAlliance[::Const.Faction.Mgl].push(::Const.Faction.Zhujiancun);
+}
+
 ::Const.WushiBanners <- [
 	"banner_wushi"	
 ];
