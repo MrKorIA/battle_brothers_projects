@@ -39,7 +39,8 @@ this.free_cultist_prisoner_action <- this.inherit("scripts/factions/faction_acti
 
 		local cultists = this.getCultists()
 		if (cultists == null ||  !cultists.hasLairs()){
-			this.printDebug("проблема действий по освобождению заключенного с культистом: " + cultists + " " + cultists.m.Flags.get("CultistLegendaryLocationBeat") + " " + cultists.hasLairs(), "mod_cultists")
+			if (cultists != null) this.printDebug("проблема действий по освобождению заключенного с культистом: " + cultists, "mod_cultists")
+			else this.printDebug("проблема действий по освобождению заключенного с культистом: " + cultists + " " + cultists.m.Flags.get("CultistLegendaryLocationBeat") + " " + cultists.hasLairs(), "mod_cultists")
 			return
 		}
 		local lairExists = false

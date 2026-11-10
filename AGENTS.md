@@ -12,6 +12,7 @@
 | `mod_Scourge_of_God/` | `mod_Scourge_of_God.zip` | Фракция Mgl («Скверна Бога»). Юниты, курган хана, named-предметы |
 | `mod_Jurchen/` | `mod_Jurchen.zip` | Фракция чучженей. Юниты, лагерные шаблоны, named-оружие, бочки пороха |
 | `AC_2-russian/` | `AC_2-russian.zip` | Animal Companions (рус.). Типы компаньонов 20–26 — существа bb_vanilla_plus |
+| `mod_kill_all_enemies/` | `mod_kill_all_enemies.zip` | Тестовый чит: MSU-кейбинд «убить всех врагов» на тактической карте (дефолт Ctrl+K). Депендс: mod_msu |
 | `mod_necro-russian/`, `mod_Retired_Gladiator-russian/` и пр. | по имени каталога | Русификации/мелкие моды, адаптируются под задачи |
 
 Сторонние зависимости-референсы (НЕ коммитить сюда): ваниль `Z:\GameMods\Battle Brothers\mods\!project\data_014`

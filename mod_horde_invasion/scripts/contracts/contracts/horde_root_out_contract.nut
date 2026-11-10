@@ -37,18 +37,48 @@ this.horde_root_out_contract <- this.inherit("scripts/contracts/contract", {
 			this.setOrigin(this.World.State.getCurrentTown());
 		}
 
-		local nearest_jin = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Jurchen).getNearestSettlement(this.m.Origin.getTile());
-		local nearest_mgl = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Mgl).getNearestSettlement(this.m.Origin.getTile());
-
-		if (this.Math.rand(1, 100) <= 50)
+		// Две цели — два ближайших лагеря орды БЕЗ деления по фракциям:
+		local camps = [];
+		foreach (s in this.World.FactionManager.getFactionOfType(this.Const.FactionType.Jurchen).getSettlements())
 		{
-			this.m.Objective1 = this.WeakTableRef(nearest_jin);
-			this.m.Objective2 = this.WeakTableRef(nearest_mgl);
+			if (!s.isLocationType(this.Const.World.LocationType.Unique))
+			{
+				camps.push(s);
+			}
+		}
+		foreach (s in this.World.FactionManager.getFactionOfType(this.Const.FactionType.Mgl).getSettlements())
+		{
+			if (!s.isLocationType(this.Const.World.LocationType.Unique))
+			{
+				camps.push(s);
+			}
+		}
+		local originTile = this.m.Origin.getTile();
+		camps.sort(function ( _a, _b )
+		{
+			if (_a.getTile().getDistanceTo(originTile) > _b.getTile().getDistanceTo(originTile))
+			{
+				return 1;
+			}
+			else if (_a.getTile().getDistanceTo(originTile) < _b.getTile().getDistanceTo(originTile))
+			{
+				return -1;
+			}
+			return 0;
+		});
+
+		if (camps.len() >= 2)
+		{
+			this.m.Objective1 = this.WeakTableRef(camps[0]);
+			this.m.Objective2 = this.WeakTableRef(camps[1]);
 		}
 		else
 		{
-			this.m.Objective2 = this.WeakTableRef(nearest_jin);
-			this.m.Objective1 = this.WeakTableRef(nearest_mgl);
+			// Запасной вариант при <2 лагерей на карте: ближайший каждой фракции
+			local nearest_jin = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Jurchen).getNearestSettlement(this.m.Origin.getTile());
+			local nearest_mgl = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Mgl).getNearestSettlement(this.m.Origin.getTile());
+			this.m.Objective1 = this.WeakTableRef(nearest_jin);
+			this.m.Objective2 = this.WeakTableRef(nearest_mgl);
 		}
 
 		this.m.Flags.set("Objective1Name", this.m.Objective1.getName());

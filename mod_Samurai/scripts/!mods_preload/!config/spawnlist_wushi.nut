@@ -386,7 +386,7 @@ this.Const.World.Spawn.WushiRoamers <- buildSpawnArray({
     MaxR = 600,
     Step = 15,
     Mode = "Archetype",
-    ArchetypeStride = 2,
+    ArchetypeStride = 1,
 
     Archetypes = [
         {

@@ -7,12 +7,12 @@ this.tiefutu_helmet <- this.inherit("scripts/items/helmets/helmet", {
 		this.m.Name = "Шлем железного латника";
 		this.m.Description = "Шлем, подобный железной башне, плотно облегает голову. На востоке его называют \'тефуту\'.";
 		this.m.ShowOnCharacter = true;
-		this.m.HideCharacterHead = true;
-		this.m.HideCorpseHead = true;
+		this.m.HideCharacterHead = false;
+		this.m.HideCorpseHead = false;
 		this.m.HideHair = true;
 		this.m.HideBeard = true;
 		this.m.IsDroppedAsLoot = true;
-		this.m.Variant = this.Math.rand(1, 2));
+		this.m.Variant = this.Math.rand(1, 2);
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorLeatherImpact;
 		this.m.InventorySound = this.Const.Sound.ClothEquip;

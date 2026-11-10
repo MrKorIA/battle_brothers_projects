@@ -319,6 +319,7 @@ local function buildSpawnArray( _cfg )
             Units = [
                 { Type = this.Const.World.Spawn.Troops.NomadInfantry, Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.Mumin,         Weight = 80  },
+                { Type = this.Const.World.Spawn.Troops.NomadInfantry, Weight = 60  },
                 { Type = this.Const.World.Spawn.Troops.Kehanweishi,   Weight = 30, MinR = 300, MaxCount = 1, BodyOverride = "figure_mgl_01" }
             ]
         }
@@ -357,22 +358,22 @@ local function buildSpawnArray( _cfg )
             ]
         },
         {
-            Body = "figure_changjidashi_01",
-            MovementSpeedMult = 1.0,
-            Units = [
-                { Type = this.Const.World.Spawn.Troops.NomadIronPagoda,      Weight = 100 },
-                { Type = this.Const.World.Spawn.Troops.NomadFireBlunderbuss, Weight = 50  },
-                { Type = this.Const.World.Spawn.Troops.NomadHalberdMaster,   Weight = 30, MinR = 250, MaxCount = 1 },
-                { Type = this.Const.World.Spawn.Troops.Caoyuanzhanshi,       Weight = 25  }
-            ]
-        },
-        {
             Body = "figure_changmaodashi_01",
             MovementSpeedMult = 1.0,
             Units = [
                 { Type = this.Const.World.Spawn.Troops.NomadIronPagoda,      Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.NomadFireBlunderbuss, Weight = 50  },
                 { Type = this.Const.World.Spawn.Troops.NomadSpearMaster,     Weight = 30, MinR = 250, MaxCount = 1 },
+                { Type = this.Const.World.Spawn.Troops.Caoyuanzhanshi,       Weight = 25  }
+            ]
+        },
+        {
+            Body = "figure_changjidashi_01",
+            MovementSpeedMult = 1.0,
+            Units = [
+                { Type = this.Const.World.Spawn.Troops.NomadIronPagoda,      Weight = 100 },
+                { Type = this.Const.World.Spawn.Troops.NomadFireBlunderbuss, Weight = 50  },
+                { Type = this.Const.World.Spawn.Troops.NomadHalberdMaster,   Weight = 30, MinR = 250, MaxCount = 1 },
                 { Type = this.Const.World.Spawn.Troops.Baihuzhang,           Weight = 25, MinR = 350 },
                 { Type = this.Const.World.Spawn.Troops.NomadCenturion,       Weight = 25, MinR = 300, MaxCount = 1, BodyOverride = "figure_tiefutu_02" }
             ]
