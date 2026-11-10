@@ -20,11 +20,11 @@ this.warp_shard_armor_05 <- this.inherit("scripts/items/armor/armor", {
 
 	function updateVariant()
 	{
-		this.m.Sprite = "bust_warp_shard_armor_04";
-		this.m.SpriteDamaged = "bust_warp_shard_armor_04_damaged";
-		this.m.SpriteCorpse = "bust_warp_shard_armor_04_dead";
-		this.m.IconLarge = "armor/inventory_warp_shard_armor_04.png";
-		this.m.Icon = "armor/icon_warp_shard_armor_04.png";
+		this.m.Sprite = "bust_warp_shard_armor_05";
+		this.m.SpriteDamaged = "bust_warp_shard_armor_05_damaged";
+		this.m.SpriteCorpse = "bust_warp_shard_armor_05_dead";
+		this.m.IconLarge = "armor/inventory_warp_shard_armor_05.png";
+		this.m.Icon = "armor/icon_warp_shard_armor_05.png";
 	}
 });
 
