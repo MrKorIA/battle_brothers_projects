@@ -164,7 +164,12 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 					}
 				}
 
-				// Обоз спавним только если у орды есть откуда и куда идти (>= 2 стана)
+				// Ветка «перехват обоза» (из ванильного decisive_battle, адаптирована):
+				// в оригинале обоз шёл между городами — понятно, где его ждать. Станов
+				// орды игрок не знает, поэтому караван спавнится в открытой окрестности
+				// военного лагеря и идёт в самый дальний стан, что дальше, чем игрок
+				// от точки спавна — перехватывать его нужно в погоне (см. сцену
+				// InterceptSupplies). Ветка активна, только если у орды есть стан.
 				local hordeSettlements = [];
 
 				foreach( f in [
@@ -177,47 +182,9 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 
 				r = this.Math.rand(1, 100);
 
-				if (r <= 40 && hordeSettlements.len() >= 2)
+				if (r <= 40 && hordeSettlements.len() >= 1)
 				{
 					this.Flags.set("IsInterceptSupplies", true);
-					local myTile = this.Contract.m.Warcamp.getTile();
-					local lowest_distance = 99999;
-					local highest_distance = 0;
-					local best_start;
-					local best_dest;
-
-					foreach( s in hordeSettlements )
-					{
-						if (s.isIsolated())
-						{
-							continue;
-						}
-
-						local d = s.getTile().getDistanceTo(myTile);
-
-						if (d < lowest_distance)
-						{
-							lowest_distance = d;
-							best_dest = s;
-						}
-
-						if (d > highest_distance)
-						{
-							highest_distance = d;
-							best_start = s;
-						}
-					}
-
-					if (best_start != null && best_dest != null && best_start != best_dest)
-					{
-						this.Flags.set("InterceptSuppliesStart", best_start.getID());
-						this.Flags.set("InterceptSuppliesDest", best_dest.getID());
-					}
-					else
-					{
-						this.Flags.set("IsInterceptSupplies", false);
-						this.Flags.set("IsDeserters", true);
-					}
 				}
 				else if (r <= 80)
 				{
@@ -340,8 +307,10 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 				local properties = this.World.State.getLocalCombatProperties(this.World.State.getPlayer().getPos());
 				properties.CombatID = "Scouts";
 				properties.Music = this.Const.Music.JinTracks;
+				// у фракций Jin/Mgl getBannerSmall() ванильно возвращает "" (не
+				// переопределён) — баннер берём от ближайшего стана орды
 				properties.EnemyBanners = [
-					this.World.FactionManager.getFaction(this.Flags.get("HordeFaction")).getBannerSmall()
+					this.Contract.getNearestHordeSettlement(this.World.State.getPlayer().getTile()).getBanner()
 				];
 				this.World.Contracts.startScriptedCombat(properties, _isPlayerAttacking, true, true);
 			}
@@ -488,7 +457,7 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 			function start()
 			{
 				this.Contract.m.BulletpointsObjectives = [
-					"Перехватить обоз орды, идущий из стана %supply_start% в стан %supply_dest%"
+					"Догнать и уничтожить обоз орды, идущий к стану %supply_dest%"
 				];
 
 				if (this.Contract.m.Warcamp != null && !this.Contract.m.Warcamp.isNull())
@@ -663,8 +632,10 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 						this.World.Assets.getBanner(),
 						this.World.FactionManager.getFaction(this.Contract.getFaction()).getBannerSmall()
 					];
+					// у фракций Jin/Mgl getBannerSmall() ванильно возвращает "" (не
+					// переопределён) — баннер берём от ближайшего стана орды
 					p.EnemyBanners = [
-						this.World.FactionManager.getFaction(this.Flags.get("HordeFaction")).getBannerSmall()
+						this.Contract.getNearestHordeSettlement(this.World.State.getPlayer().getTile()).getBanner()
 					];
 					local allyStrength = 90;
 
@@ -1213,7 +1184,7 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 		this.m.Screens.push({
 			ID = "InterceptSupplies",
 			Title = "В военном лагере...",
-			Text = "[img]gfx/ui/events/event_96.png[/img]%commander% встречает вас в своей палатке. Выглядит он возбуждённым. Рядом с ним стоит невысокого роста мужчина с хитрым и внимательным взглядом. Военачальник говорит скороговоркой.%SPEECH_ON%{Этот вот сорока, вот эта, принёс на хвосте весть: из стана %supply_start% в стан %supply_dest% идёт большой обоз орды. Порох, стрелы, доспехи, жаровни. Если мы его сожжём — чурчжэни в решающий день останутся без зубов! | Здравствуй, наёмник. Мой лазутчик вернулся от степняков и поведал: обоз со снаряжением, столь необходимым орде, идёт из стана %supply_start% в стан %supply_dest%. Я хочу, чтобы ты перехватил и уничтожил его. | Разве лазутчики не чудесны? Взгляни на этого парня. Он сказал мне: господин, большой обоз вышёл из стана %supply_start%, и идёт он в стан %supply_dest%. Оружие, порох, доспехи и многое, многое другое. А я ему ответил: у меня есть именно тот человек, что сумеет извлечь пользу из таких вестей. И этот человек — ты! Отправляйся, перехвати обоз и сожги его дотла. | Ты ведь понимаешь, наёмник, что сражения зачастую выигрываются ещё до их начала? Мой верный лазутчик разнюхал, что прямо сейчас из стана %supply_start% в стан %supply_dest% идёт большой обоз с порохом и сталью для орды. Перехвати его — и орда в решающий день будет куда хуже вооружена. | Известно ли тебе, что однажды я выиграл битву, не обнажив клинка? Мне удалось сжечь обоз со снаряжением, столь нужный врагу, и он просто не сумел сражаться. Мой лазутчик поведал: орда ждёт подобный обоз — из стана %supply_start% в стан %supply_dest%. Перехвати и уничтожь его, и это не закончит войну, но подарит нам весомое преимущество. | Известно ли тебе, что войско без пороха и стрел — это и не войско вовсе? Меж тем, у орды на исходе запасы. Собственно, они до сих пор не напали в полную силу именно потому, что ждут большой обоз из стана %supply_start%. А он идёт в стан %supply_dest%. Мой лазутчик выследил его. Теперь дело за тобой.}%SPEECH_OFF%",
+			Text = "[img]gfx/ui/events/event_96.png[/img]%commander% встречает вас в своей палатке, возбуждённо сжимая в кулаке лоскут карты.%SPEECH_ON%Лазутчики принесли добрую весть: обоз орды — порох, стрелы, доспехи для генеральной битвы — прошёл мимо наших дозорных и теперь тащится к стану %supply_dest%. Он уже в открытом поле, вот здесь, недалеко от лагеря. Догони его, наёмник, и сожги вместе с грузом. Если обоз доберётся — чурчжэни в день битвы будут вооружены на все сто.%SPEECH_OFF% | %commander% указывает вам на карту, где свежим мелом отмечена дорога.%SPEECH_ON%Смотри сюда. Наши люди видели большой обоз орды: повозки с порохом и снаряжением для решающего удара. Он идёт в стан %supply_dest%. Пока он в открытой степи — он наш. Догони и уничтожь, пока груз не ушёл за частокол.%SPEECH_OFF% | У палатки военачальника вы застаёте его с запиской, прикреплённой к карте.%SPEECH_ON%Разведчики доложили: обоз со снаряжением орды вышел к открытой дороге и направляется к стану %supply_dest%. Порох, сталь, жаровни — всё, чтобы генерал орды сомневался не больше, чем мул в пустой хлев. Добудь мне этот обоз, наёмник, и клянусь: в день битвы чурчжэни будут драться палками.%SPEECH_OFF% | %commander% сам выходит вам навстречу — признак того, что дело не терпит.%SPEECH_ON%Обоз орды, наёмник. Большой. Порох, стрелы, всё такое. Наши разведчики засекли его неподалёку — он прошёл мимо дозорных и теперь ползёт к стану %supply_dest%. Ты понимаешь, что это значит? Если он доберётся, генерал получит всё необходимое для генерального сражения. Не дай ему добраться.%SPEECH_OFF%",
 			Image = "",
 			List = [],
 			Options = [
@@ -1229,18 +1200,65 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 			],
 			function start()
 			{
-				local startTile = this.World.getEntityByID(this.Flags.get("InterceptSuppliesStart")).getTile();
-				local destTile = this.World.getEntityByID(this.Flags.get("InterceptSuppliesDest")).getTile();
-				local destSettlement = this.World.getEntityByID(this.Flags.get("InterceptSuppliesDest"));
-				local enemyFaction = this.World.FactionManager.getFaction(destSettlement.getFaction());
-				local party = enemyFaction.spawnEntity(startTile, "Обоз орды", false, this.Const.World.Spawn.HordeRaiders, 110 * this.Contract.getDifficultyMult() * this.Contract.getScaledDifficultyMult(), this.Contract.getMinibossModifier());
+				// Караван спавнится в открытой окрестности лагеря (игрок знает эти
+				// места) и идёт в самый дальний стан, что дальше, чем игрок от точки
+				// спавна — иначе игрок физически не успеет его догнать.
+				local warcampTile = this.Contract.m.Warcamp.getTile();
+				local spawnTile = this.Contract.getTileToSpawnLocation(warcampTile, 4, 8);
+				local dest;
+				local bestD = 0;
+
+				if (spawnTile != null)
+				{
+					local playerD = this.World.State.getPlayer().getTile().getDistanceTo(spawnTile);
+					local hordeSettlements = [];
+
+					foreach( f in [
+						this.World.FactionManager.getFactionOfType(this.Const.FactionType.Jurchen),
+						this.World.FactionManager.getFactionOfType(this.Const.FactionType.Mgl)
+					] )
+					{
+						hordeSettlements.extend(f.getSettlements());
+					}
+
+					foreach( s in hordeSettlements )
+					{
+						if (s.isIsolated())
+						{
+							continue;
+						}
+
+						local d = s.getTile().getDistanceTo(spawnTile);
+
+						if (d >= playerD && d > bestD)
+						{
+							bestD = d;
+							dest = s;
+						}
+					}
+				}
+
+				if (spawnTile == null || dest == null)
+				{
+					// вырожденный случай: ветку сворачиваем в дезертиров
+					this.Flags.set("IsInterceptSupplies", false);
+					this.Flags.set("IsDeserters", true);
+					this.Contract.setScreen("Deserters1");
+					return;
+				}
+
+				this.Flags.set("InterceptSuppliesDest", dest.getID());
+				local destTile = dest.getTile();
+				local enemyFaction = this.World.FactionManager.getFaction(dest.getFaction());
+				local party = enemyFaction.spawnEntity(spawnTile, "Обоз орды", false, this.Const.World.Spawn.HordeRaiders, 110 * this.Contract.getDifficultyMult() * this.Contract.getScaledDifficultyMult(), this.Contract.getMinibossModifier());
 				party.getSprite("base").Visible = false;
-				party.getSprite("banner").setBrush(destSettlement.getBanner());
+				party.getSprite("body").setBrush("horde_cart");
+				party.getSprite("banner").setBrush(dest.getBanner());
 				party.setMirrored(true);
 				party.setVisibleInFogOfWar(true);
 				party.setImportant(true);
 				party.setDiscovered(true);
-				party.setDescription("Обоз Железной Орды: повозки с порохом, стрелами и добычей, идущие между станами орды.");
+				party.setDescription("Обоз Железной Орды: повозки с порохом, стрелами и добычей, идущие к стану орды.");
 				party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 				party.getFlags().set("IsCaravan", true);
 				party.setAttackableByAI(false);
@@ -1307,7 +1325,7 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 		this.m.Screens.push({
 			ID = "SuppliesIntercepted",
 			Title = "После битвы...",
-			Text = "[img]gfx/ui/events/event_60.png[/img]{Вы рассчитывали поживиться на останках обоза, но охранники подожгли пороховые повозки вместе со всем, что могло иметь хоть какую-то ценность. К несчастью, удалось добиться лишь того, что снаряжение не попало к орде. | Вы уничтожили большую часть обоза, а остальное охранники взорвали сами, не желая отдавать добро во вражеские руки. %commander% будет очень доволен подобным исходом. | Сражение было нелёгким, но охрана обоза перебита. К сожалению, чурчжэни применили тактику выжженной земли и взорвали повозки, прежде чем вы добрались до груза. Они понимали: нельзя оставить порох недругам. Тем не менее %commander% останется доволен. | Нужно признать, охрана обоза дала хороший бой, но отряд \'%companyname%\' вырезал её до последнего человека. По крайней мере, вы так полагали, но в разгар битвы одному из чурчжэней удалось выскользнуть и показать отличное знание тактики выжженной земли. Повозки взлетели на воздух одна за другой. Видимо, орда рассудила: раз нам это снаряжение не досталось, то пусть его не получит никто. Мелочно, но умно. Тем не менее %commander%, да и всё его войско, будут довольны. | Обоз был вырезан. Вы рассчитывали захватить пару повозок и поживиться порохом и сталью, но один из чурчжэней успел поднесть факел к бочкам, не желая, дабы ценности достались врагу. Тем не менее орда, вне всяких сомнений, ослаблена.}",
+			Text = "[img]gfx/ui/events/event_60.png[/img]{Вы рассчитывали поживиться на останках обоза, но охранники подожгли пороховые повозки вместе со всем, что могло иметь хоть какую-то ценность. К несчастью, удалось добиться лишь того, что снаряжение не попало к орде. | Вы уничтожили большую часть обоза, а остальное охранники взорвали сами, не желая отдавать добро во вражеские руки. %commander% будет очень доволен подобным исходом. | Сражение было нелёгким, но охрана обоза перебита. К сожалению, чурчжэни применили тактику выжженной земли и взорвали повозки, прежде чем вы добрались до груза. Они понимали: нельзя оставить порох недругам. Тем не менее %commander% останется доволен. | Нужно признать, охрана обоза дала хороший бой, но отряд \'%companyname%\' вырезал её до последнего человека. По крайней мере, вы так полагали, но в разгар битвы одному из чурчжэней удалось выскользнуть и показать отличное знание тактики выжженной земли. Повозки взлетели на воздух одна за другой. Видимо, орда рассудила: раз нам это снаряжение не досталось, то пусть его не получит никто. Мелочно, но умно. Тем не менее %commander%, да и всё его войско, будут довольны. | Обоз был вырезан. Вы рассчитывали захватить пару повозок и поживиться порохом и сталью, но один из чурчжэней успел поднести факел к бочкам, не желая, дабы ценности достались врагу. Тем не менее орда, вне всяких сомнений, ослаблена.}",
 			Image = "",
 			List = [],
 			Options = [
@@ -1817,12 +1835,11 @@ this.horde_decisive_battle_contract <- this.inherit("scripts/contracts/contract"
 			this.m.Flags.get("Bribe")
 		]);
 
-		if (this.m.Flags.get("IsInterceptSupplies"))
+		// InterceptSuppliesDest выбирается только в start() сцены InterceptSupplies —
+		// раньше (экран Overview сразу после принятия) флага ещё нет, без гейта
+		// getEntityByID(null).getName() падает
+		if (this.m.Flags.get("IsInterceptSupplies") && this.m.Flags.has("InterceptSuppliesDest"))
 		{
-			_vars.push([
-				"supply_start",
-				this.World.getEntityByID(this.m.Flags.get("InterceptSuppliesStart")).getName()
-			]);
 			_vars.push([
 				"supply_dest",
 				this.World.getEntityByID(this.m.Flags.get("InterceptSuppliesDest")).getName()

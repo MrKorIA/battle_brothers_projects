@@ -1,11 +1,14 @@
-// Скрытый эффект «сотника гарнизона» контракта «Порох орды».
-// Каждые 3 хода владельца призывает подкрепления с восточного края карты
-// (образец — zmod_davkul_rising-russian/scripts/skills/actives/summon_reinforcements_skill.nut).
-// Эффект, а не активный скилл: срабатывает детерминированно в onTurnEnd, не зависит от AI-агента.
+// Скрытый эффект гарнизона склада контракта «Порох орды».
+// Призывает подкрепления с восточного края карты (образец —
+// zmod_davkul_rising-russian/scripts/skills/actives/summon_reinforcements_skill.nut).
+// Эффект, а не активный скилл: срабатывает детерминированно в onTurnEnd, не зависит
+// от AI-агента. Висит на КАЖДОМ бойце гарнизона, но волна идёт раз в 3 раунда
+// на всё поле — общий гейт в TempFlags активного контракта: первый сработавший
+// хозяин закрывает гейт на 3 раунда, остальные молча выходят. Волны растут
+// (3 → 6 → 12 → 24 → 32, потолок 32) — оставить бочки и фармить
+// подкрепления невыгодно.
 this.horde_call_reinforcements_effect <- this.inherit("scripts/skills/skill", {
-	m = {
-		TurnsLeft = 2
-	},
+	m = {},
 	function create()
 	{
 		this.m.ID = "effects.horde_call_reinforcements";
@@ -22,15 +25,6 @@ this.horde_call_reinforcements_effect <- this.inherit("scripts/skills/skill", {
 
 	function onTurnEnd()
 	{
-		this.m.TurnsLeft = this.m.TurnsLeft - 1;
-
-		if (this.m.TurnsLeft > 0)
-		{
-			return;
-		}
-
-		this.m.TurnsLeft = 3;
-
 		local user = this.getContainer().getActor();
 
 		if (!user.isAlive() || user.isDying() || this.Tactical.Entities.isEnemyRetreating())
@@ -40,66 +34,62 @@ this.horde_call_reinforcements_effect <- this.inherit("scripts/skills/skill", {
 
 		local faction = user.getFaction();
 
-		if (this.Tactical.Entities.getInstancesOfFaction(faction).len() >= 25)
+		if (this.Tactical.Entities.getInstancesOfFaction(faction).len() >= 40)
 		{
 			return;
 		}
 
-		local numSummons = 3;
-		local tileArray = [];
-		local size = this.Tactical.getMapSize();
+		local contract = this.World.Contracts.getActiveContract();
 
-		// восточный край карты, за спинами гарнизона (линия врага — x 19..24)
-		for( local x = size.X - 5; x < size.X - 1; x = ++x )
+		if (contract == null)
 		{
-			for( local y = 6; y < size.Y - 6; y = ++y )
+			return;
+		}
+
+		local round = this.Time.getRound();
+
+		if (contract.m.TempFlags.get("HordeReinfNextRound") > round)
+		{
+			return;
+		}
+
+		// волна растёт: 3, 6, 12, 24, далее 32 (потолок)
+		local wave = contract.m.TempFlags.get("HordeReinfWave");
+		local numSummons = this.Math.min(3 * this.Math.pow(2, wave), 32);
+
+		// площадка призыва — восточный край карты, за спинами гарнизона
+		local size = this.Tactical.getMapSize();
+		local centerX = size.X - 4;
+		local centerY = this.Math.rand(8, size.Y - 8);
+		local tiles = [];
+
+		for( local x = centerX - 3; x <= size.X - 2; x = ++x )
+		{
+			for( local y = centerY - 5; y <= centerY + 5; y = ++y )
 			{
 				if (!this.Tactical.isValidTileSquare(x, y))
 				{
 					continue;
 				}
 
-				tileArray.push(this.Tactical.getTileSquare(x, y));
-			}
-		}
+				local t = this.Tactical.getTileSquare(x, y);
 
-		local spawnTiles = [];
-
-		while (tileArray.len() > 0)
-		{
-			local idx = this.Math.rand(0, tileArray.len() - 1);
-			local startTile = tileArray.remove(idx);
-
-			if (!startTile.IsEmpty || startTile.IsVisibleForPlayer)
-			{
-				continue;
-			}
-
-			spawnTiles = [startTile];
-
-			for( local i = 0; i < 6; i = ++i )
-			{
-				if (startTile.hasNextTile(i))
+				if (t.IsEmpty && !t.IsVisibleForPlayer)
 				{
-					local nextTile = startTile.getNextTile(i);
-
-					if (nextTile.IsEmpty && !nextTile.IsVisibleForPlayer)
-					{
-						spawnTiles.push(nextTile);
-					}
+					tiles.push(t);
 				}
 			}
-
-			if (spawnTiles.len() >= numSummons)
-			{
-				break;
-			}
 		}
 
-		if (spawnTiles.len() < numSummons)
+		if (tiles.len() < numSummons)
 		{
+			// площадки не хватило — волна не выходит, гейт не тратим
 			return;
 		}
+
+		// волна выходит: закрываем гейт на 3 раунда и двигаем счётчик
+		contract.m.TempFlags.set("HordeReinfNextRound", round + 3);
+		contract.m.TempFlags.set("HordeReinfWave", wave + 1);
 
 		local scripts = [
 			"scripts/entity/tactical/humans/nomad_ironpagoda",
@@ -109,12 +99,24 @@ this.horde_call_reinforcements_effect <- this.inherit("scripts/skills/skill", {
 
 		for( local i = 0; i < numSummons; i = ++i )
 		{
-			local spawn = this.Tactical.spawnEntity(scripts[this.Math.rand(0, scripts.len() - 1)], spawnTiles[i].Coords);
+			local t = tiles.remove(this.Math.rand(0, tiles.len() - 1));
+			local spawn = this.Tactical.spawnEntity(scripts[this.Math.rand(0, scripts.len() - 1)], t.Coords);
 			spawn.setFaction(faction);
 			spawn.assignRandomEquipment();
+			// новички тоже зовут следующие волны: пока жив хоть один боец орды,
+			// склад не остаётся без подкреплений (волна всё равно одна на всех —
+			// общий гейт по раундам)
+			spawn.getSkills().add(this.new("scripts/skills/effects/horde_call_reinforcements_effect"));
 		}
 
-		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(user) + " подаёт сигнал — со стороны лагеря прибывает подкрепление!");
+		if (("ClassName" in user) && user.ClassName == "barrel_of_gunpowder")
+		{
+			this.Tactical.EventLog.log("Со стороны лагеря прибывает очередное подкрепление орды!");
+		}
+		else
+		{
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(user) + " подаёт сигнал — со стороны лагеря прибывает подкрепление!");
+		}
 	}
 
 });

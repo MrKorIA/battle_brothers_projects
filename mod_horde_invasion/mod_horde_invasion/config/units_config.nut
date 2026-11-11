@@ -41,6 +41,12 @@ addEntityType("HordeGeneral", "Генерал Железной Орды", "ге�
 	FatigueRecoveryRate = 25
 };
 
+// Имена и титулы Генерала — полководцы средневековой китайско-чурчжэньской
+// армии клана Ваньянь (основатели империи Цзинь): исторические якоря
+// (Агуда, Уцимай) + правдоподобные имена того же звучания.
+::Const.Strings.HordeGeneralNames <- ["Ваньянь Агуда", "Ваньянь Уцимай", "Ваньянь Уяшу", "Ваньянь Хэла", "Ваньянь Мэнъэ", "Ваньянь Лушкуй", "Ваньянь Сянлянь", "Моувэнь Тяньшэн", "Уцимай Малань", "Хэлэбу Сюйянь"];
+::Const.Strings.HordeGeneralTitles <- ["Победоносный", "Непобеждённый", "Меч Великого Хана", "Опора Орды", "Гроза Западных Марок", "Сокол хана", "Железный полководец", "Владыка степей", "Гром десяти тысяч", "Хранитель Чёрного Пороха"];
+
 ::Const.World.Spawn.Troops.HordeGeneral <-
 {
 	ID = this.Const.EntityType.HordeGeneral,
@@ -49,8 +55,8 @@ addEntityType("HordeGeneral", "Генерал Железной Орды", "ге�
 	Cost = 80,
 	Row = 1,
 	Script = "scripts/entity/tactical/humans/horde_general",
-	NameList = this.Const.Strings.NomadCenturionNames,
-	TitleList = this.Const.Strings.NomadCenturionTitles
+	NameList = this.Const.Strings.HordeGeneralNames,
+	TitleList = this.Const.Strings.HordeGeneralTitles
 };
 
 // Кризисные actions вешаем на трейт Jurchen (Mgl в кризисе союзна — силы набирает Jurchen).
