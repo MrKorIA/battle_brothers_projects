@@ -4,8 +4,8 @@ this.horde_general_helmet <- this.inherit("scripts/items/helmets/helmet", {
 	{
 		this.helmet.create();
 		this.m.ID = "armor.head.horde_general";
-		this.m.Name = "Шлем генерала Железной Орды";
-		this.m.Description = "Изящный, но в то же время прочный шлем иноземного генерала Железной Орды.";
+		this.m.Name = "Шлем генерала Великой Орды";
+		this.m.Description = "Изящный и вместе с тем прочный шлем иноземного генерала Великой Орды.";
 		this.m.ShowOnCharacter = true;
 		this.m.HideCharacterHead = false;
 		this.m.HideCorpseHead = false;

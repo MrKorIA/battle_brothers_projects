@@ -1,4 +1,4 @@
-// Юнит-босс «Генерал Железной Орды» + регистрация кризисных actions Jurchen.
+// Юнит-босс «Генерал Великой Орды» + регистрация кризисных actions Jurchen.
 // ВАЖНО: файл включается из load.nut внутри queue(">mod_msu", ">mod_jin", ">mod_mgl", ...) —
 // Const.World.Spawn.Troops.* обеих фракций гарантированно уже загружены.
 
@@ -19,7 +19,7 @@ local function addEntityType( _id, _name, _namePlural, _icon )
 	::Const.EntityIcon.push(_icon);
 }
 
-addEntityType("HordeGeneral", "Генерал Железной Орды", "генералы Железной Орды", "horde_general_orientation");
+addEntityType("HordeGeneral", "Генерал Великой Орды", "генералы Великой Орды", "horde_general_orientation");
 
 ::Const.Tactical.Actor.HordeGeneral <- {
 	XP = 750,

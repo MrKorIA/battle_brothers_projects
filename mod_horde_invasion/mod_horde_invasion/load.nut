@@ -2,7 +2,7 @@
 ::include("mod_horde_invasion/config/units_config");
 ::include("mod_horde_invasion/config/spawnlist_horde");
 
-// Хуки и конфиг кризиса «Нашествие Железной Орды»
+// Хуки и конфиг кризиса «Нашествие Великой Орды»
 ::includeFiles(::IO.enumerateFiles("mod_horde_invasion/hooks"));
 
 // JS-хук: радиокнопка выбора кризиса в меню новой кампании

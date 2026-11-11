@@ -1,5 +1,5 @@
 ::HordeInvasion.HooksMod.hook("scripts/factions/faction_manager", function(q) {
-	// Предикат кризиса «Нашествие Железной Орды»
+	// Предикат кризиса «Нашествие Великой Орды»
 	q.isHordeInvasion <- { function isHordeInvasion()
 	{
 		return this.m.GreaterEvil.Type == ::Const.World.GreaterEvilType.Horde && this.m.GreaterEvil.Phase == ::Const.World.GreaterEvilPhase.Live;

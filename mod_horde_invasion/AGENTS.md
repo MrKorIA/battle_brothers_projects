@@ -1,4 +1,4 @@
-# Проект: mod_horde_invasion (Нашествие Железной Орды)
+# Проект: mod_horde_invasion (Нашествие Великой Орды)
 
 Мод кризиса для Battle Brothers (Squirrel, .nut). Создаётся с нуля по TZ.md.
 Структура мода — по образцу bb_vanilla_plus.

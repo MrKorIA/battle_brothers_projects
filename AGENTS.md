@@ -8,7 +8,7 @@
 | Каталог | Zip в data | Профиль |
 |---|---|---|
 | `bb_vanilla_plus/` | `mod_vanilla_plus.zip` | Основной контент-мод. Деревья перков магов (piro/crio/electro/shaman/demon/vestal), предыстории, интеграция с AC |
-| `mod_horde_invasion/` | `mod_horde_invasion.zip` | Кризис «Нашествие Жёлёной Орды». ТЗ: `mod_horde_invasion/TZ.md`. Депендсы: mod_Jurchen + mod_Scourge_of_God |
+| `mod_horde_invasion/` | `mod_horde_invasion.zip` | Кризис «Нашествие Великой Орды» (объединённые силы Jurchen+Mgl; фракция Mgl — «Железная Орда»). ТЗ: `mod_horde_invasion/TZ.md`. Депендсы: mod_Jurchen + mod_Scourge_of_God |
 | `mod_Scourge_of_God/` | `mod_Scourge_of_God.zip` | Фракция Mgl («Скверна Бога»). Юниты, курган хана, named-предметы |
 | `mod_Jurchen/` | `mod_Jurchen.zip` | Фракция чучженей. Юниты, лагерные шаблоны, named-оружие, бочки пороха |
 | `AC_2-russian/` | `AC_2-russian.zip` | Animal Companions (рус.). Типы компаньонов 20–26 — существа bb_vanilla_plus |

@@ -2,7 +2,7 @@
 
 ## Реализовано
 
-- `scripts/ambitions/ambitions/defeat_horde_ambition.nut` — амбиция «Сломить Железную Орду»
+- `scripts/ambitions/ambitions/defeat_horde_ambition.nut` — амбиция «Сломить Великую Орду»
   (образец defeat_undead_ambition): гейты isHordeInvasion + make_nobles_aware + репутация 1500;
   успех — ванильная концовка кризиса (GE.Type сброшен, LastType == Horde).
 - `scripts/events/events/crisis/horde_intro_event.nut` — интро Live-фазы (новость crisis_horde_start,

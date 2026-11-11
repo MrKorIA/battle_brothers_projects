@@ -3,7 +3,7 @@ this.horde_camp_location <- this.inherit("scripts/entity/world/location", {
 	function create()
 	{
 		this.location.create();
-		this.m.Name = "Стан Железной Орды";
+		this.m.Name = "Стан Великой Орды";
 		this.m.TypeID = "location.horde_camp";
 		this.m.LocationType = this.Const.World.LocationType.Lair;
 		this.m.CombatLocation.Template[0] = "tactical.jin_camp";

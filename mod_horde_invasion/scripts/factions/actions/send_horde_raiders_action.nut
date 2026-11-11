@@ -81,9 +81,9 @@ this.send_horde_raiders_action <- this.inherit("scripts/factions/faction_action"
 
 		local settlement = this.pickWeightedRandom(settlements);
 		settlement.setLastSpawnTimeToNow();
-		local party = this.getFaction().spawnEntity(settlement.getTile(), "Рейдеры Орды", false, this.Const.World.Spawn.HordeRaiders, this.Math.rand(75, 120) * this.getReputationToDifficultyLightMult());
+		local party = this.getFaction().spawnEntity(settlement.getTile(), "Рейдеры Великой Орды", false, this.Const.World.Spawn.HordeRaiders, this.Math.rand(75, 120) * this.getReputationToDifficultyLightMult());
 		party.getSprite("banner").setBrush(settlement.getBanner());
-		party.setDescription("Тяжёлый отряд Железной Орды, охотящийся на всех, кто пытается пересечь патрулируемые им территории.");
+		party.setDescription("Тяжёлый отряд Великой Орды, охотящийся на всех, кто пытается пересечь патрулируемые им территории.");
 		party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 		party.getFlags().set("IsRandomlySpawned", true);
 		party.getLoot().Money = this.Math.rand(50, 200);

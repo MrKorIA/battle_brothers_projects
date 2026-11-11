@@ -64,7 +64,7 @@ this.horde_break_siege_contract <- this.inherit("scripts/contracts/contract", {
 			{
 				this.Contract.m.BulletpointsObjectives = [
 					"Отправиться в местечко %objective%",
-					"Снять осаду Железной Орды"
+					"Снять осаду Великой Орды"
 				];
 
 				if (this.Math.rand(1, 100) <= this.Const.Contracts.Settings.IntroChance)
@@ -336,7 +336,7 @@ this.horde_break_siege_contract <- this.inherit("scripts/contracts/contract", {
 		this.m.Screens.push({
 			ID = "Task",
 			Title = "Переговоры",
-			Text = "[img]gfx/ui/events/event_45.png[/img]{%employer% протягивает вам кубок вина.%SPEECH_ON%Выпьем.%SPEECH_OFF%Вы почти уверены, что ощущаете в его дыхании привкус нехороших новостей. Залпом выпив вино, вы киваете собеседнику. Он кивает вам в ответ.%SPEECH_ON%Окрестности кишат ордой, и, похоже, она хочет взять %objective%.%SPEECH_OFF%Он снова наполняет кубок, выпивает, вновь наливает.%SPEECH_ON%Если поселение падёт, то и все окрестные земли будут потеряны. Говорят, хан учёл ошибки прошлых нашествий — теперь у его воинов и осадные машины, и порох. Мои шпионы докладывают, что осада только началась, орда ещё не собрала основные силы воедино, а это значит, что мы можем ударить и разбить их до того, как будет слишком поздно. Отправляйся туда и сними осаду!%SPEECH_OFF% | %employer% окружён стражниками. Их шлемы сняты, и вы видите угрюмые лица, мокрые от пота. Некоторые дрожат, и даже доспехи не в состоянии это скрыть. %employer%, заметив ваш отряд, подзывает вас взмахом руки.%SPEECH_ON%Наёмник! У меня ужасные новости. Времени мало, расскажу кратко: орда вторглась в эти земли и может захватить %objective%. Они осадили его, но, судя по донесениям, ещё не обладают численным перевесом. Мне нужно, чтобы ты отправился туда и уничтожил их до того, как будет слишком поздно.%SPEECH_OFF% | %employer% стоит в окружении писцов, сменяющих друг друга со свежими донесениями. Наконец он обращает внимание на вас.%SPEECH_ON%Наёмник, тебе раньше приходилось снимать осаду? Орда осадила %objective%. У нас мало времени: они скоро возьмут это проклятое поселение, а затем и все окружающие земли! Тяжёлая пехота, лучники, осадные машины — кто бы мог подумать, что степняки научатся воевать осадой. Снеси их, пока город не пал!%SPEECH_OFF%}",
+			Text = "[img]gfx/ui/events/event_45.png[/img]{%employer% протягивает вам кубок вина.%SPEECH_ON%Выпьем.%SPEECH_OFF%Вы почти уверены, что ощущаете в его дыхании привкус нехороших новостей. Залпом выпив вино, вы киваете собеседнику. Он кивает вам в ответ.%SPEECH_ON%Окрестности кишат ордой, и, похоже, она хочет взять %objective%.%SPEECH_OFF%Он снова наполняет кубок, выпивает, вновь наливает.%SPEECH_ON%Если поселение падёт, то и все окрестные земли будут потеряны. Говорят, хан учёл ошибки прошлых нашествий — теперь у его воинов и осадные машины, и порох. Мои шпионы докладывают, что осада только началась, орда ещё не собрала основные силы воедино, а это значит, что мы можем ударить и разбить их до того, как будет слишком поздно. Отправляйся туда и сними осаду!%SPEECH_OFF% | %employer% окружён стражниками. Их шлемы сняты, и вы видите угрюмые лица, мокрые от пота. Некоторые дрожат, и даже доспехи не в состоянии это скрыть. %employer%, заметив ваш отряд, подзывает вас взмахом руки.%SPEECH_ON%Наёмник! У меня ужасные новости. Времени мало, расскажу кратко: орда вторглась в эти земли и может захватить %objective%. Они осадили его, но, судя по донесениям, ещё не обладают численным перевесом. Мне нужно, чтобы ты отправился туда и уничтожил их до того, как будет слишком поздно.%SPEECH_OFF% | %employer% стоит в окружении писцов, сменяющих друг друга со свежими донесениями. Наконец он обращает внимание на вас.%SPEECH_ON%Наёмник, тебе раньше приходилось снимать осаду? Орда осадила %objective%. У нас мало времени: они скоро возьмут это проклятое поселение, а затем и все окружающие земли! Тяжёлая пехота, лучники, осадные машины — кто бы мог подумать, что степняки научатся брать города осадой. Снеси их, пока город не пал!%SPEECH_OFF%}",
 			Image = "",
 			List = [],
 			ShowEmployer = true,
@@ -651,7 +651,7 @@ this.horde_break_siege_contract <- this.inherit("scripts/contracts/contract", {
 
 			local party = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Jurchen).spawnEntity(tile, "Осадные орудия", false, this.Const.World.Spawn.HordeRaiders, this.Math.rand(100, 120) * this.getDifficultyMult() * this.getScaledDifficultyMult(), this.getMinibossModifier());
 			this.m.UnitsSpawned.push(party.getID());
-			party.setDescription("Воины Железной Орды и их осадные орудия.");
+			party.setDescription("Воины Великой Орды и их осадные орудия.");
 			local numSiegeUnits = this.Math.rand(3, 4);
 
 			for( local j = 0; j < numSiegeUnits; j = j )
@@ -734,7 +734,7 @@ this.horde_break_siege_contract <- this.inherit("scripts/contracts/contract", {
 
 			local party = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Mgl).spawnEntity(tile, "Воины орды", false, this.Const.World.Spawn.MglRaiders, this.Math.rand(90, 110) * this.getDifficultyMult() * this.getScaledDifficultyMult(), this.getMinibossModifier());
 			this.m.UnitsSpawned.push(party.getID());
-			party.setDescription("Воины Железной Орды, идущие на войну.");
+			party.setDescription("Воины Великой Орды, идущие на войну.");
 			party.getLoot().ArmorParts = this.Math.rand(0, 15);
 			party.getLoot().Ammo = this.Math.rand(0, 10);
 			party.addToInventory("supplies/rice_item");

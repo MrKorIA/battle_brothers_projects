@@ -1,4 +1,4 @@
-// Армия Железной Орды в кризис: тяжёлый отряд идёт к ближайшему человеческому поселению,
+// Армия Великой Орды в кризис: тяжёлый отряд идёт к ближайшему человеческому поселению,
 // громит приписные локации (raid_order) или само поселение (destroy_order), возвращается.
 // Образец — data_014/scripts/factions/actions/send_greenskin_army_action.nut.
 this.send_horde_army_action <- this.inherit("scripts/factions/faction_action", {
@@ -125,9 +125,9 @@ this.send_horde_army_action <- this.inherit("scripts/factions/faction_action", {
 			}
 		}
 
-		local party = this.getFaction().spawnEntity(myTile, "Армия Железной Орды", false, this.Const.World.Spawn.HordeRaiders, this.Math.rand(90, 130) * this.getScaledDifficultyMult());
+		local party = this.getFaction().spawnEntity(myTile, "Армия Великой Орды", false, this.Const.World.Spawn.HordeRaiders, this.Math.rand(90, 130) * this.getScaledDifficultyMult());
 		party.getSprite("banner").setBrush(origin.getBanner());
-		party.setDescription("Армия Железной Орды, идущая на войну против человеческих поселений.");
+		party.setDescription("Армия Великой Орды, идущая на войну против человеческих поселений.");
 		party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 		party.getFlags().set("IsRandomlySpawned", true);
 		party.setLooting(false);

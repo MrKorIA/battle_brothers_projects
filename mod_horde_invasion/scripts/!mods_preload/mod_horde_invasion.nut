@@ -1,6 +1,6 @@
 ::HordeInvasion <- {
 	ID = "mod_horde_invasion",
-	Name = "Нашествие Железной Орды",
+	Name = "Нашествие Великой Орды",
 	Version = "0.1.0"
 }
 

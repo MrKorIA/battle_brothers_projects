@@ -375,7 +375,7 @@ this.horde_free_prisoners_contract <- this.inherit("scripts/contracts/contract",
 							local tile = this.Contract.getTileToSpawnLocation(playerTile, 10, 15);
 							local party = this.World.FactionManager.getFaction(camp.getFaction()).spawnEntity(tile, "Воины орды", false, this.Const.World.Spawn.HordeRaiders, 120 * this.Contract.getDifficultyMult() * this.Contract.getScaledDifficultyMult(), this.Contract.getMinibossModifier());
 							party.getSprite("banner").setBrush(camp.getBanner());
-							party.setDescription("Отряд Железной Орды, угоняющий пленных.");
+							party.setDescription("Отряд Великой Орды, угоняющий пленных.");
 							party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 							this.Contract.m.UnitsSpawned.push(party);
 							party.getLoot().ArmorParts = this.Math.rand(0, 25);
@@ -434,7 +434,7 @@ this.horde_free_prisoners_contract <- this.inherit("scripts/contracts/contract",
 		this.m.Screens.push({
 			ID = "Battlesite3",
 			Title = "После битвы...",
-			Text = "[img]gfx/ui/events/event_53.png[/img]{Воины орды повержены, и вы входите в их стан. Пленники сидят связанные, с повязками на глазах, под стеной из колючего кустарника. Вы приказываете освободить их. Уже смирившиеся со своей судьбой люди со слезами благодарят вас. Обычный рабочий день, правда. | Орда разбита, и вы спешно обыскиваете стан. Пленников находят в шатре, связанных вместе. После освобождения они едва могут говорить, но их глаза многое рассказывают о пережитом. %randombrother% приносит отрезы ткани, чтобы они могли одеться перед возвращением. | Со степняками покончено. Обыскивая лагерь, вы слышите людские крики из-за шатра. %randombrother% откидывает полог — там сотник орды с обнажённым клинком над связанными людьми. Наёмник одним движением выхватывает меч и рубит незадачливого стражника, прежде чем тот понимает, что удача отвернулась. Пленники, перебивая друг друга, благодарят вас. %employer% будет рад: хотя бы некоторые из его людей вернутся домой.}",
+			Text = "[img]gfx/ui/events/event_53.png[/img]{Воины орды повержены, и вы входите в их стан. Пленники сидят связанные, с повязками на глазах, под стеной из колючего кустарника. Вы приказываете освободить их. Уже смирившиеся со своей судьбой люди со слезами благодарят вас. Обычный рабочий день, правда. | Орда разбита, и вы спешно обыскиваете стан. Пленников находят в шатре, связанных вместе. После освобождения они едва могут говорить, но их глаза многое рассказывают о пережитом. %randombrother% приносит отрезы ткани, чтобы они могли одеться перед возвращением. | Со степняками покончено. Обыскивая лагерь, вы слышите людские крики из-за шатра. %randombrother% откидывает полог — там сотник орды с обнажённым клинком над связанными людьми. Наёмник одним движением выхватывает меч и рубит незадачливого стражника, прежде чем тот понял, что удача отвернулась. Пленники, перебивая друг друга, благодарят вас. %employer% будет рад: хотя бы некоторые из его людей вернутся домой.}",
 			Image = "",
 			List = [],
 			Options = [
@@ -500,7 +500,7 @@ this.horde_free_prisoners_contract <- this.inherit("scripts/contracts/contract",
 
 				},
 				{
-					Text = "Этому не бывать. Проваливай отсюда. ",
+					Text = "Этому не бывать. Проваливай отсюда.",
 					function getResult()
 					{
 						this.World.getTemporaryRoster().clear();
@@ -714,7 +714,7 @@ this.horde_free_prisoners_contract <- this.inherit("scripts/contracts/contract",
 		this.m.Screens.push({
 			ID = "EmptyCamp",
 			Title = "По мере приближения...",
-			Text = "[img]gfx/ui/events/event_53.png[/img]{Вы врываетесь в стан орды с оружием наготове, но застаёте его пустым. Котелки с рисом перевёрнуты, костры брошены. %randombrother% приоткрывает полог шатра и находит связанных пленников. Они благодарят древних богов, завидев вас. %employer% будет доволен, а вы радуетесь, что орда сдалась без боя. | Лагерь орды покинут. Следы уходят вдаль — уходили в спешке, оставив обоз. %randombrother% подзывает вас: пленники сидят в яме под колючей решёткой. Вы открываете крышку и помогаеть им выбраться. Не все выжили, но %employer% будет счастлив и нескольким везучим. | Вы врываетесь в стан орды — пусто. Поваленные шатры, обугленные кострища. %randombrother% смеётся.%SPEECH_ON%Похоже, они знали, что отряд \'%companyname%\' идёт.%SPEECH_OFF%Внезапно из шатра раздаётся крик. Внутри — люди с завязанными глазами, забившиеся в угол. У кого-то не хватает пальцев, кто-то лишён глаза — следы недель в полону. Вы качаете головой и приказываете позаботиться о пострадавших.}",
+			Text = "[img]gfx/ui/events/event_53.png[/img]{Вы врываетесь в стан орды с оружием наготове, но застаёте его пустым. Котелки с рисом перевёрнуты, костры брошены. %randombrother% приоткрывает полог шатра и находит связанных пленников. Они благодарят древних богов, завидев вас. %employer% будет доволен, а вы радуетесь, что орда сдалась без боя. | Лагерь орды покинут. Следы уходят вдаль — уходили в спешке, оставив обоз. %randombrother% подзывает вас: пленники сидят в яме под колючей решёткой. Вы открываете крышку и помогаете им выбраться. Не все выжили, но несколько человек дождались спасения — %employer% будет доволен. | Вы врываетесь в стан орды — пусто. Поваленные шатры, обугленные кострища. %randombrother% смеётся.%SPEECH_ON%Похоже, они знали, что отряд \'%companyname%\' идёт.%SPEECH_OFF%Внезапно из шатра раздаётся крик. Внутри — люди с завязанными глазами, забившиеся в угол. У кого-то не хватает пальцев, кто-то лишён глаза — следы недель в полону. Вы качаете головой и приказываете позаботиться о пострадавших.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -751,7 +751,7 @@ this.horde_free_prisoners_contract <- this.inherit("scripts/contracts/contract",
 					{
 						this.World.Assets.addBusinessReputation(this.Const.World.Assets.ReputationOnContractSuccess);
 						this.World.Assets.addMoney(this.Contract.m.Payment.getOnCompletion());
-						this.World.FactionManager.getFaction(this.Contract.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationNobleContractSuccess, "Освободил пленников из лагерей Железной Орды");
+						this.World.FactionManager.getFaction(this.Contract.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationNobleContractSuccess, "Освободил пленников из лагерей Великой Орды");
 						this.World.Contracts.finishActiveContract();
 
 						if (this.World.FactionManager.isHordeInvasion())

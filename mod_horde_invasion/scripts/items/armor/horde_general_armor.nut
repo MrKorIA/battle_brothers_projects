@@ -4,8 +4,8 @@ this.horde_general_armor <- this.inherit("scripts/items/armor/armor", {
 	{
 		this.armor.create();
 		this.m.ID = "armor.body.horde_general";
-		this.m.Name = "Доспех генерала Железной Орды";
-		this.m.Description = "Изящный, но в то же время прочный доспех иноземного генерала Железной Орды.";
+		this.m.Name = "Доспех генерала Великой Орды";
+		this.m.Description = "Изящный и вместе с тем прочный доспех иноземного генерала Великой Орды.";
 		this.m.IsDroppedAsLoot = true;
 		this.m.ShowOnCharacter = true;
 		this.m.Variant = 1;

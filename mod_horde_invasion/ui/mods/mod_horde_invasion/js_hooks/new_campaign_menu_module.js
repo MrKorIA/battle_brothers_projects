@@ -1,4 +1,4 @@
-// Мод «Нашествие Железной Орды»: радиокнопка кризиса в меню новой кампании.
+// Мод «Нашествие Великой Орды»: радиокнопка кризиса в меню новой кампании.
 // Ванильный файл не перекрывается — оборачиваем прототип (паттерн bb_vanilla_plus).
 var HordeInvasionHooks = HordeInvasionHooks || {};
 
@@ -11,7 +11,7 @@ NewCampaignMenuModule.prototype.buildCompanyCrisisSelectionPanel = function (con
 	this.mCompanyCrisisSelectionPanel.find('.permanent-destruction-control:first').before(evilHordeControl);
 	this.mEvilHordeCheckbox = $('<input type="radio" id="cb-evil-horde" name="evil"/>');
 	evilHordeControl.append(this.mEvilHordeCheckbox);
-	this.mEvilHordeLabel = $('<label class="text-font-normal font-color-subtitle" for="cb-evil-horde">Нашествие Железной Орды</label>');
+	this.mEvilHordeLabel = $('<label class="text-font-normal font-color-subtitle" for="cb-evil-horde">Нашествие Великой Орды</label>');
 	evilHordeControl.append(this.mEvilHordeLabel);
 	this.mEvilHordeCheckbox.iCheck({
 		checkboxClass: 'icheckbox_flat-orange',

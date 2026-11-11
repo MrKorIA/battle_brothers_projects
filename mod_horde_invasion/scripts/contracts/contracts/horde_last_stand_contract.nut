@@ -399,7 +399,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 		this.m.Screens.push({
 			ID = "RaidersAtTheWalls",
 			Title = "%objective%",
-			Text = "[img]gfx/ui/events/event_29.png[/img]{%objective%. Когда вы приблизились к нему, %randombrother%, идущий впереди, внезапно выкрикивает.%SPEECH_ON%Командир, быстрее!%SPEECH_OFF%Вы бросаетесь к нему и смотрите вперёд. Вокруг города ползут цепочки степняков — лучники с дальнобойными луками уже отмеряют дистанцию до стен. Отряду \'%companyname%\' придётся пробиваться сквозь них, чтобы попасть внутрь. | Навстречу отряду \'%companyname%\' бежит мужчина. Он прижимает к себе окровавленную руку. Он в исступлении кричит.%SPEECH_ON%Прочь, прочь! Здесь нет ничего, кроме смерти!%SPEECH_OFF%%randombrother% сбивает незнакомца с ног, обнажая оружие. Вы же, взглянув вперёд, придерживаете его руку: %objective% уже обложен со всех сторон — зажигательные стрелы, огненные бочки, степные лучники. Отряд должен действовать быстро! | Вы прибыли вовремя: стены %objective% уже осаждают воины орды! | Почти дойдя до цели, вы вынуждены остановиться: впереди, у самых стен %objective%, разворачиваются цепи латников с алебардами. Передовой отряд орды. Отряду \'%companyname%\' предстоит пробиваться в город с боем!}",
+			Text = "[img]gfx/ui/events/event_29.png[/img]{%objective%. Когда вы приблизились к нему, %randombrother%, идущий впереди, внезапно выкрикивает.%SPEECH_ON%Командир, быстрее!%SPEECH_OFF%Вы бросаетесь к нему и смотрите вперёд. Вокруг города ползут цепочки степняков — лучники с дальнобойными луками уже отмеряют дистанцию до стен. Отряду \'%companyname%\' придётся пробиваться сквозь них, чтобы попасть внутрь. | Навстречу отряду \'%companyname%\' бежит мужчина. Он прижимает к себе окровавленную руку и в исступлении кричит.%SPEECH_ON%Прочь, прочь! Здесь нет ничего, кроме смерти!%SPEECH_OFF%%randombrother% сбивает незнакомца с ног, обнажая оружие. Вы же, взглянув вперёд, придерживаете его руку: %objective% уже обложен со всех сторон — зажигательные стрелы, огненные бочки, степные лучники. Отряд должен действовать быстро! | Вы прибыли вовремя: стены %objective% уже осаждают воины орды! | Почти дойдя до цели, вы вынуждены остановиться: впереди, у самых стен %objective%, разворачиваются цепи латников с алебардами. Передовой отряд орды. Отряду \'%companyname%\' предстоит пробиваться в город с боем!}",
 			Image = "",
 			List = [],
 			Options = [
@@ -491,7 +491,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 		this.m.Screens.push({
 			ID = "Militia1",
 			Title = "После битвы...",
-			Text = "[img]gfx/ui/events/event_46.png[/img]{Вы выиграли это сражение, чего не скажешь об ополчении: стражники понесли столь тяжёлые потери, что большинство жителей собираются бежать из деревни, не желая помогать с её обороной! | Победа! Но какой ценой! В бою пало так много ополченцев, что никто из жителей города %objective%, похоже, не желает восполнять их ряды!}",
+			Text = "[img]gfx/ui/events/event_46.png[/img]{Вы выиграли это сражение, чего не скажешь об ополчении: стражники понесли столь тяжёлые потери, что большинство жителей собираются бежать из города, не желая помогать с её обороной! | Победа! Но какой ценой! В бою пало так много ополченцев, что никто из жителей города %objective%, похоже, не желает восполнять их ряды!}",
 			Image = "",
 			List = [],
 			Options = [
@@ -594,7 +594,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 		this.m.Screens.push({
 			ID = "Success1",
 			Title = "По возвращении...",
-			Text = "[img]gfx/ui/events/event_04.png[/img]{Вы входите в %townname% и видите, что %employer% стоит на балконе. Он подзывает вас, а его страж кидает кошель с кронами в ваши руки.%SPEECH_ON%Наёмник! Рад, что ты вернулся! Мои пташки уже напели мне о твоих свершениях. Надеюсь, ты потратишь эти кроны с умом!%SPEECH_OFF%Затем он поворачивается и уходит, прежде чем вы успеваете ответить. Крестьяне разглядывают вас, словно путевой знак, указывающий на места, в которые они даже и не подумают отправиться. | Ваш наниматель, %employer%, отвешивает несколько пощёчин какому-то подростку, затем пинает его, опрокидывая в грязь. Заметив вас, дворянин вытирает пот со лба и говорит.%SPEECH_ON%Это тебя не касается.%SPEECH_OFF%Парнишка кое-как поднимается на ноги. К нему подходит слуга, но дворянин отнимает тряпку и швыряет её в сторону.%SPEECH_ON%Ты думаешь, так он чему-нибудь научится? Если тебе так хочется кому-то помочь — помоги этому наёмнику. Он удержал город перед лицом орды и заслужил свои %reward_completion% крон. Всё ясно?%SPEECH_OFF%Слуга кивает и быстро уходит. Вы же стоите, наблюдая за продолжающимся избиением. Спустя несколько минут появляется слуга с кошелем. Он передаёт его вам и шепчет, что вам стоит поскорее уйти. | %employer% склонился над своим столом, уперевшись в него руками. Он опустил голову, разглядывая лежащий перед ним степной колчан.%SPEECH_ON%Нашли в овраге неподалёку от города. Опустой. Есть идеи, что это значит?%SPEECH_OFF%Вы предполагаете, что кто-то бросил его в спешке. Дворянин усмехается.%SPEECH_ON%Нет. Сдаётся мне, это как-то связано с тобой, наёмник. Ты разбил их у городских стен, и орда откатилась обратно в степь. Вот твоя плата — %reward_completion% крон. Потрать их на то, чтобы в следующий раз у меня оказалось больше людей вроде тебя.%SPEECH_OFF%}",
+			Text = "[img]gfx/ui/events/event_04.png[/img]{Вы входите в %townname% и видите, что %employer% стоит на балконе. Он подзывает вас, а его страж кидает кошель с кронами в ваши руки.%SPEECH_ON%Наёмник! Рад, что ты вернулся! Мои пташки уже напели мне о твоих свершениях. Надеюсь, ты потратишь эти кроны с умом!%SPEECH_OFF%Затем он поворачивается и уходит, прежде чем вы успеваете ответить. Крестьяне разглядывают вас, словно путевой знак, указывающий на места, в которые они даже и не подумают отправиться. | Ваш наниматель, %employer%, отвешивает несколько пощёчин какому-то подростку, затем пинает его, опрокидывая в грязь. Заметив вас, дворянин вытирает пот со лба и говорит.%SPEECH_ON%Это тебя не касается.%SPEECH_OFF%Парнишка кое-как поднимается на ноги. К нему подходит слуга, но дворянин отнимает тряпку и швыряет её в сторону.%SPEECH_ON%Ты думаешь, так он чему-нибудь научится? Если тебе так хочется кому-то помочь — помоги этому наёмнику. Он удержал город перед лицом орды и заслужил свои %reward_completion% крон. Всё ясно?%SPEECH_OFF%Слуга кивает и быстро уходит. Вы же стоите, наблюдая за продолжающимся избиением. Спустя несколько минут появляется слуга с кошелем. Он передаёт его вам и шепчет, что вам стоит поскорее уйти. | %employer% склонился над своим столом, уперевшись в него руками. Он опустил голову, разглядывая лежащий перед ним степной колчан.%SPEECH_ON%Нашли в овраге неподалёку от города. Пустой. Есть идеи, что это значит?%SPEECH_OFF%Вы предполагаете, что кто-то бросил его в спешке. Дворянин усмехается.%SPEECH_ON%Нет. Сдаётся мне, это как-то связано с тобой, наёмник. Ты разбил их у городских стен, и орда откатилась обратно в степь. Вот твоя плата — %reward_completion% крон. Потрать их на то, чтобы в следующий раз у меня оказалось больше людей вроде тебя.%SPEECH_OFF%}",
 			Image = "",
 			Characters = [],
 			List = [],
@@ -606,7 +606,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 					{
 						this.World.Assets.addBusinessReputation(this.Const.World.Assets.ReputationOnContractSuccess);
 						this.World.Assets.addMoney(this.Contract.m.Payment.getOnCompletion());
-						this.World.FactionManager.getFaction(this.Contract.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationNobleContractSuccess, "Защитил " + this.Flags.get("ObjectiveName") + " от Железной Орды");
+						this.World.FactionManager.getFaction(this.Contract.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationNobleContractSuccess, "Защитил " + this.Flags.get("ObjectiveName") + " от Великой Орды");
 						this.World.Contracts.finishActiveContract();
 
 						if (this.World.FactionManager.isHordeInvasion())
@@ -644,7 +644,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 					function getResult()
 					{
 						this.World.Assets.addBusinessReputation(this.Const.World.Assets.ReputationOnContractFail);
-						this.World.FactionManager.getFaction(this.Contract.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationNobleContractFail, "Не удалось защитить " + this.Flags.get("ObjectiveName") + " от Железной Орды");
+						this.World.FactionManager.getFaction(this.Contract.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationNobleContractFail, "Не удалось защитить " + this.Flags.get("ObjectiveName") + " от Великой Орды");
 						this.World.Contracts.finishActiveContract(true);
 						return 0;
 					}
@@ -696,7 +696,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 		this.m.UnitsSpawned.push(party.getID());
 		party.getLoot().ArmorParts = this.Math.rand(0, 15);
 		party.getSprite("banner").setBrush(hordeBase.getBanner());
-		party.setDescription("Тяжёлый отряд Железной Орды, идущий сжечь очередной город.");
+		party.setDescription("Тяжёлый отряд Великой Орды, идущий сжечь очередной город.");
 		party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 		party.setSlowerAtNight(false);
 		party.setUsingGlobalVision(false);
@@ -727,7 +727,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 		this.m.UnitsSpawned.push(party.getID());
 		party.getLoot().ArmorParts = this.Math.rand(0, 15);
 		party.getSprite("banner").setBrush(hordeBase.getBanner());
-		party.setDescription("Передовой отряд Железной Орды, готовящий штурм города.");
+		party.setDescription("Передовой отряд Великой Орды, готовящий штурм города.");
 		party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 		party.setSlowerAtNight(false);
 		party.setUsingGlobalVision(false);
@@ -787,7 +787,7 @@ this.horde_last_stand_contract <- this.inherit("scripts/contracts/contract", {
 		local party = this.World.FactionManager.getFactionOfType(this.Const.FactionType.Jurchen).spawnEntity(tile, "Разведчики орды", false, this.Const.World.Spawn.HordeRoamers, 110 * this.getDifficultyMult() * this.getScaledDifficultyMult(), this.getMinibossModifier());
 		this.m.UnitsSpawned.push(party.getID());
 		party.getSprite("banner").setBrush(hordeBase.getBanner());
-		party.setDescription("Лёгкие разведчики Железной Орды, обходящие город с флангов.");
+		party.setDescription("Лёгкие разведчики Великой Орды, обходящие город с флангов.");
 		party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 		party.setSlowerAtNight(false);
 		party.setUsingGlobalVision(false);

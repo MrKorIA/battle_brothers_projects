@@ -72,9 +72,9 @@ this.send_horde_roamers_action <- this.inherit("scripts/factions/faction_action"
 
 		local settlement = this.pickWeightedRandom(settlements);
 		settlement.setLastSpawnTimeToNow();
-		local party = this.getFaction().spawnEntity(settlement.getTile(), "Разведчики Орды", false, this.Const.World.Spawn.HordeRoamers, this.Math.min(settlement.getResources(), this.Math.rand(60, 110)));
+		local party = this.getFaction().spawnEntity(settlement.getTile(), "Разведчики Великой Орды", false, this.Const.World.Spawn.HordeRoamers, this.Math.min(settlement.getResources(), this.Math.rand(60, 110)));
 		party.getSprite("banner").setBrush(settlement.getBanner());
-		party.setDescription("Лёгкий отряд Железной Орды, ведущий разведку в этом районе.");
+		party.setDescription("Лёгкий отряд Великой Орды, ведущий разведку в этом районе.");
 		party.setFootprintType(this.Const.World.FootprintsType.Nomads);
 		party.getFlags().set("IsRandomlySpawned", true);
 		party.getLoot().Money = this.Math.rand(0, 100);
