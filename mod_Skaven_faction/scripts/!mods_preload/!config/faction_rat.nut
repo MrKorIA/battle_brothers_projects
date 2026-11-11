@@ -17,6 +17,7 @@ local function addEntityType(_id, _name, _namePlural, _icon)
 
 addEntityType("RatClanrat", "Клановая крыса скавенов", "клановых крыс скавенов", "rat_clanrat_orientation");
 addEntityType("RatAssassin", "Ночной бегун скавенов", "ночных бегунов скавенов", "rat_assassin_orientation");
+addEntityType("RatEngineer", "Варп-инженер скавенов", "варп-инженеров скавенов", "rat_engineer_orientation");
 addEntityType("RatWarrior", "Штурмовая крыса скавенов", "штурмовых крыс скавенов", "rat_warrior_orientation");
 addEntityType("RatMonk", "Чумной монах скавенов", "чумных монахов скавенов", "rat_monk_orientation");
 addEntityType("RatPackmaster", "Хозяин стаи скавенов", "хозяинов стаи скавенов", "rat_packmaster_orientation");
@@ -121,6 +122,26 @@ addEntityType("RatTretch", "Треч Трусливый Хвост", "Треч �
 	MeleeDefense = 10,
 	RangedDefense = 20,
 	Initiative = 130,
+	FatigueEffectMult = 1.0,
+	MoraleEffectMult = 1.0,
+	Armor = [
+		0,
+		0
+	],
+	FatigueRecoveryRate = 20
+};
+
+::Const.Tactical.Actor.RatEngineer <- {
+	XP = 250,
+	ActionPoints = 9,
+	Hitpoints = 55,
+	Bravery = 70,
+	Stamina = 125,
+	MeleeSkill = 55,
+	RangedSkill = 80,
+	MeleeDefense = 10,
+	RangedDefense = 20,
+	Initiative = 110,
 	FatigueEffectMult = 1.0,
 	MoraleEffectMult = 1.0,
 	Armor = [
@@ -489,6 +510,17 @@ addEntityType("RatTretch", "Треч Трусливый Хвост", "Треч �
 		Cost = 20,
 		Row = 1,
 		Script = "scripts/entity/tactical/enemies/rat_assassin",
+		TitleList = null
+	}
+
+::Const.World.Spawn.Troops.RatEngineer <-
+	{
+		ID = this.Const.EntityType.RatEngineer,
+		Variant = 0,
+		Strength = 25,
+		Cost = 25,
+		Row = 1,
+		Script = "scripts/entity/tactical/enemies/rat_engineer",
 		TitleList = null
 	}
 

@@ -188,6 +188,16 @@ this.ratorge <- this.inherit("scripts/entity/tactical/actor", {
 		this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
 	}
 
+	function onOtherActorDeath( _killer, _victim, _skill )
+	{
+		if ((_victim.getType() == this.Const.EntityType.RatSwarm || _victim.getType() == this.Const.EntityType.RatClanrat) && _victim.isAlliedWith(this))
+		{
+			return;
+		}
+
+		this.actor.onOtherActorDeath(_killer, _victim, _skill);
+	}
+
 	function onInit()
 	{
 		this.actor.onInit();

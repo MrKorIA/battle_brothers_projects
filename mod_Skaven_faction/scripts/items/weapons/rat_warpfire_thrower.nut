@@ -1,26 +1,22 @@
 this.rat_warpfire_thrower <- this.inherit("scripts/items/weapons/weapon", {
 	m = {
-		IsLoaded = true
+		Heat = 0,
+		HeatPerShot = 30,
+		CooldownPerTurn = 30
 	},
-	function isLoaded()
+	function getHeat()
 	{
-		return this.m.IsLoaded;
+		return this.m.Heat;
 	}
 
-	function setLoaded( _l )
+	function addHeat( _h )
 	{
-		this.m.IsLoaded = _l;
+		this.m.Heat = this.Math.min(100, this.m.Heat + _h);
+	}
 
-		if (_l)
-		{
-			this.m.ArmamentIcon = "icon_handgonne_01_loaded";
-		}
-		else
-		{
-			this.m.ArmamentIcon = "icon_handgonne_01_empty";
-		}
-
-		this.updateAppearance();
+	function coolDown( _h )
+	{
+		this.m.Heat = this.Math.max(0, this.m.Heat - _h);
 	}
 
 	function create()
@@ -28,7 +24,7 @@ this.rat_warpfire_thrower <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.rat_warpfire_thrower";
 		this.m.Name = "Метатель Варп-Огня";
-		this.m.Description = "Метатель Варп-Огня - это грубый, но крайне нестабильный огнемёт, который обрушивает на врага или небольшой участок земли взрыв концентрированного Варп-Огня. Поражённая цель будет заражена чумой. Не может использоваться в ближнем бою.";
+		this.m.Description = "Метатель Варп-Огня - это грубый, но крайне нестабильный огнемёт, который обрушивает на врага или небольшой участок земли взрыв концентрированного Варп-Огня. Поражённая цель будет заражена чумой. Не может использоваться в ближнем бою. После каждого выстрела огнемёт перегревается, и в конце концов может взорваться.";
 		this.m.Categories = "Огнестрельное, двуручное";
 		this.m.IconLarge = "weapons/ranged/handgonne_01.png";
 		this.m.Icon = "weapons/ranged/handgonne_01_70x70.png";
@@ -39,7 +35,7 @@ this.rat_warpfire_thrower <- this.inherit("scripts/items/weapons/weapon", {
 		this.m.AddGenericSkill = true;
 		this.m.ShowQuiver = true;
 		this.m.ShowArmamentIcon = true;
-		this.m.ArmamentIcon = "icon_handgonne_01_loaded";
+		this.m.ArmamentIcon = "rat_warp_weapon_01";
 		this.m.Value = 3000;
 		this.m.RangeMin = 2;
 		this.m.RangeMax = 2;
@@ -53,6 +49,7 @@ this.rat_warpfire_thrower <- this.inherit("scripts/items/weapons/weapon", {
 		this.m.ArmorDamageMult = 0.9;
 		this.m.DirectDamageMult = 0.25;
 		this.m.IsEnforcingRangeLimit = true;
+		this.m.IsDroppedAsLoot = false;
 	}
 
 	function getAmmoID()
@@ -69,38 +66,29 @@ this.rat_warpfire_thrower <- this.inherit("scripts/items/weapons/weapon", {
 	{
 		local result = this.weapon.getTooltip();
 
-		if (!this.m.IsLoaded)
+		if (this.m.Heat > 0)
 		{
 			result.push({
 				id = 10,
 				type = "text",
 				icon = "ui/tooltips/warning.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Должен быть перезаряжен перед следующей стрельбой[/color]"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Перегрев: " + this.m.Heat + "%. Каждый выстрел нагревает огнемёт, простой остывает[/color]"
 			});
 		}
-	}
 
-	function onCombatFinished()
-	{
-		this.setLoaded(true);
-	}
-
-	function onEquip()
-	{
-		this.weapon.onEquip();
-		this.addSkill(this.new("scripts/skills/actives/rat_fire_handgonne_skill"));
-
-		if (!this.m.IsLoaded)
-		{
-			this.addSkill(this.new("scripts/skills/actives/reload_handgonne_skill"));
-		}
+		return result;
 	}
 
 	function onCombatFinished()
 	{
 		this.weapon.onCombatFinished();
-		this.m.IsLoaded = true;
+		this.m.Heat = 0;
+	}
+
+	function onEquip()
+	{
+		this.weapon.onEquip();
+		this.addSkill(this.new("scripts/skills/actives/rat_warpfire_throw_skill"));
 	}
 
 });
-

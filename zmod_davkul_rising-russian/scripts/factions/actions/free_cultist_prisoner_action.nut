@@ -37,13 +37,13 @@ this.free_cultist_prisoner_action <- this.inherit("scripts/factions/faction_acti
 			return;
 		}
 
-		local cultists = this.getCultists()
+		local cultists = this.getCultists();
 		if (cultists == null ||  !cultists.hasLairs()){
-			if (cultists != null) this.printDebug("проблема действий по освобождению заключенного с культистом: " + cultists, "mod_cultists")
-			else this.printDebug("проблема действий по освобождению заключенного с культистом: " + cultists + " " + cultists.m.Flags.get("CultistLegendaryLocationBeat") + " " + cultists.hasLairs(), "mod_cultists")
-			return
+			this.printDebug("проблема действий по освобождению заключенного с культистом: " + cultists, "mod_cultists");
+			this.printDebug(cultists.m.Flags.get("CultistLegendaryLocationBeat") + " " + cultists.hasLairs(), "mod_cultists");
+			return;
 		}
-		local lairExists = false
+		local lairExists = false;
 		foreach (lair in cultists.getLairs()){
 			if (lair.m.TargetSettlement != null) this.printDebug(format("проверка логова на предмет пленника. Размер: %i targetSettlement: %s фракция: %s targetfaction: %s", lair.getSize(),
 				lair.m.TargetSettlement == null ? "null" : lair.m.TargetSettlement.getName(), 
@@ -56,10 +56,10 @@ this.free_cultist_prisoner_action <- this.inherit("scripts/factions/faction_acti
 			}
 		}
 		if (!lairExists){
-			this.printDebug("Нет логова? ", "mod_cultists")
-			return
+			this.printDebug("Нет логова? ", "mod_cultists");
+			return;
 		}
-		this.printDebug("оценка действий по освобождению заключенного ", "mod_cultists")
+		this.printDebug("оценка действий по освобождению заключенного ", "mod_cultists");
 		this.m.Score = 1;
 	}
 
@@ -74,7 +74,7 @@ this.free_cultist_prisoner_action <- this.inherit("scripts/factions/faction_acti
 		contract.setEmployerID(_faction.getRandomCharacter().getID());
 		contract.setDestination(_faction);
 		this.World.Contracts.addContract(contract);
-		this.printDebug("действие по освобождению заключенного добавлено во фракцию: " + _faction.getName(), "mod_cultists")
+		this.printDebug("действие по освобождению заключенного добавлено во фракцию: " + _faction.getName(), "mod_cultists");
 	}
 
 });
