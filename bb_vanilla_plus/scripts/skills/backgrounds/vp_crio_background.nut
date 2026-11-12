@@ -50,12 +50,6 @@ this.vp_crio_background <- this.inherit("scripts/skills/backgrounds/character_ba
                 id = 2,
                 type = "description",
                 text = this.getDescription()
-            },
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "В непогоду получает бонус к защитам. На все действия тратит на четверть меньше выносливости."
             }
         ];
     }
@@ -72,13 +66,7 @@ this.vp_crio_background <- this.inherit("scripts/skills/backgrounds/character_ba
 				id = 2,
 				type = "description",
 				text = this.getBackgroundDescription()
-			},
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "В непогоду получает бонус к защитам. На все действия тратит на четверть меньше выносливости."
-            }
+			}
 		];
 	}
 
@@ -110,26 +98,6 @@ this.vp_crio_background <- this.inherit("scripts/skills/backgrounds/character_ba
         if (!this.m.Container.hasSkill("trait.bright"))
         {
             this.m.Container.add(this.new("scripts/skills/traits/bright_trait"));
-        }
-    }
-
-    function onUpdate( _properties )
-    {
-        this.character_background.onUpdate(_properties);
-
-        _properties.FatigueEffectMult = 0.75;
-        _properties.MovementFatigueCostMult = 0.75;
-
-        if (this.Tactical.isActive())
-        {
-            local env = this.Tactical.getWeather();
-            local isNight = !this.World.getTime().IsDaytime;
-
-            if (isNight || env.IsRaining)
-            {
-                _properties.MeleeDefense += 10;
-                _properties.RangedDefense += 15;
-            }
         }
     }
 

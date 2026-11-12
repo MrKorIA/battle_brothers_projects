@@ -52,12 +52,6 @@ this.vp_piro_background <- this.inherit("scripts/skills/backgrounds/character_ba
                 id = 2,
                 type = "description",
                 text = this.getDescription()
-            },
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "Иммунен к урону от огня и горения."
             }
         ];
     }
@@ -74,13 +68,7 @@ this.vp_piro_background <- this.inherit("scripts/skills/backgrounds/character_ba
 				id = 2,
 				type = "description",
 				text = this.getBackgroundDescription()
-			},
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "Иммунен к урону от огня и горения."
-            }
+			}
 		];
 	}
 
@@ -114,14 +102,6 @@ this.vp_piro_background <- this.inherit("scripts/skills/backgrounds/character_ba
         {
             this.m.Container.add(this.new("scripts/skills/traits/bright_trait"));
         }
-    }
-
-    function onUpdate( _properties )
-    {
-        this.character_background.onUpdate(_properties);
-
-        _properties.IsImmuneToFire = true;
-        _properties.FatigueEffectMult *= 0.5;
     }
 
     function onSetAppearance()

@@ -56,12 +56,6 @@ this.vp_shaman_background <- this.inherit("scripts/skills/backgrounds/character_
                 id = 2,
                 type = "description",
                 text = this.getDescription()
-            },
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "Шаманы чувствует себя в лесах и на болотах как дома. Получает повышенную мобильность при движении по пересеченной местности."
             }
         ];
     }
@@ -78,13 +72,7 @@ this.vp_shaman_background <- this.inherit("scripts/skills/backgrounds/character_
 				id = 2,
 				type = "description",
 				text = this.getBackgroundDescription()
-			},
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "Шаманы чувствует себя в лесах и на болотах как дома. Получает повышенную мобильность при движении по пересеченной местности."
-            }
+			}
 		];
 	}
 
@@ -117,29 +105,6 @@ this.vp_shaman_background <- this.inherit("scripts/skills/backgrounds/character_
         if (!this.m.Container.hasSkill("trait.bright"))
         {
             this.m.Container.add(this.new("scripts/skills/traits/bright_trait"));
-        }
-    }
-
-    function onUpdate( _properties )
-    {
-        this.character_background.onUpdate(_properties);
-
-        local actor = this.getContainer().getActor();
-        if (actor.isPlacedOnMap())
-        {
-            local tile = actor.getTile();
-            local isNatureObstacle = tile.Type == this.Const.World.TerrainType.Swamp
-                                  || tile.Type == this.Const.World.TerrainType.Forest
-                                  || tile.Type == this.Const.World.TerrainType.LeaveForest
-                                  || tile.Type == this.Const.World.TerrainType.AutumnForest
-                                  || tile.Type == this.Const.World.TerrainType.SnowyForest;
-
-            if (isNatureObstacle)
-            {
-                _properties.MovementAPCostAdditional = 0;
-                _properties.MovementFatigueCostMult *= 0.5;
-                _properties.MovementAPCostAdditional -= 1;
-            }
         }
     }
 

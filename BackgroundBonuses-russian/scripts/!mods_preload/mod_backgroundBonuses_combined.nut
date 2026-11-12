@@ -6114,6 +6114,342 @@
 				_tag.push(_tile);
 			}
 		});
+
+		//vp backgrounds are not part of the original mod_fantasybro, so each hook is wrapped in try/catch
+		try {
+			::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/vp_crio_background", function(q) {
+
+				q.getGenericTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "В непогоду получает бонус к защитам. На все действия тратит на четверть меньше выносливости."
+					});
+					return ret;
+				}
+
+				q.getTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "В непогоду получает бонус к защитам. На все действия тратит на четверть меньше выносливости."
+					});
+					return ret;
+				}
+
+				q.onUpdate = @(__original) function( _properties )
+				{
+					__original( _properties );
+
+					_properties.FatigueEffectMult = 0.75;
+					_properties.MovementFatigueCostMult = 0.75;
+
+					if (this.Tactical.isActive())
+					{
+						local env = this.Tactical.getWeather();
+						local isNight = !this.World.getTime().IsDaytime;
+
+						if (isNight || env.IsRaining)
+						{
+							_properties.MeleeDefense += 10;
+							_properties.RangedDefense += 15;
+						}
+					}
+				}
+			});
+		} catch(e) {}
+
+		try {
+			::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/vp_electro_background", function(q) {
+
+				q.getGenericTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Громовержец подобно молнии не может усидеть долго на одном месте. Восстанавливает немного выносливости после перемещения."
+					});
+					return ret;
+				}
+
+				q.getTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Громовержец подобно молнии не может усидеть долго на одном месте. Восстанавливает немного выносливости после перемещения."
+					});
+					return ret;
+				}
+
+				q.onMovementFinished = @(__original) function( )
+				{
+					__original( );
+
+					local actor = this.getContainer().getActor();
+					actor.setFatigue(this.Math.max(0, actor.getFatigue() - 1));
+				}
+			});
+		} catch(e) {}
+
+		try {
+			::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/vp_piro_background", function(q) {
+
+				q.getGenericTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Иммунен к урону от огня и горения. Тратит на 50% меньше выносливости на действия."
+					});
+					return ret;
+				}
+
+				q.getTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Иммунен к урону от огня и горения. Тратит на 50% меньше выносливости на действия."
+					});
+					return ret;
+				}
+
+				q.onUpdate = @(__original) function( _properties )
+				{
+					__original( _properties );
+
+					_properties.IsImmuneToFire = true;
+					_properties.FatigueEffectMult *= 0.5;
+				}
+			});
+		} catch(e) {}
+
+		try {
+			::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/vp_shaman_background", function(q) {
+
+				q.getGenericTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Шаман чувствует себя в лесах и на болотах как дома. Получает повышенную мобильность при движении по пересеченной местности."
+					});
+					return ret;
+				}
+
+				q.getTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Шаман чувствует себя в лесах и на болотах как дома. Получает повышенную мобильность при движении по пересеченной местности."
+					});
+					return ret;
+				}
+
+				q.onUpdate = @(__original) function( _properties )
+				{
+					__original( _properties );
+
+					local actor = this.getContainer().getActor();
+					if (actor.isPlacedOnMap())
+					{
+						local tile = actor.getTile();
+						local isNatureObstacle = tile.Type == this.Const.World.TerrainType.Swamp
+						                      || tile.Type == this.Const.World.TerrainType.Forest
+						                      || tile.Type == this.Const.World.TerrainType.LeaveForest
+						                      || tile.Type == this.Const.World.TerrainType.AutumnForest
+						                      || tile.Type == this.Const.World.TerrainType.SnowyForest;
+
+						if (isNatureObstacle)
+						{
+							_properties.MovementAPCostAdditional = 0;
+							_properties.MovementFatigueCostMult *= 0.5;
+							_properties.MovementAPCostAdditional -= 1;
+						}
+					}
+				}
+			});
+		} catch(e) {}
+
+		try {
+			::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/vp_vestal_background", function(q) {
+
+				q.getGenericTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Невосприимчива к очарованию, страху и другим психическим воздействиям."
+					});
+					return ret;
+				}
+
+				q.getTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Невосприимчива к очарованию, страху и другим психическим воздействиям."
+					});
+					return ret;
+				}
+
+				q.onUpdate = @(__original) function( _properties )
+				{
+					__original( _properties );
+
+					if(this.getContainer().getActor().isPlacedOnMap())
+					{
+						_properties.MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack] = 1000.0;
+					}
+				}
+			});
+		} catch(e) {}
+
+		try {
+			::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/vp_demon_background", function(q) {
+
+				q.getGenericTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Каждый ход с шансом 5% одержимый может нанести ближайшему союзнику 10 урона (не может убить, но может вызвать кровотечение) и восстановить себе 10 ОЗ. Если рядом только враги — одержимый будет занят ими, а если никого нет — одержимый ранит себя на 10 ОЗ."
+					});
+					return ret;
+				}
+
+				q.getTooltip = @(__original) function()
+				{
+					local ret = __original();
+					ret.push({
+						id = 10,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Каждый ход с шансом 5% одержимый может нанести ближайшему союзнику 10 урона (не может убить, но может вызвать кровотечение) и восстановить себе 10 ОЗ. Если рядом только враги — одержимый будет занят ими, а если никого нет — одержимый ранит себя на 10 ОЗ."
+					});
+					return ret;
+				}
+
+				q.onTurnStart = @(__original) function( )
+				{
+					local ret = __original( );
+
+					local actor = this.getContainer().getActor();
+					if (!actor.isPlacedOnMap() || !actor.isAlive() || actor.isDying())
+					{
+						return ret;
+					}
+
+					if (this.Math.rand(1, 100) > 5)
+					{
+						return ret;
+					}
+
+					local ownTile = actor.getTile();
+					local allies = [];
+					local hasEnemies = false;
+					for (local i = 0; i < 6; i = ++i)
+					{
+						if (!ownTile.hasNextTile(i))
+						{
+							continue;
+						}
+						local tile = ownTile.getNextTile(i);
+						if (tile.IsOccupiedByActor && tile.getEntity() != null)
+						{
+							local entity = tile.getEntity();
+							if (entity.isAlive() && !entity.isDying())
+							{
+								if (entity.isAlliedWith(actor))
+								{
+									allies.push(entity);
+								}
+								else
+								{
+									hasEnemies = true;
+								}
+							}
+						}
+					}
+
+					if (allies.len() > 0)
+					{
+						local victim = allies[this.Math.rand(0, allies.len() - 1)];
+						local wasAbleToDie = victim.m.IsAbleToDie;
+						victim.m.IsAbleToDie = false;
+						local hitInfo = clone this.Const.Tactical.HitInfo;
+						hitInfo.DamageRegular = 10;
+						hitInfo.DamageArmor = 0.0;
+						hitInfo.DamageDirect = 1.0;
+						hitInfo.BodyPart = this.Const.BodyPart.Body;
+						hitInfo.BodyDamageMult = 1.0;
+						hitInfo.FatalityChanceMult = 0.0;
+						victim.onDamageReceived(actor, null, hitInfo);
+						victim.m.IsAbleToDie = wasAbleToDie;
+
+						if (victim.isAlive() && !victim.isDying() && !victim.getCurrentProperties().IsImmuneToBleeding)
+						{
+							local effect = this.new("scripts/skills/effects/bleeding_effect");
+							victim.getSkills().add(effect);
+						}
+
+						actor.setHitpoints(this.Math.min(actor.getHitpointsMax(), actor.getHitpoints() + 10));
+						if (ownTile.IsVisibleForPlayer)
+						{
+							this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(actor) + " полоснул союзника " + this.Const.UI.getColorizedEntityName(victim) + ", восстановив себе 10 ОЗ.");
+						}
+					}
+					else if (!hasEnemies)
+					{
+						local wasAbleToDie = actor.m.IsAbleToDie;
+						actor.m.IsAbleToDie = false;
+						local hitInfo = clone this.Const.Tactical.HitInfo;
+						hitInfo.DamageRegular = 10;
+						hitInfo.DamageArmor = 0.0;
+						hitInfo.DamageDirect = 1.0;
+						hitInfo.BodyPart = this.Const.BodyPart.Body;
+						hitInfo.BodyDamageMult = 1.0;
+						hitInfo.FatalityChanceMult = 0.0;
+						actor.onDamageReceived(actor, null, hitInfo);
+						actor.m.IsAbleToDie = wasAbleToDie;
+
+						if (ownTile.IsVisibleForPlayer)
+						{
+							this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(actor) + " в безумии ранил сам себя.");
+						}
+					}
+
+					return ret;
+				}
+			});
+		} catch(e) {}
 	}
 
 	if( ::mods_getRegisteredMod("mod_necro") != null )
@@ -6270,6 +6606,191 @@
                 }
                 return __original( _skill, _targetEntity, _properties );
             }
+		});
+
+		::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/jianhao_background", function(q) {
+
+			q.getGenericTooltip = @(__original) function()
+			{
+				local ret = __original();
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Прибавляет к урону от оружия и навыку ближнего боя разницу между своей защитой в ближнем бою и защитой цели в ближнем бою."
+				});
+				return ret;
+			}
+
+			q.getTooltip = @(__original) function()
+			{
+				local ret = __original();
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Прибавляет к урону от оружия и навыку ближнего боя разницу между своей защитой в ближнем бою и защитой цели в ближнем бою."
+				});
+				return ret;
+			}
+
+			q.onAnySkillUsed = @(__original) function( _skill, _targetEntity, _properties )
+			{
+				if( _targetEntity != null && _skill.isAttack() && !_skill.isRanged() )
+				{
+					local actor = this.getContainer().getActor();
+					local diff = actor.getCurrentProperties().MeleeDefense - _targetEntity.getCurrentProperties().MeleeDefense;
+					if (diff > 0)
+					{
+						_properties.MeleeSkill += diff;
+						_properties.DamageRegularMin += diff;
+						_properties.DamageRegularMax += diff;
+					}
+				}
+				return __original( _skill, _targetEntity, _properties );
+			}
+		});
+
+		::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/langren_background", function(q) {
+
+			q.getGenericTooltip = @(__original) function()
+			{
+				local ret = __original();
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Не получает проверок боевого духа при окружении врагами."
+				});
+				return ret;
+			}
+
+			q.getTooltip = @(__original) function()
+			{
+				local ret = __original();
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Не получает проверок боевого духа при окружении врагами."
+				});
+				return ret;
+			}
+
+			//the engine makes a negative morale check on becoming surrounded only if m.MaxEnemiesThisTurn < number of adjacent enemies,
+			//so keeping it high for the whole round neutralizes those checks
+			q.onCombatStarted = @(__original) function( )
+			{
+				local ret = __original();
+				if (this.getContainer().getActor().isPlacedOnMap())
+				{
+					this.getContainer().getActor().m.MaxEnemiesThisTurn = 99;
+				}
+				return ret;
+			}
+
+			q.onNewRound = @(__original) function( )
+			{
+				local ret = __original();
+				if (this.getContainer().getActor().isPlacedOnMap())
+				{
+					this.getContainer().getActor().m.MaxEnemiesThisTurn = 99;
+				}
+				return ret;
+			}
+
+			q.onTurnStart = @(__original) function( )
+			{
+				local ret = __original();
+				if (this.getContainer().getActor().isPlacedOnMap())
+				{
+					this.getContainer().getActor().m.MaxEnemiesThisTurn = 99;
+				}
+				return ret;
+			}
+
+			q.onMovementFinished = @(__original) function( )
+			{
+				local ret = __original();
+				if (this.getContainer().getActor().isPlacedOnMap())
+				{
+					this.getContainer().getActor().m.MaxEnemiesThisTurn = 99;
+				}
+				return ret;
+			}
+		});
+
+		::modBackgroundBonuses.HooksMod.hook("scripts/skills/backgrounds/renzhe_background", function(q) {
+
+			q.getGenericTooltip = @(__original) function()
+			{
+				local ret = __original();
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Если скрыт в кустах: +100 к навыкам ближнего и дальнего боя и +100% к урону. Раскрыт, но стоит на клетке с кустами: +10 к навыкам ближнего и дальнего боя и +10% к урону."
+				});
+				return ret;
+			}
+
+			q.getTooltip = @(__original) function()
+			{
+				local ret = __original();
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Если скрыт в кустах: +100 к навыкам ближнего и дальнего боя и +100% к урону. Раскрыт, но стоит на клетке с кустами: +10 к навыкам ближнего и дальнего боя и +10% к урону."
+				});
+				return ret;
+			}
+
+			q.onUpdate = @(__original) function( _properties )
+			{
+				local actor = this.getContainer().getActor();
+				if (actor.isPlacedOnMap())
+				{
+					local isHidden = this.getContainer().hasSkill("terrain.hidden");
+					if (isHidden)
+					{
+						//an adjacent enemy reveals the ninja even while he has the hidden effect
+						local ownTile = actor.getTile();
+						for (local i = 0; i < 6; i = ++i)
+						{
+							if (ownTile.hasNextTile(i))
+							{
+								local tile = ownTile.getNextTile(i);
+								if (tile.IsOccupiedByActor && tile.getEntity() != null && tile.getEntity().isAlive() && !tile.getEntity().isDying() && !tile.getEntity().isAlliedWith(actor))
+								{
+									isHidden = false;
+									break;
+								}
+							}
+						}
+					}
+
+					if (isHidden)
+					{
+						_properties.MeleeSkill += 100;
+						_properties.RangedSkill += 100;
+						_properties.MeleeDamageMult *= 2.0;
+						_properties.RangedDamageMult *= 2.0;
+					}
+					else
+					{
+						local tile = actor.getTile();
+						if (tile != null && tile.IsHidingEntity)
+						{
+							_properties.MeleeSkill += 10;
+							_properties.RangedSkill += 10;
+							_properties.MeleeDamageMult *= 1.1;
+							_properties.RangedDamageMult *= 1.1;
+						}
+					}
+				}
+				__original( _properties);
+			}
 		});
 	}
 

@@ -50,12 +50,6 @@ this.vp_electro_background <- this.inherit("scripts/skills/backgrounds/character
                 id = 2,
                 type = "description",
                 text = this.getDescription()
-            },
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "Громовержец подобно молнии не может усидеть долго на одном месте. Восстанавливает немного выносливости после перемещения."
             }
         ];
     }
@@ -72,13 +66,7 @@ this.vp_electro_background <- this.inherit("scripts/skills/backgrounds/character
 				id = 2,
 				type = "description",
 				text = this.getBackgroundDescription()
-			},
-            {
-                id = 10,
-                type = "text",
-                icon = "ui/icons/special.png",
-                text = "Громовержец подобно молнии не может усидеть долго на одном месте. Восстанавливает немного выносливости после перемещения."
-            }
+			}
 		];
 	}
 
@@ -111,14 +99,6 @@ this.vp_electro_background <- this.inherit("scripts/skills/backgrounds/character
         {
             this.m.Container.add(this.new("scripts/skills/traits/bright_trait"));
         }
-    }
-
-    function onMovementFinished()
-    {
-        local actor = this.getContainer().getActor();
-
-        // Восстанавливаем немного усталости за то, что маг "вырабатывает статическое электричество" при ходьбе
-        actor.setFatigue(this.Math.max(0, actor.getFatigue() - 1));
     }
 
     function onSetAppearance()
