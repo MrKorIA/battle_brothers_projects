@@ -8,6 +8,7 @@ this.warp_shard_armor_01 <- this.inherit("scripts/items/armor/armor", {
 		this.m.Name = "Броня из варп-осколков";
 		this.m.Description = "Броня из шипованных пластин, инкрустированных осколками чистого варп-камня. Которая защищает владельца от вреда, а также вредит тем, кто наносит ему удары, посредством силы варп-камня.";
 		this.m.SlotType = this.Const.ItemSlot.Body;
+		this.m.ItemType = this.m.ItemType | this.Const.Items.ItemType.Named;
 		this.m.IsDroppedAsLoot = true;
 		this.m.ShowOnCharacter = true;
 		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;
@@ -38,7 +39,38 @@ this.warp_shard_armor_01 <- this.inherit("scripts/items/armor/armor", {
 			text = "Возвращает [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] урона, полученного в ближнем бою, обратно атакующему"
 		});
 
+		result.push({
+			id = 3,
+			type = "text",
+			icon = "ui/icons/special.png",
+			text = "Для преображения брони носитель должен [color=" + this.Const.UI.Color.NegativeValue + "] убить чемпиона скавенов[/color]"
+		});
+
 		return result;
+	}
+
+	function onEquip()
+	{
+		this.armor.onEquip();
+		local skill = this.new("scripts/skills/effects/warp_shard_upgrade_effect");
+		skill.m.Mode = 1;
+		skill.m.NextArmorScript = "scripts/items/armor/warp_shard_armor_02";
+		this.addSkill(skill);
+	}
+
+	function onUnequip()
+	{
+		this.armor.onUnequip();
+
+		if (this.getContainer() != null && this.getContainer().getActor() != null && !this.getContainer().getActor().isNull())
+		{
+			local skill = this.getContainer().getActor().getSkills().getSkillByID("effects.warp_shard_upgrade");
+
+			if (skill != null && skill.getItem() == this)
+			{
+				skill.removeSelf();
+			}
+		}
 	}
 
 	function onDamageReceived( _damage, _fatalityType, _attacker )

@@ -38,7 +38,8 @@ addFaction(
 		"scripts/factions/actions/build_rat_camp_action",
 		"scripts/factions/actions/send_rat_ambushers_action",
 		"scripts/factions/actions/send_rat_roamers_action",
-		"scripts/factions/actions/defend_rat_action"
+		"scripts/factions/actions/defend_rat_action",
+		"scripts/factions/actions/build_rat_god_camp_action"
 	],
 	[
 		"music/rat.ogg"

@@ -52,7 +52,38 @@ this.warp_shard_armor_03 <- this.inherit("scripts/items/armor/armor", {
 			text = "Восстанавливает [color=" + this.Const.UI.Color.PositiveValue + "]10[/color] ОЗ каждый ход"
 		});
 
+		result.push({
+			id = 4,
+			type = "text",
+			icon = "ui/icons/special.png",
+			text = "Для преображения брони носитель должен [color=" + this.Const.UI.Color.NegativeValue + "] убить чемпиона орков[/color]"
+		});
+
 		return result;
+	}
+
+	function onEquip()
+	{
+		this.armor.onEquip();
+		local skill = this.new("scripts/skills/effects/warp_shard_upgrade_effect");
+		skill.m.Mode = 3;
+		skill.m.NextArmorScript = "scripts/items/armor/warp_shard_armor_04";
+		this.addSkill(skill);
+	}
+
+	function onUnequip()
+	{
+		this.armor.onUnequip();
+
+		if (this.getContainer() != null && this.getContainer().getActor() != null && !this.getContainer().getActor().isNull())
+		{
+			local skill = this.getContainer().getActor().getSkills().getSkillByID("effects.warp_shard_upgrade");
+
+			if (skill != null && skill.getItem() == this)
+			{
+				skill.removeSelf();
+			}
+		}
 	}
 
 	function onDamageReceived( _damage, _fatalityType, _attacker )
