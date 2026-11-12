@@ -99,6 +99,7 @@ this.lancer_gae_buidhe_event <- this.inherit("scripts/events/event", {
 					icon = "ui/items/" + item.getIcon(),
 					text = "Вы получаете " + item.getName()
 				});
+				_event.m.Lancer.getFlags().set("gae_dearg_search", this.World.getTime().Days);
 			}
 
 		});
