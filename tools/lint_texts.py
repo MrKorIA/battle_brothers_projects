@@ -205,6 +205,9 @@ def lint_string(content):
     o, c = content.count("[img]"), content.count("[/img]")
     if o != c:
         add("ERR", "IMG_PAIR", "[img] без пары [/img]: %d vs %d" % (o, c))
+    o, c = content.count("%SPEECH_ON%"), content.count("%SPEECH_OFF%")
+    if o != c:
+        add("ERR", "SPEECH_PAIR", "непарные речевые теги: %d SPEECH_ON vs %d SPEECH_OFF" % (o, c))
     o, c = content.count("{"), content.count("}")
     if o != c:
         add("ERR", "BRACE_PAIR", "непарные {}: %d vs %d" % (o, c))
