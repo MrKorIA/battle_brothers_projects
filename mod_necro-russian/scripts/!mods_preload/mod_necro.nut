@@ -40,7 +40,7 @@ mod.queue(">mod_reforged", ">mod_msu", function () {
 
     ::Hooks.registerJS("ui/mods/necro.js");
     ::Hooks.registerCSS("ui/mods/necro.css");
-    ::include("necro/tactical_state");
+    ::include("mod_necro/tactical_state");
 
     // Allow origin to adjust hiring and tryout cost and wage on per bro basis
     mod.hook("scripts/entity/tactical/player", function (q) {

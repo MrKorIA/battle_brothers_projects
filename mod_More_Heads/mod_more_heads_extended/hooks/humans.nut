@@ -282,7 +282,6 @@
 	}}.create;
 });
 
-
 if (::mods_getRegisteredMod("mod_jin") != null)
 {
     ::MoreHeadsExtended.HooksMod.hook("scripts/entity/tactical/humans/nomad_centurion", function(q) {
@@ -777,4 +776,27 @@ if (::mods_getRegisteredMod("mod_wushi") != null)
             }
         }}.create;
     });
+}
+
+if (::mods_getRegisteredMod("mod_horde_invasion") != null)
+{
+    ::MoreHeadsExtended.HooksMod.hook("scripts/entity/tactical/humans/horde_general", function(q) {
+        q.create = @(__original) { function create()
+        {
+            __original();
+            try {
+                this.m.Bodies = this.Const.Bodies.AsianMale;
+                this.m.Faces = this.Const.Faces.AsianMale;
+                this.m.Hairs = this.Const.Hair.AsianMale;
+                this.m.HairColors = this.Const.HairColors.Asian;
+                this.m.Beards = this.Const.Beards.AsianMale;
+		        this.m.BeardChance = 75;
+			    if (this.m.Bodies != null && this.m.Bodies.len() > 0) this.m.Body = this.Math.rand(0, this.m.Bodies.len() - 1);
+            } catch (e) {
+                ::logError("[mod_more_heads_extended] scripts/entity/tactical/humans/horde_general: " + e);
+            }
+        }}.create;
+
+    });
+
 }

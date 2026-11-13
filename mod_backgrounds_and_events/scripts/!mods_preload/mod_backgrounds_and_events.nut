@@ -6,15 +6,15 @@ local mod = ::XBE <- {
 };
 ::mods_registerMod(mod.ID, mod.Version, mod.Name);
 
-foreach (file in ::IO.enumerateFiles("hackflows/const/")) ::include(file);
-foreach (file in ::IO.enumerateFiles("hackflows/hooks/")) ::include(file);
-foreach (file in ::IO.enumerateFiles("hackflows/world/")) ::include(file);
+foreach (file in ::IO.enumerateFiles("mod_backgrounds_and_events/const/")) ::include(file);
+foreach (file in ::IO.enumerateFiles("mod_backgrounds_and_events/hooks/")) ::include(file);
+foreach (file in ::IO.enumerateFiles("mod_backgrounds_and_events/world/")) ::include(file);
 
 ::mods_queue(mod.ID, ">mod_background_perks", function () {
-    ::include("hackflows/background_perks");
+    ::include("mod_backgrounds_and_events/background_perks");
     ::logInfo("xbe: LOADED");
 
-    ::include("hackflows/rosetta_ru");
+//    ::include("mod_backgrounds_and_events/rosetta_ru");
 
     // // Debug draft lists
     // ::mods_hookChildren("scenarios/world/starting_scenario", function (cls) {
@@ -40,7 +40,7 @@ foreach (file in ::IO.enumerateFiles("hackflows/world/")) ::include(file);
 
 ::mods_queue(mod.ID, ">msu", function () {
      if (!("MSU" in getroottable())) return;
-    ::include("hackflows/hack_msu");
+    ::include("mod_backgrounds_and_events/hack_msu");
     ::HackMSU.setup(mod, {
         nexus = "https://www.nexusmods.com/battlebrothers/mods/769"
         github = "https://github.com/Suor/battle-brothers-xbe"

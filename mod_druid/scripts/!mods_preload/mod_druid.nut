@@ -49,7 +49,7 @@ mod.queue(">mod_msu", ">mod_reforged", ">mod_background_perks",
     }
 
     // Shared helpers (relocateItem, applyBeastform[Look], onBeastJoinedPack, isDruidScenario).
-    ::include("druid/helpers");
+    ::include("mod_druid/helpers");
 
 
     // If More Backgrounds and Events present we repurpose it's druid background.
