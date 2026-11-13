@@ -164,7 +164,7 @@ this.xxi_female_background <- this.inherit("scripts/skills/backgrounds/character
 	function onAddEquipment()
 	{
 		local items = this.getContainer().getActor().getItems();
-		items.equip(this.new("scripts/items/armor/xxdress"));
+		items.equip(this.new("scripts/items/armor/vp_dress"));
 	}
 
 });

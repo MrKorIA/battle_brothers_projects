@@ -129,6 +129,11 @@ this.vp_vestal_background <- this.inherit("scripts/skills/backgrounds/character_
 				xtattoo_head.setBrush("bust_head_darkeyes_01");
 			}
 		}
+		actor.getSprite("permanent_injury_4").setBrush("zombie_rage_eyes");
+		actor.getSprite("permanent_injury_4").Visible = true;
+		actor.getSprite("permanent_injury_4").Color = this.createColor("#ffffff");
+		actor.getSprite("permanent_injury_4").Saturation = 0.3;
+		actor.setSpriteOffset("permanent_injury_4", this.createVec(0, -0.9));
     }
 
     function onAddEquipment()

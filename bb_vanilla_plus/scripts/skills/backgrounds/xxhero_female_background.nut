@@ -263,7 +263,7 @@ this.xxhero_female_background <- this.inherit("scripts/skills/backgrounds/xxhero
 		}
 		else
 		{
-			items.equip(this.new("scripts/items/armor/xxdress"));
+			items.equip(this.new("scripts/items/armor/vp_dress"));
 		}
 	}
 
