@@ -152,7 +152,7 @@ this.sb2_sumskel_skill <- this.inherit("scripts/skills/skill", {
 		local gg = this.Math.max(_user.getCurrentProperties().getBravery() * 1, 1);
 		actor.getBaseProperties().Hitpoints += this.Math.min(gg, 200);
 		actor.setHitpoints(actor.getHitpointsMax());
-		actor.setName("Draugr");
+		actor.setName("Драугр");
 
 		local body = actor.getSprite("body");
 		body.setBrush(this.Const.Items.Default.PlayerNakedBody);

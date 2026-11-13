@@ -8,4 +8,3 @@
 ::includeFiles(::IO.enumerateFiles("mod_vanilla_plus/hooks"));
 
 ::Hooks.registerJS("ui/mods/setup.js");
-::Hooks.registerJS("ui/mods/mod_vanilla_plus/js_hooks/screens/character/modules/character_screen_left_panel/character_screen_stats_module.js");

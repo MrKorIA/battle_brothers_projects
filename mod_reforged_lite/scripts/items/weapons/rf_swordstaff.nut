@@ -1,0 +1,48 @@
+this.rf_swordstaff <- ::inherit("scripts/items/weapons/weapon", {
+	m = {},
+	function create()
+	{
+		this.weapon.create();
+		this.m.ID = "weapon.rf_swordstaff";
+		this.m.Name = "Меч на палке";
+		this.m.Description = "Длинное древко с лезвием меча на конце позволяет вести бой как вблизи, так и на расстоянии.";
+		this.m.IconLarge = "weapons/melee/rf_swordstaff_01.png";
+		this.m.Icon = "weapons/melee/rf_swordstaff_01_70x70.png";
+		this.m.SlotType = ::Const.ItemSlot.Mainhand;
+		this.m.BlockedSlotType = ::Const.ItemSlot.Offhand;
+		this.m.WeaponType = ::Const.Items.WeaponType.Sword | ::Const.Items.WeaponType.Spear;
+		this.m.ItemType = ::Const.Items.ItemType.Weapon | ::Const.Items.ItemType.MeleeWeapon | ::Const.Items.ItemType.TwoHanded | ::Const.Items.ItemType.Defensive;
+		this.m.ArmamentIcon = "icon_rf_swordstaff_01";
+		this.m.Value = 2400;
+		this.m.Condition = 72.0;
+		this.m.ConditionMax = 72.0;
+		this.m.StaminaModifier = -10;
+		this.m.RangeMin = 1;
+		this.m.RangeMax = 2;
+		this.m.RangeIdeal = 2;
+		this.m.RegularDamage = 55;
+		this.m.RegularDamageMax = 80;
+		this.m.ArmorDamageMult = 1.0;
+		this.m.DirectDamageMult = 0.25;
+		this.m.ChanceToHitHead = 5;
+	}
+
+	function onEquip()
+	{
+		this.weapon.onEquip();
+
+		local prong = ::new("scripts/skills/actives/prong_skill");
+		this.addSkill(prong);
+
+		this.addSkill(::new("scripts/skills/actives/rf_overhead_strike_swordstaff_skill"));
+
+		local skill = this.new("scripts/skills/actives/spearwall");
+		skill.m.ActionPointCost += 2;
+		skill.m.FatigueCost += 5;
+		skill.m.Icon = "skills/active_124.png";
+		skill.m.IconDisabled = "skills/active_124_sw.png";
+		skill.m.Overlay = "active_124";
+		skill.m.BaseAttackName = prong.getName();
+		this.addSkill(skill);
+	}
+});

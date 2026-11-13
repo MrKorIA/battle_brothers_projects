@@ -13,6 +13,7 @@
 | `mod_Jurchen/` | `mod_Jurchen.zip` | Фракция чучженей. Юниты, лагерные шаблоны, named-оружие, бочки пороха |
 | `AC_2-russian/` | `AC_2-russian.zip` | Animal Companions (рус.). Типы компаньонов 20–26 — существа bb_vanilla_plus |
 | `mod_kill_all_enemies/` | `mod_kill_all_enemies.zip` | Тестовый чит: MSU-кейбинд «убить всех врагов» на тактической карте (дефолт Ctrl+K). Депендс: mod_msu |
+| `mod_reforged_lite/` | `mod_reforged_lite.zip` | Lite-версия Reforged: только задачный функционал из полного мода (драугры, травмы, nested tooltips, орки-нежить и пр. — по задачам). Бережно к ваниле, ID как у старшего брата. Референсы: `!project/mod_reforged_core-0.9.3-russian`, `mod_framework-0.9.2-russian`, `mod_reforged_assets-0.1.4`. Депендсы: mod_msu + mod_modern_hooks |
 | `mod_necro-russian/`, `mod_Retired_Gladiator-russian/` и пр. | по имени каталога | Русификации/мелкие моды, адаптируются под задачи |
 
 Сторонние зависимости-референсы (НЕ коммитить сюда): ваниль `Z:\GameMods\Battle Brothers\mods\!project\data_014`

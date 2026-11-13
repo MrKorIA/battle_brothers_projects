@@ -1075,14 +1075,3 @@ addEntityType("XXMobBear", "Медведь-Убийца", "Медведей-Уб
 addEntityType("XXMobBloodsucker", "Кровосос", "Кровососов", "xxmob_bloodsucker_orientation");
 addEntityType("XXMobToad", "Гигантская Жаба", "Гигантских Жаб", "xxmob_toad_orientation");
 addEntityType("XXMobWhiteWolf", "Снежный Лютоволк", "Снежных Лютоволков", "xxmob_white_wolf_orientation");
-
-//draugrs
-addEntityType("RF_DraugrThrall", "Курганник раб", "курганников рабов", "rf_draugr_thrall_orientation");
-addEntityType("RF_DraugrThrallBodyguard", "Курганник раб", "курганников рабов", "rf_draugr_thrall_orientation");
-addEntityType("RF_DraugrWarrior", "Курганник дренгр", "курганников дренгров", "rf_draugr_warrior_orientation");
-addEntityType("RF_DraugrWarriorBodyguard", "Курганник дренгр", "курганников дренгров", "rf_draugr_warrior_orientation");
-addEntityType("RF_DraugrHuskarl", "Курганник хускарл", "курганников хускарлов", "rf_draugr_huskarl_orientation");
-addEntityType("RF_DraugrHuskarlBodyguard", "Курганник хускарл", "курганников хускарлов", "rf_draugr_huskarl_orientation");
-addEntityType("RF_DraugrHero", "Курганник герой", "курганников героев", "rf_draugr_hero_orientation");
-addEntityType("RF_DraugrHeroChampion", "Курганник герой", "курганников героев", "rf_draugr_hero_orientation");
-addEntityType("RF_DraugrShaman", "Курганник провидец", "курганников провидцев", "rf_draugr_shaman_orientation");

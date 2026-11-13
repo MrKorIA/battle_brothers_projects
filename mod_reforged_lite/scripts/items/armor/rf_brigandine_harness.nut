@@ -1,0 +1,22 @@
+this.rf_brigandine_harness <- ::inherit("scripts/items/armor/armor", {
+	m = {},
+	function create()
+	{
+		this.armor.create();
+		this.m.ID = "armor.body.rf_brigandine_harness";
+		this.m.Name = "Бригандинный доспех";
+		this.m.Description = "Бригандина, надетая поверх кольчуги, усиленная наплечниками и пластинчатыми наручами, обеспечивает отличную защиту при умеренной потере подвижности.";
+		this.m.SlotType = ::Const.ItemSlot.Body;
+		this.m.IsDroppedAsLoot = true;
+		this.m.ShowOnCharacter = true;
+		this.m.Variant = 1;
+		this.m.VariantString = "rf_brigandine_harness"
+		this.updateVariant();
+		this.m.ImpactSound = ::Const.Sound.ArmorHalfplateImpact;
+		this.m.InventorySound = ::Const.Sound.ArmorHalfplateImpact;
+		this.m.Value = 6000;
+		this.m.Condition = 270;
+		this.m.ConditionMax = 270;
+		this.m.StaminaModifier = -28;
+	}
+});
