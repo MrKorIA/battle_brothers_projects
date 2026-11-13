@@ -657,7 +657,7 @@ this.horde_break_siege_contract <- this.inherit("scripts/contracts/contract", {
 			for( local j = 0; j < numSiegeUnits; j = j )
 			{
 				this.Const.World.Common.addTroop(party, {
-					Type = this.Const.World.Spawn.Troops.GreenskinCatapult
+					Type = this.Const.World.Spawn.Troops.HordeCatapult
 				}, false);
 				j = ++j;
 			}
@@ -666,7 +666,7 @@ this.horde_break_siege_contract <- this.inherit("scripts/contracts/contract", {
 			party.getLoot().ArmorParts = this.Math.rand(0, 15);
 			party.getLoot().Ammo = this.Math.rand(0, 10);
 			party.addToInventory("supplies/rice_item");
-			party.getSprite("body").setBrush("figure_siege_01");
+			party.getSprite("body").setBrush("figure_horde_catapult");
 			party.getSprite("banner").setBrush(jinBase != null ? jinBase.getBanner() : "banner_jin");
 			party.getSprite("banner").Visible = false;
 			party.getSprite("base").Visible = false;

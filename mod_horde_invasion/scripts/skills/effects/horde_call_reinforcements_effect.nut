@@ -103,6 +103,14 @@ this.horde_call_reinforcements_effect <- this.inherit("scripts/skills/skill", {
 			local spawn = this.Tactical.spawnEntity(scripts[this.Math.rand(0, scripts.len() - 1)], t.Coords);
 			spawn.setFaction(faction);
 			spawn.assignRandomEquipment();
+			// подставка: в середине боя assignBases не вызывается, и на спавне
+			// остаётся дефолтная (песочная) база класса — ставим тактическую
+			// базу фракции, как у развёрнутого гарнизона (bust_base_jin)
+			if (spawn.hasSprite("socket"))
+			{
+				spawn.getSprite("socket").setBrush(this.World.FactionManager.getFaction(faction).getTacticalBase());
+			}
+
 			// новички тоже зовут следующие волны: пока жив хоть один боец орды,
 			// склад не остаётся без подкреплений (волна всё равно одна на всех —
 			// общий гейт по раундам)

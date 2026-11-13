@@ -59,6 +59,18 @@ addEntityType("HordeGeneral", "Генерал Великой Орды", "ген�
 	TitleList = this.Const.Strings.HordeGeneralTitles
 };
 
+addEntityType("HordeCatapult", "Онагр орды", "онагры орды", "horde_catapult_orientation");
+
+::Const.World.Spawn.Troops.HordeCatapult <-
+{
+	ID = this.Const.EntityType.HordeCatapult,
+	Variant = 0,
+	Strength = 50,
+	Cost = 25,
+	Row = 2,
+	Script = "scripts/entity/tactical/objective/horde_catapult"
+};
+
 // Кризисные actions вешаем на трейт Jurchen (Mgl в кризисе союзна — силы набирает Jurchen).
 // Deck фракций строится из этого списка при генерации мира; для сейвов, созданных
 // без мода, actions не подхватятся (vanilla-совместимое ограничение).
