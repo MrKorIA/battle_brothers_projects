@@ -29,8 +29,8 @@ this.leper_background <- this.inherit("scripts/skills/backgrounds/character_back
 			this.Const.Attributes.Hitpoints
 		];
 		this.m.Titles = [
-			"Грязнуля"
-			"Прокаженный",
+			"Грязнуля",
+			"Прокажённый",
 			"Оборванец",
 			"Больной",
 			"Изгой",

@@ -3,6 +3,7 @@ this.cook_southern_background <- this.inherit("scripts/skills/backgrounds/hackfl
 	function create()
 	{
 		this.cook_background.create();
+		this.m.BadEnding = "Покинув отряд \'%companyname%\', %name% нанялся поваром к войску одного из визирей, где кормили хуже, чем у вас, и нередко совсем не кормили. Вам рассказал об этом наёмник, ушедший вместе с ним: в походе припасы таяли быстрее, чем их успевали добывать. {К северу | К югу | К западу | К востоку} отсюда повара застали ночью у чужого котла с ложкой в руке, и часовой, не разобравшись, убил его на месте. Утром выяснилось, что он просто собирался сварить похлёбку на всех из того, что было.";
 		this.m.Bodies = this.Const.Bodies.SouthernMale;
 		this.m.Faces = this.Const.Faces.SouthernMale;
 		this.m.Hairs = this.Const.Hair.SouthernMale;
