@@ -24,7 +24,7 @@
 // means "after this mod IF present" — absent mods are tolerated. We list
 // Hardened too so our appearance overrides land last in the hook chain.
 ::MoreHeadsExtended.HooksMod.queue(
-	[">vanilla", ">mod_reforged", ">mod_msu", ">mod_hardened", ">mod_backgrounds_and_events", ">mod_jin", ">mod_wushi"],
+	[">vanilla", ">mod_reforged", ">mod_msu", ">mod_hardened", ">mod_backgrounds_and_events", ">mod_jin", ">mod_wushi", ">mod_horde_invasion"],
 	function() {
 		::include("mod_more_heads_extended/const_extensions.nut");
 		::include("mod_more_heads_extended/hooks/human.nut");
