@@ -1,0 +1,14 @@
+/* Картинка сложности контракта в тултипе (rf_image, см. tooltips/contracts.nut).
+   Контейнеру тултипа позволено выходить за свои границы, чтобы орнамент сложности
+   лёг поверх рамки. */
+.tooltip-module .rf-contract-difficulty-tooltip
+{
+	position: absolute;
+	z-index: 10;
+	width: auto;
+	height: auto;
+	top: 0.5rem;
+	right: 1.5rem;
+	pointer-events: none;
+	transform: scale(0.5);
+}

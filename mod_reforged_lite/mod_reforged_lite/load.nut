@@ -5,6 +5,12 @@
 ::include("mod_reforged_lite/tooltips/nested_helpers");
 ::include("mod_reforged_lite/tooltips/concepts");
 
+// Текстовые хелперы (тултип контракта на экране города)
+::include("mod_reforged_lite/text/text");
+
+// Тултипы мода: контракт на экране города (Contract.Tooltip — см. JS-хук town screen)
+::include("mod_reforged_lite/tooltips/contracts");
+
 local function onCostCompare( _t1, _t2 )
 {
 	if (_t1.Cost < _t2.Cost)
@@ -72,3 +78,9 @@ local function calculateCosts( _p )
 
 // JS-хук: проброс entityId в тултипы характеров (character screen)
 ::Hooks.registerJS("ui/mods/mod_reforged_lite/js_hooks/screens/character/modules/character_screen_left_panel/character_screen_stats_module.js");
+
+// JS-хуки: тултип контракта на экране города + расторжение по ПКМ, rf_image в тултипах
+::Hooks.registerJS("ui/mods/mod_reforged_lite/js_hooks/screens/world/modules/world_town_screen/world_town_screen_main_dialog_module.js");
+::Hooks.registerJS("ui/mods/mod_reforged_lite/js_hooks/screens/world/world_town_screen.js");
+::Hooks.registerJS("ui/mods/mod_reforged_lite/js_hooks/screens/tooltip/modules/tooltip_module.js");
+::Hooks.registerCSS("ui/mods/mod_reforged_lite/css/tooltip_module.css");

@@ -1,6 +1,24 @@
 // Хелперы генерации вложенных ссылок (аналог ::Reforged.NestedTooltips из Reforged 0.9.3):
 // формируют разметку [текст|Skill+X] / [текст|Perk+X] / [текст|Entity+ID] для parseString.
 ::ReforgedLite.NestedTooltips <- {
+	// Флаг «сейчас строится текст события/контракта»: пока он установлен, имена
+	// сущностей (города, фракции) оборачиваются во вложенные тултип-ссылки.
+	// Счётчик, а не булев флаг: обёртки могут вкладываться друг в друга.
+	__IsApplyingNestingForEvents = 0,
+
+	function setApplyNestingForEvents( _apply )
+	{
+		if (_apply)
+			this.__IsApplyingNestingForEvents += 1;
+		else if (this.__IsApplyingNestingForEvents > 0)
+			this.__IsApplyingNestingForEvents -= 1;
+	}
+
+	function isApplyingNestingForEvents()
+	{
+		return this.__IsApplyingNestingForEvents != 0;
+	}
+
 	function getNestedPerkName( _obj, _extraData = null )
 	{
 		local perkDef = ::Const.Perks.findById(_obj.getID());
@@ -44,5 +62,20 @@
 	function getNestedEntityName( _obj, _extraData = null )
 	{
 		return format("[%s|Entity+%i%s]", _obj.getName(), _obj.getID(), _extraData == null ? "" : "," + _extraData);
+	}
+
+	function getNestedWorldEntityName( _obj, _extraData = null )
+	{
+		return format("[%s|WorldEntity+%i%s]", _obj.getName(), _obj.getID(), _extraData == null ? "" : "," + _extraData);
+	}
+
+	function getNestedFactionName( _obj, _extraData = null )
+	{
+		return format("[%s|Faction+%i%s]", _obj.getName(), _obj.getID(), _extraData == null ? "" : "," + _extraData);
+	}
+
+	function getNestedObjectName( _obj, _extraData = null )
+	{
+		return format("[%s|Obj+%s%s]", _obj.getName(), ::ReforgedLite.Mod.Tooltips.parseObject(_obj), _extraData == null ? "" : "," + _extraData);
 	}
 };

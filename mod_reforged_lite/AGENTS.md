@@ -103,6 +103,33 @@ Lite-версия мод-комплекса Reforged для Battle Brothers (Squ
   бандитов (палисад, 300 ресурсов, лут богаче bandit_camp); строится фракцией бандитов
   (1 с 1-го дня, +1 за 50 дней, макс 6) — регистрация через .extend actions бандитов;
   спрайт карты уже в rf_world_entity
+- Тултипы контрактов (перенос из mod_reforged/hooks/contracts/contract.nut + связанного):
+  тултип контракта на экране города (картинка сложности rf_image, «будет доступен ещё N
+  дней», маршрут «Цель/В пути примерно/к …», оплата аванс/по завершении/за голову, ситуация
+  поселения, предупреждение об активном контракте, ПКМ «Расторгнуть контракт») и вложенные
+  ссылки на города/фракции в текстах сцен контракта (имена оборачиваются при построении
+  текста сцены; JS-рендер — зависимость mod_nested_tooltips). Файлы: хук
+  hooks/contracts/contract.nut (RF_getTooltip + обёртки setScreen/buildText/onPrepareVariables
+  вокруг флага ::ReforgedLite.NestedTooltips), флаг/хелперы — tooltips/nested_helpers.nut,
+  текстовые хелперы — text/text.nut (::ReforgedLite.Text), регистрация Contract.Tooltip /
+  Faction+<ID> — tooltips/contracts.nut, обёртки getName — hooks/entity/world/world_entity.nut
+  (+guard updateStrength), hooks/factions/faction.nut (RF_getTooltip фракции + getName +
+  guard spawnEntity), attached_location getRealName; SQ-хук ПКМ — hooks/ui/screens/world/
+  world_town_screen.nut; JS — js_hooks/screens/world/** (town screen), rf_image в
+  js_hooks/screens/tooltip/modules/tooltip_module.js + css/tooltip_module.css; ассеты
+  gfx/ui/icons/rf_difficulty_*_tooltip.png (из mod_reforged_assets-0.1.4).
+  НЕ перенесено из референса: авто-переговоры/скип сцен, портрет заказчика в списке,
+  last-visit система поселений (ситуация в тултипе ищется только в живых ситуациях:
+  текущего города без Агента / всех городов с Агентом), EventActor/Skill/Item-ссылки
+  в текстах сцен, Contract.FocusOnObjective (панель активного контракта на карте мира).
+  ЛОВУШКА: contentType «settlement-status-effect» — НЕ бесполезный маркер: ванильный
+  TooltipModule.buildFromData по нему вешает тултипу is-full-width is-status-effect-content
+  (Reforged вставляет его первой записью тултипа контракта/фракции — копируем).
+  ЛОВУШКА 2: не-ASCII внутри идентификатора вложенной ссылки (ExtraData после «+») —
+  не использовать динамический Tooltip+ с русским текстом в таблице (как в оригинальном
+  RF_getOfferedByText): идентификатор кодируется байтами, JS держит его как Latin-1,
+  транспорт JS->SQ кодирует в UTF-8 повторно → в тултипе иероглифы. Ссылки на объекты
+  с русскими именами — только ID на проводе + резолв имени на стороне SQ (тип WorldActor).
 - НЕ переносится: система Reach (досягаемость), rf-перки без ванильных аналогов
   (menacing/wear_them_down у zombie_orc, sweeping_strikes у vampire_lord — завязаны на Reach),
   addPerkGroupOfEquippedWeapon, anatomist-зелья, легендарные сущности кроме перечисленных кризисных
