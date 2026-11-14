@@ -215,9 +215,9 @@ local function addEntityType(_id, _name, _namePlural, _icon)
 
 addEntityType("NomadFireBlunderbuss", "Хоцян-огнемётчик", "хоцян-огнемётчиков", "nomad_14_orientation");
 addEntityType("NomadHalberdMaster", "Мастер цзи", "мастеров цзи", "nomad_11_orientation");
-addEntityType("NomadInfantry", "Цзядин", "Цзядинов", "nomad_09_orientation");
+addEntityType("NomadInfantry", "Цзядин", "цзядинов", "nomad_09_orientation");
 addEntityType("NomadIronPagoda", "Тефуту", "тефуту", "nomad_12_orientation");
-addEntityType("NomadSpearMaster", "Копейщик Цян", "копейщиков цян", "nomad_10_orientation");
+addEntityType("NomadSpearMaster", "Копейщик цян", "копейщиков цян", "nomad_10_orientation");
 addEntityType("NomadCenturion", "Мэнъань", "мэнъань", "nomad_13_orientation");
 
 ::Const.World.Spawn.Troops.NomadFireBlunderbuss <-

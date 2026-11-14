@@ -85,9 +85,12 @@
 
 ## Состояние на момент создания файла
 
-- Последний фикс: механика BaseItemScript (named-предметы) перенесена из framework —
-  `mod_reforged_lite/hooks/items/item.nut` + `hooks/items/weapons/named/named_weapon.nut`.
-  **Не проверена в игре** (сборка не запускалась после фикса).
+- Фикс named-предметов (2026-11-14): хуки BaseItemScript (`hooks/items/item.nut` +
+  `hooks/items/weapons/named/named_weapon.nut`) УДАЛЕНЫ. Вместо механики копирования
+  с базового предмета все named-оружие `scripts/items/weapons/named/` переписано
+  по образцу ванильных named и named_rf_draugr_*: явные поля (статы = базовое оружие,
+  Value named) + явный onEquip со скиллами базового оружия. Пофикшен ID
+  named_rf_voulge (был скопирован weapon.named_rf_battle_axe). **Не проверено в игре**.
 - Все .nut мода проходят `tools/nut_check.py`; inherit/new-цепочки сверены (0 пропусков).
 - Сборка: только по явной просьбе пользователя, при закрытой игре (`build.bat`).
 

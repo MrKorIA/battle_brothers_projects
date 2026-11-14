@@ -25,9 +25,6 @@
 });
 
 // Автоконцепты: ссылки на ванильные тултипы характеристик (character-stats.*)
-// ВНИМАНИЕ: setTooltips НЕ мёржит существующие подтаблицы (MSU __addTable заменяет
-// под-ключ целиком) — повторный вызов с {Concept=...} стёр бы ручные концепты выше.
-// Поэтому пишем напрямую в таблицу Concept через getTooltip (паттерн Reforged).
 ::MSU.QueueBucket.FirstWorldInit.push(function() {
 	local autoConcepts = [
 		"ActionPoints", "Hitpoints", "Morale", "Fatigue", "MaximumFatigue",

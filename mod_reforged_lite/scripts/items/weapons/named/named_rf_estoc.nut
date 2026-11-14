@@ -8,8 +8,20 @@ this.named_rf_estoc <- ::inherit("scripts/items/weapons/named/named_weapon", {
 		this.m.ID = "weapon.named_rf_estoc";
 		this.m.NameList = ::Const.Strings.FencingSwordNames;
 		this.m.Description = "Хорошо выкованный эсток требует длины и прочности, совмещённой с лёгкостью, дабы наносить быстрые и ловкие удары. Этот клинок - один из лучших образцов, которые вы когда-либо видели.";
+		this.m.SlotType = ::Const.ItemSlot.Mainhand;
+		this.m.BlockedSlotType = ::Const.ItemSlot.Offhand;
+		this.m.WeaponType = ::Const.Items.WeaponType.Sword;
+		this.m.ItemType = ::Const.Items.ItemType.Named | ::Const.Items.ItemType.Weapon | ::Const.Items.ItemType.MeleeWeapon | ::Const.Items.ItemType.TwoHanded;
 		this.m.Value = 4200;
-		this.m.BaseItemScript = "scripts/items/weapons/rf_estoc";
+		this.m.Condition = 60.0;
+		this.m.ConditionMax = 60.0;
+		this.m.StaminaModifier = -10;
+		this.m.RegularDamage = 55;
+		this.m.RegularDamageMax = 70;
+		this.m.ArmorDamageMult = 0.3;
+		this.m.DirectDamageMult = 0.25;
+		this.m.DirectDamageAdd = 0.35;
+		this.m.ChanceToHitHead = -25;
 		this.randomizeValues();
 	}
 
@@ -20,5 +32,16 @@ this.named_rf_estoc <- ::inherit("scripts/items/weapons/named/named_weapon", {
 		this.m.ArmamentIcon = "icon_rf_estoc_named_0" + this.m.Variant;
 	}
 
-	// No need to define onEquip because skills are copied from base weapon definition due to BaseItemScript
+	function onEquip()
+	{
+		this.named_weapon.onEquip();
+
+		local skill = this.new("scripts/skills/actives/rf_sword_thrust_skill");
+		skill.m.FatigueCost += 2;
+		this.addSkill(skill);
+
+		this.addSkill(this.new("scripts/skills/actives/lunge_skill"));
+
+		this.addSkill(this.new("scripts/skills/actives/riposte"));
+	}
 });
