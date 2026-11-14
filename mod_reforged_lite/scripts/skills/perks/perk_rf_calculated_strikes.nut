@@ -6,8 +6,8 @@ this.perk_rf_calculated_strikes <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_calculated_strikes";
-		this.m.Name = ::Const.Strings.PerkName.RF_CalculatedStrikes;
-		this.m.Description = ::Const.Strings.PerkDescription.RF_CalculatedStrikes;
+		this.m.Name = "Расчётливые выпады";
+		this.m.Description = ::ReforgedLite.Mod.Tooltips.parseString("Наносит на " + ::MSU.Text.colorPositive("20%") + " больше урона всем противникам, ещё не сделавшим свой [ход|Concept.Turn] в текущем [ходе боя|Concept.Round]\n[Инициатива|Concept.Initiative] уменьшается на " + ::MSU.Text.colorNegative("20%") + ".");
 		this.m.Icon = "ui/perks/perk_rf_calculated_strikes.png";
 		this.m.Type = ::Const.SkillType.Perk;
 		this.m.Order = ::Const.SkillOrder.Perk;

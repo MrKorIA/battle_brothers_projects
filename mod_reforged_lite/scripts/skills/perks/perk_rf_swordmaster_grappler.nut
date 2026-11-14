@@ -4,8 +4,8 @@ this.perk_rf_swordmaster_grappler <- ::inherit("scripts/skills/perks/perk_rf_swo
 	{
 		this.perk_rf_swordmaster_abstract.create();
 		this.m.ID = "perk.rf_swordmaster_grappler";
-		this.m.Name = ::Const.Strings.PerkName.RF_SwordmasterGrappler;
-		this.m.Description = ::Const.Strings.PerkDescription.RF_SwordmasterGrappler;
+		this.m.Name = "Захват";
+		this.m.Description = ::ReforgedLite.Mod.Tooltips.parseString("Становится доступным умение [Пинок|Skill+rf_swordmaster_kick_skill], позволяющее провести бесплатную атаку по противнику и ошеломить его. При успешной атаке цель отбрасывается на одну клетку назад.");
 		this.m.Icon = "ui/perks/perk_rf_swordmaster_grappler.png";
 	}
 

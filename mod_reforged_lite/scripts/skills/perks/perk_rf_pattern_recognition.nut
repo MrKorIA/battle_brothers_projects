@@ -5,7 +5,7 @@ this.perk_rf_pattern_recognition <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_pattern_recognition";
-		this.m.Name = ::Const.Strings.PerkName.RF_PatternRecognition;
+		this.m.Name = "Распознавание поведения";
 		this.m.Description = "Этот персонаж способен быстро понять стиль боя своего противника, и чем дольше длится бой, тем лучше он сражается.";
 		this.m.Icon = "ui/perks/perk_rf_pattern_recognition.png";
 		this.m.IconMini = "perk_rf_pattern_recognition_mini";

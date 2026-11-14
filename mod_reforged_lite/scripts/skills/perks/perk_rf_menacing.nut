@@ -3,8 +3,8 @@ this.perk_rf_menacing <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_menacing";
-		this.m.Name = ::Const.Strings.PerkName.RF_Menacing;
-		this.m.Description = ::Const.Strings.PerkDescription.RF_Menacing;
+		this.m.Name = "Угрожающий вид";
+		this.m.Description = ::ReforgedLite.Mod.Tooltips.parseString("Даёт " + ::MSU.Text.colorPositive("+10") + " к [угрозе|Concept.Threat]");
 		this.m.Icon = "ui/perks/perk_rf_menacing.png";
 		this.m.Type = ::Const.SkillType.Perk;
 		this.m.Order = ::Const.SkillOrder.Perk;

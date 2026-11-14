@@ -10,7 +10,7 @@ this.perk_rf_sanguinary <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_sanguinary";
-		this.m.Name = ::Const.Strings.PerkName.RF_Sanguinary;
+		this.m.Name = "Кровожадность";
 		this.m.Description = "Ужасающие убийства придают персонажу новые силы!";
 		this.m.Icon = "ui/perks/perk_rf_sanguinary.png";
 		this.m.Type = ::Const.SkillType.Perk | ::Const.SkillType.StatusEffect;

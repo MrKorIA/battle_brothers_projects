@@ -3,7 +3,7 @@ this.perk_rf_skirmisher <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_skirmisher";
-		this.m.Name = ::Const.Strings.PerkName.RF_Skirmisher;
+		this.m.Name = "Застрельщик";
 		this.m.Description = "Этот персонаж может двигаться быстрее большинства.";
 		this.m.Icon = "ui/perks/perk_rf_skirmisher.png";
 		this.m.Type = ::Const.SkillType.Perk | ::Const.SkillType.StatusEffect;

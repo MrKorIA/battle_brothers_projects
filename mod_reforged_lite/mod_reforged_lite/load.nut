@@ -5,6 +5,9 @@
 ::include("mod_reforged_lite/tooltips/nested_helpers");
 ::include("mod_reforged_lite/tooltips/concepts");
 
+// Утилиты мира (имена/баннеры наёмных отрядов — охотники за головами)
+::include("mod_reforged_lite/utils");
+
 // Текстовые хелперы (тултип контракта на экране города)
 ::include("mod_reforged_lite/text/text");
 
@@ -65,7 +68,9 @@ local function calculateCosts( _p )
 		::Const.World.Spawn.Noble,
 		::Const.World.Spawn.UndeadScourge,
 		::Const.World.Spawn.Necromancer,
-		::Const.World.Spawn.NecromancerSouthern
+		::Const.World.Spawn.NecromancerSouthern,
+		::Const.World.Spawn.HD_AttachedProduction,
+		::Const.World.Spawn.HD_AttachedProductionSouthern
 	])
 	{
 		if (group != null)

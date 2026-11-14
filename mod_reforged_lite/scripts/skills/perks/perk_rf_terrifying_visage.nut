@@ -3,8 +3,8 @@ this.perk_rf_terrifying_visage <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_terrifying_visage";
-		this.m.Name = ::Const.Strings.PerkName.RF_TerrifyingVisage;
-		this.m.Description = ::Const.Strings.PerkDescription.RF_TerrifyingVisage;
+		this.m.Name = "Пугающий взгляд";
+		this.m.Description = ::ReforgedLite.Mod.Tooltips.parseString("Каждая атака, наносящая урон по [ОЗ|Concept.Hitpoints], вызывает у цели проверку [боевого духа|Concept.Bravery]. При провале проверки, цель получает эффект [Охвачен ужасом|Skill+horrified_effect].");
 		this.m.Icon = "ui/perks/perk_rf_terrifying_visage.png";
 		this.m.Type = ::Const.SkillType.Perk;
 		this.m.Order = ::Const.SkillOrder.Perk;

@@ -103,6 +103,65 @@ Lite-версия мод-комплекса Reforged для Battle Brothers (Squ
   бандитов (палисад, 300 ресурсов, лут богаче bandit_camp); строится фракцией бандитов
   (1 с 1-го дня, +1 за 50 дней, макс 6) — регистрация через .extend actions бандитов;
   спрайт карты уже в rf_world_entity
+- Охотники за головами (порт из mod_hardened): менеджер отрядов на карте мира
+  (scripts/ai/world/bounty_hunter_manager.nut). 1 отряд (PartyMax), спавнится у неизолированного
+  поселения >10 тайлов от игрока, фракция-работодатель = поселение, свежий ванильный спавн-лист
+  Const.World.Spawn.BountyHunters (bounty_hunter/bounty_hunter_ranged/wardog, ВАНИЛЬНЫЕ тактические
+  сущности — редизайн Hardened НЕ переносится), ресурсы как у ванильных наёмников
+  (min(330, 150+дни), НЕТ глобальных множителей Hardened). Фигура figure_hd_bounty_hunter_01
+  перенесена в лист rf_world_entity (brushes/gfx — pack через bbrusher из bbros\bin\rf_world_entity).
+  Прописка: хуки entity_manager (create/update/clear/onDeserialize), world_state.onSerialize
+  (список отрядов пишется в World.Flags "HD_BountyHunterIDs" ДО __original — ваниль сериализует
+  Flags раньше EntityManager, порядок проверен), событие HD_onRemoved (world_controller.popOrder
+  дергает его у снимаемого приказа; пустая база на world_behavior, реализация в move_order —
+  отряд с флагом HD_IsBountyHunters по прибытии перекрашивается во фракцию ближайшего
+  поселения). Новые члены классов (HD_onRemoved и пр.) объявлять ТОЛЬКО через q.X <- ... —
+  обёртка q.X = @(__original) по отсутствующему члену падает при применении хука (порядок
+  файлов в hooks/** не гарантирован). Утилиты имён/баннеров наёмников —
+  mod_reforged_lite/utils.nut (::ReforgedLite.util, включён в load.nut)
+- Набеги на пристройки (порт из mod_hardened): attached_location.m.IsRaidable (можно атаковать
+  и временно разрушить даже союзную) / GoesIntoLockdown (закрыта, пока у поселения
+  "situation.raided") / IsAutoDetectedRaidableLocation. Базовый хук hooks/entity/world/
+  attached_location.nut: onCombatLost → setActive(false) + статус "Набеги" поселению; isAttackable
+  → false в блокировке (цель контракта — выбор спрайта selection поселения — блокировку снимает);
+  тултип состава защитников СОЮЗНОЙ пристройки через флаг world_entity.m.HD_IsTemporaryUnallied
+  (isAlliedWithPlayer → false пока флаг; хук в world_entity.nut); «Производит:» (дети-тултипы)
+  у всех пристроек; развалины с исходным именем «X (Развалины)»; восстановленная пристройка
+  перебрасывает именной лут (setActive + guard MSU.Serialization.isLoading). 6 военных пристроек
+  raidable (fortified_outpost, militia_trainingcamp(+oriental), stone_watchtower(+oriental),
+  wooden_watchtower): защитники Noble/Southern/Militia, именной лут, краски, ресурсы 150–250
+  (без множителей Hardened). Производственные — автодетектом по onUpdateProduce (у военных
+  продукции нет — двойная защита от порядка хуков): защитники-крестьяне/ополчение, списки
+  Const.World.Spawn.HD_AttachedProduction(/Southern) (!config/mod_hd_attached_production_spawnlist.nut,
+  + calculateCosts в load.nut); культура поселения выбирает список в createDefenders (список
+  ставится в create, когда поселение ещё null). ВАЖНО: ваниль пускает бой с ЛОКАЦИЕЙ только если
+  она не союзная (isAttackable && !isAlliedWithPlayer; у локаций НЕТ Ctrl-force-attack — он только
+  у партий и жжёт всю репутацию с фракцией), поэтому союзную цель перед startCombat временно метим
+  ванильным faction.setIsTemporaryEnemy(true) (сброс — ванильная faction_manager.onCombatFinished
+  после боя). КРИТИЧНО: ваниль НЕ сериализует мод-поля и НЕ вызывает create() при загрузке сейва —
+  raidable-состояние восстанавливается в onDeserialize: базовый хук перепроводит автодетект
+  (производственные), 6 военных файлов применяют свой сетап из общей applyRaidSetup(this) в create
+  И onDeserialize (+fallback Resources==0 для сейвов до фичи). Без этого защитники пустые, а
+  ванильный location.onBeforeCombatStarted («нет защитников в листе ожидания») сам дёргает
+  onCombatLost → «Набеги» из воздуха. ВЗАИМОДЕЙСТВИЕ (по запросу игрока, вместо диалога hardened):
+  атакующий клик — Ctrl+ЛКМ по союзной пристройке (курсор атаки с Ctrl — хук
+  updateCursorAndTooltip, по аналогии с партиями) или обычный ЛКМ, если владеющий город враждебен;
+  клик помечает цель (world_state.m.HD_ForceRaidTarget — только button-события, и флаг живёт,
+  пока ваниль ведёт отряд к локации: события мыши с зажатой кнопкой/клики в другое место
+  сбрасывают его вместе с AutoEnterLocation, иначе драг стирал его до прибытия) — enterLocation
+  (вызывается ванилью по прибытии AutoEnterLocation, world_state:767) открывает ДИАЛОГ БОЯ как у
+  ванильных враждебных локаций; обычный клик по союзной пристройке подавляется (return false —
+  миссклик без последствий). Штраф отношений за набег из Hardened (глобальный
+  startCombat-хук "Attacked them") НЕ перенесён.
+  ЛОВУШКА: у пристроек ваниль часто НЕТ ФРАКЦИИ (0) — settlement.addFaction (faction.nut:378)
+  раздаёт её только уже существующим пристройкам; с фракцией 0 ваниль молча пропускает локацию
+  в showCombatDialog/getLocalCombatProperties (getFaction() == 0 → continue) — никакого боя и
+  тишины в логах. Лечение — HD_ensureRaidFaction() (settlement.getFaction()) из setSettlement-хука
+  и onDeserialize-восстановлений. ЛОВУШКА 2: ваниль не вызывает onSpawned у пристроек;
+  наш setSettlement вызывает его вручную — но setSettlement дергается и из onDeserialize, а
+  onSpawned докидывает именной лут в m.Loot → накапливание лута в сейвах; стабилизация в
+  onDeserialize (Loot.len() > 2 → clear + onSpawned). Баннер: ванильный IsShowingBanner=true
+  у location НЕ трогаем (у Hardened был свой UI-редизайн баннеров)
 - Тултипы контрактов (перенос из mod_reforged/hooks/contracts/contract.nut + связанного):
   тултип контракта на экране города (картинка сложности rf_image, «будет доступен ещё N
   дней», маршрут «Цель/В пути примерно/к …», оплата аванс/по завершении/за голову, ситуация

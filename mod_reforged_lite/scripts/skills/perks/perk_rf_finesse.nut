@@ -3,8 +3,8 @@ this.perk_rf_finesse <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_finesse";
-		this.m.Name = ::Const.Strings.PerkName.RF_Finesse;
-		this.m.Description = ::Const.Strings.PerkDescription.RF_Finesse;
+		this.m.Name = "Изящность";
+		this.m.Description = ::ReforgedLite.Mod.Tooltips.parseString("Все умения затрачивают на " + ::MSU.Text.colorPositive("20%") + " меньше [выносливости|Concept.Fatigue]");
 		this.m.Icon = "ui/perks/perk_rf_finesse.png";
 		this.m.Type = ::Const.SkillType.Perk;
 		this.m.Order = ::Const.SkillOrder.Any;

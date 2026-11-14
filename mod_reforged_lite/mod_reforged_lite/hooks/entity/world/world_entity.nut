@@ -25,3 +25,16 @@
 		return ::ReforgedLite.NestedTooltips.isApplyingNestingForEvents() ? ::ReforgedLite.Mod.Tooltips.parseString(format("[%s|WorldEntity+%i]", ::ReforgedLite.Mod.Tooltips.removeAllFromString(__original()), this.getID())) : __original();
 	}}.getRealName;
 });
+
+// Набеги на пристройки (порт из mod_hardened): флаг принудительной "не-союзности" —
+// пока true, isAlliedWithPlayer всегда false (тултип raidable-пристройки показывает состав защитников)
+::ReforgedLite.HooksMod.hook("scripts/entity/world/world_entity", function(q) {
+	q.m.HD_IsTemporaryUnallied <- false;
+
+	q.isAlliedWithPlayer = @(__original) { function isAlliedWithPlayer()
+	{
+		if (this.m.HD_IsTemporaryUnallied) return false;
+
+		return __original();
+	}}.isAlliedWithPlayer;
+});

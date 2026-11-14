@@ -6,7 +6,7 @@ this.perk_rf_double_strike <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_double_strike";
-		this.m.Name = ::Const.Strings.PerkName.RF_DoubleStrike;
+		this.m.Name = "Двойной удар";
 		this.m.Description = "Этот персонаж только что ударил врага, и он готов ударить ещё сильнее! Следующая атака нанесёт больше урона. После промаха эффект исчезнет.";
 		this.m.Icon = "ui/perks/perk_rf_double_strike.png";
 		this.m.Type = ::Const.SkillType.Perk | ::Const.SkillType.StatusEffect;

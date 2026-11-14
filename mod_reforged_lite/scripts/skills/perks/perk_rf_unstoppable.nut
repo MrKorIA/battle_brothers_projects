@@ -7,7 +7,7 @@ this.perk_rf_unstoppable <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.rf_unstoppable";
-		this.m.Name = ::Const.Strings.PerkName.RF_Unstoppable;
+		this.m.Name = "Неудержимый";
 		this.m.Description = "Этот персонаж подобен валуну, скатывающемуся по склону, его не остановить!";
 		this.m.Icon = "ui/perks/perk_rf_unstoppable.png";
 		this.m.IconMini = "perk_rf_unstoppable_mini";
