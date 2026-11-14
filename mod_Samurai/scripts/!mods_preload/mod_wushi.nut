@@ -336,8 +336,11 @@
     				if (tile != null)
     				{
     					camp = this.World.spawnLocation("scripts/entity/world/settlements/zhujiancun", tile.Coords);
-    					this.World.uncoverFogOfWar(camp.getTile().Pos, 1200);
-						if (!this.World.isUsingFogOfWar()) camp.setDiscovered(true);
+						if (this.World.isUsingFogOfWar())
+						{
+						    this.World.uncoverFogOfWar(camp.getTile().Pos, 1200);
+						    camp.setDiscovered(true);
+						}
     				}
     				if (camp != null)
     				{
