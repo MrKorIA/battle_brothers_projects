@@ -126,4 +126,20 @@
                 __original(_updateTo);
         }
     });
+
+    ::LuftRetiredGladiatorOrigin.HooksMod.hook("scripts/entity/tactical/player", function (q) {
+        q.getHiringCost = q.getTryoutCost = @(__original) function () {
+            local cost = __original();
+            local origin = ::World.Assets.getOrigin();
+            return "getBroRetCostMult" in origin
+                ? ::Math.floor(cost * origin.getBroRetCostMult(this)) : cost;
+        }
+
+        q.getDailyCost = @(__original) function () {
+            local wage = __original();
+            local origin = ::World.Assets.getOrigin();
+            return "getBroRetWageMult" in origin
+                ? ::Math.floor(wage * origin.getBroRetWageMult(this)) : wage;
+        }
+    });
 });

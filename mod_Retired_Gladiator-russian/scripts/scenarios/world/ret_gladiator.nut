@@ -168,15 +168,15 @@ this.ret_gladiator <- this.inherit("scripts/scenarios/world/starting_scenario", 
 	    }
 	}
 
-//function onBuildPerkTree( _background ) //throw sand assignment
-//    {
-//    	if (_background.m.CustomPerkTree == null)
-//    	{
-//			return;
-//    	}
-//
-//    	_background.m.CustomPerkTree[0].push(this.Const.Perks.PerkDefs.LegendThrowSand);
-//	}
+    function getBroRetCostMult(_bro) {
+        local isSouthern = _bro.getEthnicity() == 1 || _bro.getEthnicity() == 4 || _bro.getEthnicity() == 7 || _bro.getEthnicity() == 8 || _bro.getBackground().getID() == "background.legend_muladi" || _bro.getBackground().getID() == "background.gladiator" || _bro.getBackground().getID() == "background.beastslayer_gladiator" || _bro.getBackground().getID() == "background.slave" || _bro.getBackground().getID() == "background.legend_qiyan" || _bro.getBackground().getID() == "background.pit_fighter";
+        return isSouthern ? 0.75 : 1.25;
+    }
+
+    function getBroRetWageMult(_bro) {
+        local isSouthern = _bro.getEthnicity() == 1 || _bro.getEthnicity() == 4 || _bro.getEthnicity() == 7 || _bro.getEthnicity() == 8 || _bro.getBackground().getID() == "background.legend_muladi" || _bro.getBackground().getID() == "background.gladiator" || _bro.getBackground().getID() == "background.beastslayer_gladiator" || _bro.getBackground().getID() == "background.slave" || _bro.getBackground().getID() == "background.legend_qiyan" || _bro.getBackground().getID() == "background.pit_fighter";
+        return isSouthern ? 0.75 : 1.25;
+    }
 
 	function onInit()
 	{
