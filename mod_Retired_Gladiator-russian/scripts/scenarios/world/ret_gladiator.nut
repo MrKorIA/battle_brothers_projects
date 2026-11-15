@@ -146,37 +146,40 @@ this.ret_gladiator <- this.inherit("scripts/scenarios/world/starting_scenario", 
 			///--- Знаю, я закодировал расизм.
 	function onGenerateBro(bro)
 	{
-	    if (bro.getEthnicity() == 1 || bro.getEthnicity() == 4 || bro.getEthnicity() == 7 || bro.getEthnicity() == 8)
+	    if (isSouthernBro(bro))
 	    {
-			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 0.75) //1.0 = default
-			bro.getBaseProperties().DailyWageMult *= 0.75; //1.0 = default
+//			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 0.75) //1.0 = default
+//			bro.getBaseProperties().DailyWageMult *= 0.75; //1.0 = default
 			bro.getSkills().add(this.new("scripts/skills/perks/perk_retglad_path"));
 //			bro.getSkills().update();
 	    }
-	    else if (bro.getBackground().getID() == "background.legend_muladi" || bro.getBackground().getID() == "background.gladiator" || bro.getBackground().getID() == "background.beastslayer_gladiator" || bro.getBackground().getID() == "background.slave" || bro.getBackground().getID() == "background.legend_qiyan" || bro.getBackground().getID() == "background.pit_fighter")
-	    {
-			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 0.75) //1.0 = default
-			bro.getBaseProperties().DailyWageMult *= 0.75; //1.0 = default
-			bro.getSkills().add(this.new("scripts/skills/perks/perk_retglad_path"));
-//			bro.getSkills().update();
-	    }
-	    else //(bro.getEthnicity() == 0)
-	    {
-			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 1.25) //1.0 = default
-			bro.getBaseProperties().DailyWageMult *= 1.25; //1.0 = default
-//			bro.getSkills().update();
-	    }
+//	    else if (bro.getBackground().getID() == "background.legend_muladi" || bro.getBackground().getID() == "background.gladiator" || bro.getBackground().getID() == "background.beastslayer_gladiator" || bro.getBackground().getID() == "background.slave" || bro.getBackground().getID() == "background.legend_qiyan" || bro.getBackground().getID() == "background.pit_fighter")
+//	    {
+//			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 0.75) //1.0 = default
+//			bro.getBaseProperties().DailyWageMult *= 0.75; //1.0 = default
+//			bro.getSkills().add(this.new("scripts/skills/perks/perk_retglad_path"));
+////			bro.getSkills().update();
+//	    }
+//	    else //(bro.getEthnicity() == 0)
+//	    {
+//			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 1.25) //1.0 = default
+//			bro.getBaseProperties().DailyWageMult *= 1.25; //1.0 = default
+////			bro.getSkills().update();
+//	    }
 	}
 
     function getBroRetCostMult(_bro) {
-        local isSouthern = _bro.getEthnicity() == 1 || _bro.getEthnicity() == 4 || _bro.getEthnicity() == 7 || _bro.getEthnicity() == 8 || _bro.getBackground().getID() == "background.legend_muladi" || _bro.getBackground().getID() == "background.gladiator" || _bro.getBackground().getID() == "background.beastslayer_gladiator" || _bro.getBackground().getID() == "background.slave" || _bro.getBackground().getID() == "background.legend_qiyan" || _bro.getBackground().getID() == "background.pit_fighter";
-        return isSouthern ? 0.75 : 1.25;
+        return isSouthernBro(_bro) ? 0.75 : 1.25;
     }
 
     function getBroRetWageMult(_bro) {
-        local isSouthern = _bro.getEthnicity() == 1 || _bro.getEthnicity() == 4 || _bro.getEthnicity() == 7 || _bro.getEthnicity() == 8 || _bro.getBackground().getID() == "background.legend_muladi" || _bro.getBackground().getID() == "background.gladiator" || _bro.getBackground().getID() == "background.beastslayer_gladiator" || _bro.getBackground().getID() == "background.slave" || _bro.getBackground().getID() == "background.legend_qiyan" || _bro.getBackground().getID() == "background.pit_fighter";
-        return isSouthern ? 0.75 : 1.25;
+        return isSouthernBro(_bro) ? 0.75 : 1.25;
     }
+
+	function isSouthernBro(_bro)
+	{
+		return _bro.getEthnicity() == 1 || _bro.getEthnicity() == 4 || _bro.getEthnicity() == 7 || _bro.getEthnicity() == 8 || _bro.getBackground().getID() == "background.legend_muladi" || _bro.getBackground().getID() == "background.gladiator" || _bro.getBackground().getID() == "background.beastslayer_gladiator" || _bro.getBackground().getID() == "background.slave" || _bro.getBackground().getID() == "background.legend_qiyan" || _bro.getBackground().getID() == "background.pit_fighter";
+	}
 
 	function onInit()
 	{
