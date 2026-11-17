@@ -84,5 +84,11 @@ this.nomad_jin_city_location <- this.inherit("scripts/entity/world/location", {
 		body.setBrush("jincamp");
 	}
 
+	function onSpawned()
+	{
+		this.m.Name = this.World.EntityManager.getUniqueLocationName(this.Const.World.LocationNames.JurchenCamp);
+		this.location.onSpawned();
+	}
+
 });
 

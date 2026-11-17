@@ -84,5 +84,11 @@ this.nomad_mgl_city2_location <- this.inherit("scripts/entity/world/location", {
 		body.setBrush("nomad_mgl_camp_01");
 	}
 
+	function onSpawned()
+	{
+		this.m.Name = this.World.EntityManager.getUniqueLocationName(this.Const.World.LocationNames.IronHordeCamp);
+		this.location.onSpawned();
+	}
+
 });
 
