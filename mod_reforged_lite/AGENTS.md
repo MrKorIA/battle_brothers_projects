@@ -150,9 +150,18 @@ Lite-версия мод-комплекса Reforged для Battle Brothers (Squ
   пока ваниль ведёт отряд к локации: события мыши с зажатой кнопкой/клики в другое место
   сбрасывают его вместе с AutoEnterLocation, иначе драг стирал его до прибытия) — enterLocation
   (вызывается ванилью по прибытии AutoEnterLocation, world_state:767) открывает ДИАЛОГ БОЯ как у
-  ванильных враждебных локаций; обычный клик по союзной пристройке подавляется (return false —
-  миссклик без последствий). Штраф отношений за набег из Hardened (глобальный
-  startCombat-хук "Attacked them") НЕ перенесён.
+  ванильных враждебных локаций; обычный клик по союзной пристройке — по ванили ничего не делает
+  (союзная локация), ПОДАВЛЕНИЕ enterLocation ЗАПРЕЩЕНО: ломает контракты на пристройках
+  (slave_revolt вешают onEnter/OnEnterCallback на локацию — suppression съедает их). Сигнал набега
+  — world_state.m.HD_RaidLocation (WeakRef): enterLocation-raid-ветка ставит, onCombatFinished и
+  combat_dialog_module_onCancelPressed снимают. Гарнизон в бою участвует ТОЛЬКО когда пристройка
+  цель набега (attached_location.onBeforeCombatStarted сравнивает getID() с HD_RaidLocation,
+  иначе clearTroops + ранний return — иначе гарнизон влезал в посторонние бои рядом как союзник,
+  эксплоит; предрасчитанные hover-ом защитники снимались бы ванилью с onCombatLost). ЛОВУШКА
+  скана клика: гвард isInCameraMovementMode() ПЕРЕД __original бесполезен — DragStyleScrolling
+  вооружает его на нажатии и сбрасывает только в updateCamera внутри __original; правильный
+  гвард — !m.WasInCameraMovementMode (как у ванильной клик-ветки). Штраф отношений за набег из
+  Hardened (глобальный startCombat-хук "Attacked them") НЕ перенесён.
   ЛОВУШКА: у пристроек ваниль часто НЕТ ФРАКЦИИ (0) — settlement.addFaction (faction.nut:378)
   раздаёт её только уже существующим пристройкам; с фракцией 0 ваниль молча пропускает локацию
   в showCombatDialog/getLocalCombatProperties (getFaction() == 0 → continue) — никакого боя и

@@ -56,6 +56,7 @@
 		]
 	}
 ];
+// Южный вариант: работники поселений + рабы, вместо северного ополчения
 ::Const.World.Spawn.HD_AttachedProductionSouthern <- [
 	{
 		MovementSpeedMult = 0.75,
@@ -68,7 +69,7 @@
 				Num = 4
 			},
 			{
-				Type = ::Const.World.Spawn.Troops.Militia,
+				Type = ::Const.World.Spawn.Troops.Slave,
 				Num = 2
 			}
 		]
@@ -84,11 +85,11 @@
 				Num = 5
 			},
 			{
-				Type = ::Const.World.Spawn.Troops.Militia,
-				Num = 3
+				Type = ::Const.World.Spawn.Troops.Slave,
+				Num = 2
 			},
 			{
-				Type = ::Const.World.Spawn.Troops.MilitiaRanged,
+				Type = ::Const.World.Spawn.Troops.Conscript,
 				Num = 1
 			}
 		]
@@ -104,8 +105,12 @@
 				Num = 3
 			},
 			{
-				Type = ::Const.World.Spawn.Troops.Militia,
-				Num = 2
+				Type = ::Const.World.Spawn.Troops.Slave,
+				Num = 1
+			},
+			{
+				Type = ::Const.World.Spawn.Troops.Conscript,
+				Num = 1
 			}
 		]
 	}

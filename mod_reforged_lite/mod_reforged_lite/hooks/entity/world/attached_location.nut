@@ -188,6 +188,23 @@
 		__original();
 	}
 
+	// Гарнизон участвует в бою только когда сама пристройка — цель набега (сигнал — HD_RaidLocation
+	// на world_state). Иначе пристройка подтягивала бы защитников в посторонние бои рядом
+	// (эксплоит: заманивать врагов к союзным казармам). Ванильную реакцию (спавн защитников,
+	// при пустых войсках — предупреждение и onCombatLost) не дёргаем; защитников, предрасчитанных
+	// hover-ом тултипа, снимаем — иначе они влезут в чужой бой
+	q.onBeforeCombatStarted = @(__original) function()
+	{
+		local raid = ::World.State.m.HD_RaidLocation;
+		if (raid != null && !raid.isNull() && raid.getID() == this.getID())
+		{
+			__original();
+			return;
+		}
+
+		this.clearTroops();
+	}
+
 // Новые функции
 	q.isRaidable <- function()
 	{

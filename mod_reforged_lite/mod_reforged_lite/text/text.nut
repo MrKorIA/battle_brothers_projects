@@ -101,9 +101,9 @@
 		if (_numDays >= 6)
 			return "около недели";
 		if (_numDays >= 4)
-			return "ещё несколько дней";
+			return "несколько дней";
 		if (_numDays >= 2)
-			return "ещё пару дней";
+			return "пару дней";
 		if (_numDays >= 1)
 			return "около дня";
 

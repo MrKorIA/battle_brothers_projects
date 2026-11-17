@@ -2,6 +2,7 @@
 ::ReforgedLite.HooksMod.hook("scripts/states/world_state", function(q) {
 	// Private
 	q.m.HD_ForceRaidTarget <- null;	// WeakRef на raidable-пристройку, выбранную атакующим кликом (Ctrl+ЛКМ, или ЛКМ по враждебной)
+	q.m.HD_RaidLocation <- null;	// WeakRef на пристройку-цель текущего набега (гарнизон участвует в бою)
 
 	// Охотники за головами: список отрядов хранится в World.Flags — пишем его ДО ванильной
 	// сериализации (флаги пишутся внутри __original)
@@ -94,6 +95,7 @@
 				this.m.AutoEnterLocation = null;
 				this.m.LastEnteredLocation = this.WeakTableRef(_location);
 				this.m.IsRunningUpdatesWhilePaused = false;
+				this.m.HD_RaidLocation = this.WeakTableRef(_location);	// сигнал гарнизону: участвовать в бою
 
 				if (_location.onEnter())
 				{
@@ -104,18 +106,25 @@
 				}
 				return true;
 			}
-
-			if (_location.isAlliedWithPlayer())
-			{
-				// Союзная пристройка без атакующего клика: без диалога и боя.
-				// Ванильная enterLocation чистит AutoEnterLocation в своём начале — повторяем,
-				// иначе цикл прибытия будет звать enterLocation каждый тик
-				this.m.AutoEnterLocation = null;
-				return false;
-			}
 		}
 
+		// Всё остальное (в т.ч. обычный клик по союзной raidable-пристройке — ваниль сама
+		// ничего не делает с союзной локацией) — по ванили; важно для контрактов на пристройках
+		// (slave_revolt и пр. весят onEnter/OnEnterCallback локации)
 		return __original(_location);
+	}
+
+	// Набеги: конец боя / отмена диалога — снимаем сигнал гарнизону
+	q.onCombatFinished = @(__original) function()
+	{
+		__original();
+		this.m.HD_RaidLocation = null;
+	}
+
+	q.combat_dialog_module_onCancelPressed = @(__original) function()
+	{
+		__original();
+		this.m.HD_RaidLocation = null;
 	}
 
 	// Набеги: курсор атаки над союзной raidable-пристройкой с зажатым Ctrl (по аналогии
