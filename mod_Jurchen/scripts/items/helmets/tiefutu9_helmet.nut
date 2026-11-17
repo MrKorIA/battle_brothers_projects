@@ -14,8 +14,8 @@ this.tiefutu9_helmet <- this.inherit("scripts/items/helmets/helmet", {
 		this.m.IsDroppedAsLoot = true;
 		this.m.Variant = 1;
 		this.updateVariant();
-		this.m.ImpactSound = this.Const.Sound.ArmorLeatherImpact;
-		this.m.InventorySound = this.Const.Sound.ClothEquip;
+		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;
+		this.m.InventorySound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.Value = 4000;
 		this.m.Condition = 310;
 		this.m.ConditionMax = 300;

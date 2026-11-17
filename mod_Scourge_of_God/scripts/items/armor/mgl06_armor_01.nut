@@ -10,8 +10,8 @@ this.mgl06_armor_01 <- this.inherit("scripts/items/armor/armor", {
 		this.m.ShowOnCharacter = true;
 		this.m.Variant = 1;
 		this.updateVariant();
-		this.m.ImpactSound = this.Const.Sound.ArmorLeatherImpact;
-		this.m.InventorySound = this.Const.Sound.ClothEquip;
+		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;
+		this.m.InventorySound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.Value = 1500;
 		this.m.Condition = 260;
 		this.m.ConditionMax = 260;

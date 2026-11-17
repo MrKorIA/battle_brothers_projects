@@ -13,7 +13,7 @@ this.named_wushi_armor02 <- this.inherit("scripts/items/armor/named/named_armor"
 		this.m.Value = 8000;
 		this.m.Condition = 250;
 		this.m.ConditionMax = 250;
-		this.m.StaminaModifier = -28;
+		this.m.StaminaModifier = -26;
 		this.randomizeValues();
 	}
     
@@ -26,6 +26,7 @@ this.named_wushi_armor02 <- this.inherit("scripts/items/armor/named/named_armor"
 		this.m.IconLarge = "armor/inventory_wushi_armor02_body_" + variant + ".png";
 		this.m.Icon = "armor/icon_wushi_armor02_body_" + variant + ".png";
 	}
+
 	function getTooltip()
 	{
 		local result = this.armor.getTooltip();
@@ -37,6 +38,7 @@ this.named_wushi_armor02 <- this.inherit("scripts/items/armor/named/named_armor"
 		});
 		return result;
 	}
+
 	function onUpdateProperties( _properties )
 	{
 		this.armor.onUpdateProperties(_properties);

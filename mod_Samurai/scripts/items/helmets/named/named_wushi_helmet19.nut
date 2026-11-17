@@ -14,14 +14,12 @@ this.named_wushi_helmet19 <- this.inherit("scripts/items/helmets/named/named_hel
 		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.InventorySound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.Value = 7000;
-		this.m.Condition = 180;
-		this.m.ConditionMax = 180;
-		this.m.StaminaModifier = -6;
+		this.m.Condition = 280;
+		this.m.ConditionMax = 280;
+		this.m.StaminaModifier = -18;
 		this.m.Vision = -2;
 		this.randomizeValues();
 	}
-
-
 
    function updateVariant()
 	{

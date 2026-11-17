@@ -11,9 +11,9 @@ this.named_wushi_armor17 <- this.inherit("scripts/items/armor/named/named_armor"
 		this.m.ImpactSound = this.Const.Sound.ArmorHalfplateImpact;
 		this.m.InventorySound = this.Const.Sound.ArmorHalfplateImpact;
 		this.m.Value = 8000;
-		this.m.Condition = 180;
-		this.m.ConditionMax = 180;
-		this.m.StaminaModifier = -15;
+		this.m.Condition = 280;
+		this.m.ConditionMax = 280;
+		this.m.StaminaModifier = -28;
 		this.randomizeValues();
 	}
     

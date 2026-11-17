@@ -21,8 +21,6 @@ this.named_wushi_helmet02 <- this.inherit("scripts/items/helmets/named/named_hel
 		this.randomizeValues();
 	}
 
-
-
    function updateVariant()
 	{
 		local variant = this.m.Variant > 9 ? this.m.Variant : "0" + this.m.Variant;
@@ -44,6 +42,7 @@ this.named_wushi_helmet02 <- this.inherit("scripts/items/helmets/named/named_hel
 		});
 		return result;
 	}
+
 	function onUpdateProperties( _properties )
 	{
 		this.helmet.onUpdateProperties(_properties);

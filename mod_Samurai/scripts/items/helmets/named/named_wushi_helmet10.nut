@@ -16,12 +16,10 @@ this.named_wushi_helmet10 <- this.inherit("scripts/items/helmets/named/named_hel
 		this.m.Value = 7000;
 		this.m.Condition = 205;
 		this.m.ConditionMax = 205;
-		this.m.StaminaModifier = -18;
+		this.m.StaminaModifier = -14;
 		this.m.Vision = -1;
 		this.randomizeValues();
 	}
-
-
 
    function updateVariant()
 	{
@@ -32,7 +30,6 @@ this.named_wushi_helmet10 <- this.inherit("scripts/items/helmets/named/named_hel
 		this.m.IconLarge = "";
 		this.m.Icon = "helmets/icon_wushi_helmet10_" + variant + ".png";
 	}
-	
-	
+
 });
 

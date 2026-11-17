@@ -13,7 +13,7 @@ this.named_wushi_armor09 <- this.inherit("scripts/items/armor/named/named_armor"
 		this.m.Value = 8000;
 		this.m.Condition = 220;
 		this.m.ConditionMax = 220;
-		this.m.StaminaModifier = -25;
+		this.m.StaminaModifier = -22;
 		this.randomizeValues();
 	}
     

@@ -121,28 +121,34 @@ this.wushidajiang <- this.inherit("scripts/entity/tactical/human", {
 
 	function assignRandomEquipment()
 	{
-		local weapons = [
-			
-			"weapons/wushiweapon26"
-			
-		];
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Mainhand))
+		{
+            local weapons = [
+                "weapons/wushiweapon26"
+            ];
 
-		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+		    this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+		}
 
-		
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Body))
+		{
+            local armor = [
+                "armor/wushi_armor18"
+            ];
+            this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
+		}
 
-		local armor = [
-		"armor/wushi_armor18"
-		];
-		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
-		local helmet = [
-		"helmets/wushi_helmet13",
-		"helmets/wushi_helmet14",
-		"helmets/wushi_helmet13",
-		"helmets/wushi_helmet15",
-		"helmets/wushi_helmet16"
-		];
-		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Head))
+		{
+            local helmet = [
+                "helmets/wushi_helmet13",
+                "helmets/wushi_helmet14",
+                "helmets/wushi_helmet13",
+                "helmets/wushi_helmet15",
+                "helmets/wushi_helmet16"
+            ];
+            this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
+		}
 	}
 
 	function makeMiniboss()
@@ -156,12 +162,23 @@ this.wushidajiang <- this.inherit("scripts/entity/tactical/human", {
 		local weapons = [
 			"weapons/named/named_wushiweapon25"
 		];
-		
+        local armor = [
+            "armor/named/named_wushi_armor11",
+            "armor/named/named_wushi_armor16",
+            "armor/named/named_wushi_armor17"
+        ];
+        local helmet = [
+            "helmets/named/named_wushi_helmet20",
+            "helmets/named/named_wushi_helmet21",
+            "helmets/named/named_wushi_helmet22"
+        ];
 
 		if (this.Math.rand(1, 100) <= 99)
 		{
 			this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 		}
+		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, weapons.len() - 1)]));
+		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, weapons.len() - 1)]));
 		
 		this.m.BaseProperties.DamageDirectMult *= 1.25;
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_relentless"));

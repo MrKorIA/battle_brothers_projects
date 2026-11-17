@@ -26,8 +26,7 @@ this.named_wushi_armor10 <- this.inherit("scripts/items/armor/named/named_armor"
 		this.m.IconLarge = "armor/inventory_wushi_armor10_body_" + variant + ".png";
 		this.m.Icon = "armor/icon_wushi_armor10_body_" + variant + ".png";
 	}
-	
-	
+
 	function getTooltip()
 	{
 		local result = this.armor.getTooltip();
@@ -39,8 +38,6 @@ this.named_wushi_armor10 <- this.inherit("scripts/items/armor/named/named_armor"
 		});
 		return result;
 	}
-	
-	
 	
 	function onUpdateProperties( _properties )
 	{

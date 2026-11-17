@@ -8,8 +8,8 @@ this.named_mgl08_armor_01 <- this.inherit("scripts/items/armor/named/named_armor
 		this.m.Name = "Доспех багатура";
 		this.m.Variant = 1;
 		this.updateVariant();
-		this.m.ImpactSound = this.Const.Sound.ArmorHalfplateImpact;
-		this.m.InventorySound = this.Const.Sound.ArmorHalfplateImpact;
+		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;
+		this.m.InventorySound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.Value = 5000;
 		this.m.Condition = 290;
 		this.m.ConditionMax = 290;

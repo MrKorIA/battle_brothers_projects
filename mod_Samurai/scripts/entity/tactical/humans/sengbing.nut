@@ -95,31 +95,39 @@ this.sengbing <- this.inherit("scripts/entity/tactical/human", {
 
 	function assignRandomEquipment()
 	{
-		local weapons = [
-		    "weapons/wushiweapon09",
-		    "weapons/wushiweapon09",
-			"weapons/wushiweapon10",
-			"weapons/wushiweapon10",
-		];
-		if (::mods_getRegisteredMod("mod_fantasybro") != null)
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Mainhand))
 		{
-		    weapons.push("weapons/xxcestus");
-		    weapons.push("weapons/xxcestusb");
+            local weapons = [
+                "weapons/wushiweapon09",
+                "weapons/wushiweapon09",
+                "weapons/wushiweapon10",
+                "weapons/wushiweapon10",
+            ];
+            if (::mods_getRegisteredMod("mod_fantasybro") != null)
+            {
+                weapons.push("weapons/xxcestus");
+                weapons.push("weapons/xxcestusb");
+            }
+            this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 		}
-		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 
-		
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Body))
+		{
+            local armor = [
+                "armor/wushi_armor06",
+            ];
+            this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
+		}
 
-		local armor = [
-			"armor/wushi_armor06",
-			
-		];
-		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
-		local helmet = [
-			"helmets/wushi_helmet05",
-		];
-		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Head))
+		{
+            local helmet = [
+                "helmets/wushi_helmet05",
+            ];
+            this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
+		}
 	}
+
     function makeMiniboss()
 	{
 		if (!this.actor.makeMiniboss())
@@ -132,8 +140,14 @@ this.sengbing <- this.inherit("scripts/entity/tactical/human", {
 		local weapons = [
 			"weapons/named/named_wushiweapon11"			
 		];
+        local armor = [
+            "armor/named/named_wushi_armor12"
+        ];
 
-		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+        if (this.Math.rand(0, 1) == 1)
+		    this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+        else
+		    this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, weapons.len() - 1)]));
 		return true;
 	}
 });

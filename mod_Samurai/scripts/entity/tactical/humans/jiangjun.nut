@@ -121,34 +121,40 @@ this.jiangjun <- this.inherit("scripts/entity/tactical/human", {
 
 	function assignRandomEquipment()
 	{
-		local weapons = [
-			
-			"weapons/wushiweapon39"
-			
-		];
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Mainhand))
+		{
+            local weapons = [
+                "weapons/wushiweapon39"
+            ];
 
-		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+            this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+		}
 
-		
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Body))
+		{
+            local armor = [
+                "armor/wushi_armor19"
+            ];
+            this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
+		}
 
-		local armor = [
-		"armor/wushi_armor19"
-		];
-		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
-		local helmet = [
-		"helmets/wushi_helmet17"
-		];
-		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
+		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Head))
+		{
+            local helmet = [
+                "helmets/wushi_helmet17"
+            ];
+            this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
+		}
 	}
 
 	function readyToSettlement()
 	{
 		local armor = [
-		"armor/wushi_armor19"
+		    "armor/wushi_armor19"
 		];
 		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
 		local helmet = [
-		"helmets/wushi_helmet17"
+		    "helmets/wushi_helmet17"
 		];
 		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
 	}
@@ -164,11 +170,25 @@ this.jiangjun <- this.inherit("scripts/entity/tactical/human", {
 		local weapons = [
 			"weapons/named/named_wushiweapon41"
 		];
-		
+        local armor = [
+            "armor/named/named_wushi_armor13"
+        ];
+        local helmet = [
+            "helmets/named/named_wushi_helmet18",
+            "helmets/named/named_wushi_helmet19"
+        ];
 
 		if (this.Math.rand(1, 100) <= 99)
 		{
 			this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+		}
+		if (this.Math.rand(1, 100) <= 60)
+		{
+			this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, weapons.len() - 1)]));
+		}
+		if (this.Math.rand(1, 100) <= 80)
+		{
+			this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, weapons.len() - 1)]));
 		}
 		
 		this.m.BaseProperties.DamageDirectMult *= 1.25;
