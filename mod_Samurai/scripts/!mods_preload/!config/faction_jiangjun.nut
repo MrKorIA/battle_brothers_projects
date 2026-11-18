@@ -28,6 +28,6 @@
     Cost = 40,
     Row = 1,
     Script = "scripts/entity/tactical/humans/jiangjun",
-    NameList = this.Const.Strings.WushiNames,
+    NameList = this.Const.Strings.SamuraiLeaderNames,
     TitleList = this.Const.Strings.JiangjunTitles
 }

@@ -5,7 +5,7 @@ this.named_wushi_helmet19 <- this.inherit("scripts/items/helmets/named/named_hel
 		this.named_helmet.create();
 		this.m.ID = "armor.head.named_wushi_helmet19";
 		this.m.Description = "Шлем, который носил знаменитый самурайский генерал.";
-		this.m.Name = "Именной шлем";
+		this.m.NameList = this.Const.Strings.SamuraiHelmetNames;
 		this.m.ShowOnCharacter = true;
 		this.m.HideHair = true;
 		this.m.HideBeard = true;

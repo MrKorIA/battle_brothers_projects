@@ -4,8 +4,8 @@ this.named_wushi_armor16 <- this.inherit("scripts/items/armor/named/named_armor"
 	{
 		this.named_armor.create();
 		this.m.ID = "armor.body.named_wushi_armor16";
-		this.m.Description = "Доспехи, которые носил знаменитый самурайский генерал.";
-		this.m.Name = "Именная броня";
+		this.m.Description = "Доспех, который носил знаменитый самурайский генерал.";
+		this.m.NameList = this.Const.Strings.SamuraiArmorNames;
 		this.m.Variant = 1;
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorHalfplateImpact;

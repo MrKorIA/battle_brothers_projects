@@ -305,8 +305,8 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
     Cost = 35,
     Row = 3,
     Script = "scripts/entity/tactical/humans/renzhe",
-    NameList = this.Const.Strings.SamuraiLeaderNames,
-    TitleList = null
+    NameList = this.Const.Strings.NinjaLeaderNames,
+    TitleList = this.Const.Strings.NinjaLeaderTitles
 };
 	
 ::Const.World.Spawn.Troops.Renzhe02 <-
@@ -328,7 +328,8 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
     Cost = 20,
     Row = 1,
     Script = "scripts/entity/tactical/humans/sengbing",
-    TitleList = null
+    NameList = this.Const.Strings.MonkLeaderNames,
+    TitleList = this.Const.Strings.MonkLeaderTitles
 };
 
 ::Const.World.Spawn.Troops.Wushi <-
@@ -350,6 +351,9 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
     Cost = 40,
     Row = 1,
     Script = "scripts/entity/tactical/humans/wushi02",
+    NameList = [
+        "Хидэо Ямада"
+    ],
     TitleList = null
 };
 
@@ -361,6 +365,9 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
     Cost = 45,
     Row = 1,
     Script = "scripts/entity/tactical/humans/wushi03",
+    NameList = [
+        "Уэда Такеши"
+    ],
     TitleList = null
 };
 
@@ -372,6 +379,9 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
     Cost = 60,
     Row = 1,
     Script = "scripts/entity/tactical/humans/wushi04",
+    NameList = [
+        "Хидэо Ямада"
+    ],
     TitleList = null
 };
 
@@ -383,6 +393,9 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
     Cost = 40,
     Row = 1,
     Script = "scripts/entity/tactical/humans/wushi05",
+    NameList = [
+        "Онимуша"
+    ],
     TitleList = null
 };
 
