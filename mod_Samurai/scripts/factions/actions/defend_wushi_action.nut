@@ -86,9 +86,9 @@ this.defend_wushi_action <- this.inherit("scripts/factions/faction_action", {
 
 			local mult = 0.66;
 			local distanceToNextSettlement = this.getDistanceToSettlements(this.m.Settlement.getTile());
-			local party = this.getFaction().spawnEntity(spawnpoints[i], "Самураи", false, this.Const.World.Spawn.WushiDefenders, this.m.Settlement.getResources() * mult);
+			local party = this.getFaction().spawnEntity(spawnpoints[i], "Вокоу", false, this.Const.World.Spawn.WushiDefenders, this.m.Settlement.getResources() * mult);
 			party.getSprite("banner").setBrush(this.m.Settlement.getBanner());
-			party.setDescription("Отряд самураев с востока.");
+			party.setDescription("Отряд вокоу с востока.");
 			party.setFootprintType(this.Const.World.FootprintsType.Brigands);
 			party.getFlags().set("IsRandomlySpawned", true);
 			local c = party.getController();

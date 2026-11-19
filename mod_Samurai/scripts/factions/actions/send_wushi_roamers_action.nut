@@ -82,10 +82,9 @@ this.send_wushi_roamers_action <- this.inherit("scripts/factions/faction_action"
 		settlement.setLastSpawnTimeToNow();
 		local rand = this.Math.rand(60, 110);
 		local distanceToNextSettlement = this.getDistanceToSettlements(settlement.getTile());
-		local party = this.getFaction().spawnEntity(settlement.getTile(), "Самураи", false, this.Const.World.Spawn.WushiRoamers, this.Math.min(settlement.getResources(), rand));
-
+		local party = this.getFaction().spawnEntity(settlement.getTile(), "Вокоу", false, this.Const.World.Spawn.WushiRoamers, this.Math.min(settlement.getResources(), rand));
 		party.getSprite("banner").setBrush(settlement.getBanner());
-		party.setDescription("Отряд самураев с востока.");
+		party.setDescription("Отряд вокоу с востока.");
 		party.setFootprintType(this.Const.World.FootprintsType.Brigands);
 		party.getFlags().set("IsRandomlySpawned", true);
 		party.getLoot().Money = this.Math.rand(0, 100);

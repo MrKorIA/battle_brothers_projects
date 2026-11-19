@@ -92,9 +92,9 @@ this.send_wushi_ambushers_action <- this.inherit("scripts/factions/faction_actio
 		settlement.setLastSpawnTimeToNow();
 		local mult = this.World.FactionManager.isCivilWar() ? 1.1 : 1.0;
 		local distanceToNextSettlement = this.getDistanceToSettlements(settlement.getTile());
-		local party = this.getFaction().spawnEntity(settlement.getTile(), "Самураи", false, this.Const.World.Spawn.WushiRaiders, this.Math.rand(75, 120) * this.getScaledDifficultyMult() * mult);
+		local party = this.getFaction().spawnEntity(settlement.getTile(), "Вокоу", false, this.Const.World.Spawn.WushiRaiders, this.Math.rand(75, 120) * this.getScaledDifficultyMult() * mult);
 		party.getSprite("banner").setBrush(settlement.getBanner());
-		party.setDescription("Отряд самураев с востока.");
+		party.setDescription("Отряд вокоу с востока.");
 		party.setFootprintType(this.Const.World.FootprintsType.Brigands);
 		party.getFlags().set("IsRandomlySpawned", true);
 		party.getLoot().Money = this.Math.rand(50, 200);
