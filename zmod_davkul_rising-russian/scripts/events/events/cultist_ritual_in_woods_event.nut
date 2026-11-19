@@ -167,7 +167,7 @@ this.cultist_ritual_in_woods_event <- this.inherit("scripts/events/event", {
 				foreach (script in loot){
 				    if (this.World.Assets.getStash().getNumberOfEmptySlots() < 1) continue;
 					local item = this.new(script)
-					this.World.Assets.getStash().add(this.new(item));
+					this.World.Assets.getStash().add(item);
 					this.List.push({
 						id = 10,
 						icon = "ui/items/" + item.getIcon(),
