@@ -45,6 +45,8 @@ addFaction(
 	]
 );
 
+::Const.FactionTrait.Actions[this.Const.FactionTrait.Settlement].push("scripts/factions/actions/drive_away_mgl_action");
+
 ::Const.MglBanners <- [
 	"banner_mgl"
 ];
