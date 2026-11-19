@@ -1,0 +1,53 @@
+// these files need to be loaded in a specific order
+::include("mod_nggh/config/names.nut")
+::include("mod_nggh/config/config.nut")
+::include("mod_nggh/config/champions.nut")
+::include("mod_nggh/config/projectiles.nut")
+::include("mod_nggh/config/ai.nut")
+::include("mod_nggh/config/corpse.nut")
+::include("mod_nggh/config/mount.nut")
+::include("mod_nggh/config/hex.nut")
+::include("mod_nggh/config/hexe_origin.nut")
+::include("mod_nggh/config/simp_levels.nut")
+::include("mod_nggh/config/charmed_utilities.nut")
+::include("mod_nggh/config/excluded_traits.nut")
+::include("mod_nggh/config/attributes_levelup.nut")
+::include("mod_nggh/config/lucky_rune_loot_table.nut")
+::include("mod_nggh/config/spawnlist_witchhunter.nut")
+::include("mod_nggh/config/runes.nut")
+
+// perk stuffs
+::include("mod_nggh/config/perk_strings.nut")
+::include("mod_nggh/config/perk_defs.nut")
+::include("mod_nggh/config/perk_trees.nut")
+::include("mod_nggh/config/perk_tree_templates.nut")
+
+// perk tooltips are updated automatically by Legends 19.3 in its afterHooks phase
+
+foreach (file in ::IO.enumerateFiles("mod_nggh/register"))
+{
+	::include(file);
+}
+
+// load the hooks
+::include("mod_nggh/hook_helper.nut")
+foreach (file in ::IO.enumerateFiles("mod_nggh/hooks"))
+{
+	::include(file);
+}
+
+if (::Is_PTR_Exist)
+{
+	foreach (file in ::IO.enumerateFiles("mod_nggh/tweak_ptr"))
+	{
+		::include(file);
+	}
+}
+
+if (::Is_AccessoryCompanions_Exist)
+{
+	foreach (file in ::IO.enumerateFiles("mod_nggh/tweak_ac"))
+	{
+		::include(file);
+	}
+}
