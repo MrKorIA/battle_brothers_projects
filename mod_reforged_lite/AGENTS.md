@@ -82,9 +82,20 @@ Lite-версия мод-комплекса Reforged для Battle Brothers (Squ
   фракция, tavern-руморы (getType-костыль), mapgen-шаблон tactical_rf_barrows
 - Травмы rf_black_eye / rf_dislocated_jaw / rf_heat_stroke + хук character_injuries;
   мини preview-система (хук actor: isPreviewing/getPreviewSkill) для тултипов
-- Вложенные тултипы: зависимость **mod_nested_tooltips** (полная версия 0.5.4 в data);
+- Вложенные тултипы: зависимость **mod_nested_tooltips** (полная версия в data, сейчас 0.5.5);
   Concept-словарь мода — `mod_reforged_lite/tooltips/concepts.nut`, ссылки в текстах —
   `::ReforgedLite.Mod.Tooltips.parseString`
+- Фикс «залипания» тултипов mod_nested_tooltips 0.5.5 (JS-патч поверх `MSU.NestedTooltip` —
+  `ui/mods/mod_reforged_lite/js_hooks/msu/nested_tooltips.js`, регистрация в load.nut; сторонний
+  zip в data НЕ правим): 0.5.5 подавляет `showTileTooltip`, пока открыт залоченный тултип
+  (коммит f763bbf; лок любого тултипа через lockDelay 500 мс), и тултип тайла под неподвижным
+  курсором после резкого переноса на другого юнита не появлялся до следующего движения мыши
+  (порог mMinMouseMovement 4 px) — разработчики мода знают («separate issue» в
+  tests/tooltip_mouse.nut), фикса нет. Патч запоминает подавленный запрос
+  (`__rflPendingTileTooltip`) и выполняет его из обёртки `updateStack`, когда стек освободился
+  (залоченный тултип закрылся по grace). Защиты от ложного показа: свежесть запроса
+  (grace+1000 мс) и проверка, что курсор не над UI-источником тултипа. UI-тултипы (навыки и пр.)
+  багом не затронуты — их цепочка enter/leave залоченный тултип снимает корректно
 - Орки-нежить: rf_zombie_orc* (7 сущностей, 2 расовых скилла, bite-скилл), хуки generateCorpse
   ванильных орков; спавн — только в партиях с некромантом (vanilla Necromancer/NecromancerSouthern/UndeadScourge)
 - Расширение предметов: оружие/броня/шлемы/зелья/банка с холодом (rf_*, кроме anatomist-зелий),

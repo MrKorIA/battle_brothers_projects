@@ -81,6 +81,10 @@ local function calculateCosts( _p )
 // JS: неймспейс мода
 ::Hooks.registerJS("ui/mods/mod_reforged_lite/setup.js");
 
+// JS-фикс: «залипание» тултипа тайла в mod_nested_tooltips 0.5.5 (подавленный залоченным
+// тултипом показ восстанавливается после его закрытия без движения мыши)
+::Hooks.registerJS("ui/mods/mod_reforged_lite/js_hooks/msu/nested_tooltips.js");
+
 // JS-хук: проброс entityId в тултипы характеров (character screen)
 ::Hooks.registerJS("ui/mods/mod_reforged_lite/js_hooks/screens/character/modules/character_screen_left_panel/character_screen_stats_module.js");
 
