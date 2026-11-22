@@ -109,6 +109,8 @@ this.wushi <- this.inherit("scripts/entity/tactical/human", {
             this.m.Items.equip(this.new("scripts/items/weapons/wushiweapon14"));
             this.m.Items.equip(this.new("scripts/items/ammo/quiver_of_arrows"));
 		    this.m.Items.addToBag(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+		    this.m.BaseProperties.IsSpecializedInBows = true;
+		    this.m.BaseProperties.Vision = 8;
 		    this.m.AIAgent = this.new("scripts/ai/tactical/agents/bounty_hunter_ranged_agent");
 		    this.m.AIAgent.setActor(this);
 	    }
