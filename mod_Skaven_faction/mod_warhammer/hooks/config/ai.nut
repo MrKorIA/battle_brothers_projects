@@ -9,7 +9,4 @@
 	RatPackmaster = "agent.rat.packmaster"
 });
 
-::MSU.Table.merge(::Const.AI.Behavior.ID, {
-	RatAttackWarpfire = 91,
-	COUNT = 92
-});
+::MSU.AI.addBehavior("RatAttackWarpfire", "Rat.AttackWarpfire", ::Const.AI.Behavior.Order.AttackHandgonne, ::Const.AI.Behavior.Score.Attack);
