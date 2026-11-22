@@ -83,7 +83,7 @@ this.companions_xxmob_toad <- this.inherit("scripts/entity/tactical/actor", {
 		local onArmorHitSounds = this.getItems().getAppearance().ImpactSound;
 		onArmorHitSounds[this.Const.BodyPart.Body] = this.Const.Sound.ArmorLeatherImpact;
 		onArmorHitSounds[this.Const.BodyPart.Head] = this.Const.Sound.ArmorLeatherImpact;
-		this.m.AIAgent = this.new("scripts/companions/types/companions_nacho_agent");
+		this.m.AIAgent = this.new("scripts/companions/types/companions_xxmob_toad_agent");
 		this.m.AIAgent.setActor(this);
 	}
 
@@ -107,6 +107,11 @@ this.companions_xxmob_toad <- this.inherit("scripts/entity/tactical/actor", {
 	function getName()
 	{
 		return this.m.Name;
+	}
+
+	function getSize()
+	{
+		return 1;
 	}
 
 	function setVariant(_v)
@@ -167,7 +172,9 @@ this.companions_xxmob_toad <- this.inherit("scripts/entity/tactical/actor", {
 	function onFactionChanged()
 	{
 		this.actor.onFactionChanged();
-		local flip = !this.isAlliedWithPlayer();
+		local flip = this.isAlliedWithPlayer();
+		this.getSprite("body").setHorizontalFlipping(flip);
+		this.getSprite("injury").setHorizontalFlipping(flip);
 		this.getSprite("body_blood").setHorizontalFlipping(flip);
 
 		if (!this.Tactical.State.isScenarioMode())
