@@ -1,9 +1,16 @@
-// Хуки конфигов и игровых систем
+// Хуки конфигов и игровых систем (функциональные — не про тултипы скиллов)
 ::includeFiles(::IO.enumerateFiles("mod_reforged_lite/hooks"));
 
 // Хелперы вложенных тултипов и словарь концепций мода (зависимость: mod_nested_tooltips)
 ::include("mod_reforged_lite/tooltips/nested_helpers");
 ::include("mod_reforged_lite/tooltips/concepts");
+
+// Движок тултип-хуков скиллов других модов (должен грузиться ДО реестров из tooltips/hooks)
+::include("mod_reforged_lite/tooltips/mod_skill_tooltips");
+
+// Тултип-хуки скиллов: ванильный батч (vanilla/) + реестры по модам (<мод>/registry.nut).
+// Только вложенные ссылки — тексты скиллов не дублируются (см. tooltips/mod_skill_tooltips.nut).
+::includeFiles(::IO.enumerateFiles("mod_reforged_lite/tooltips/hooks"));
 
 // Утилиты мира (имена/баннеры наёмных отрядов — охотники за головами)
 ::include("mod_reforged_lite/utils");
