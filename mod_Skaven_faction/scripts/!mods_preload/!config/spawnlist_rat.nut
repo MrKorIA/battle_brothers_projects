@@ -513,8 +513,8 @@ this.Const.World.Spawn.RatRaiders <- buildSpawnArray({
             Units = [
                 { Type = this.Const.World.Spawn.Troops.RatSwarm,     Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatClanrat,   Weight = 100 },
-                { Type = this.Const.World.Spawn.Troops.RatWarrior,   Weight = 60, BodyOverride = "figure_tiefutu_02" },
-                { Type = this.Const.World.Spawn.Troops.RatBannerMen, Weight = 15, MinR = 100, MaxCount = 1 }
+                { Type = this.Const.World.Spawn.Troops.RatWarrior,   Weight = 60, BodyOverride = "figure_rat_02", BodyPriority = 50 },
+                { Type = this.Const.World.Spawn.Troops.RatBannerMen, Weight = 15, MinR = 100, MaxCount = 1, BodyOverride = "figure_rat_04", BodyPriority = 50 }
             ]
         },
         {
@@ -525,8 +525,8 @@ this.Const.World.Spawn.RatRaiders <- buildSpawnArray({
             Units = [
                 { Type = this.Const.World.Spawn.Troops.RatSwarm,      Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
-                { Type = this.Const.World.Spawn.Troops.RatWarrior,    Weight = 60  },
-                { Type = this.Const.World.Spawn.Troops.RatBannerMen,  Weight = 15, MinR = 115, MaxCount = 1 },
+                { Type = this.Const.World.Spawn.Troops.RatWarrior,    Weight = 60, BodyOverride = "figure_rat_02", BodyPriority = 50 },
+                { Type = this.Const.World.Spawn.Troops.RatBannerMen,  Weight = 15, MinR = 115, MaxCount = 1, BodyOverride = "figure_rat_04", BodyPriority = 50 },
                 { Type = this.Const.World.Spawn.Troops.RatPackmaster, Weight = 15, MinR = 140, MaxCount = 1 }
             ]
         },
@@ -550,8 +550,8 @@ this.Const.World.Spawn.RatRaiders <- buildSpawnArray({
                 { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatAssassin,   Weight = 40, MaxCount = 4 },
                 { Type = this.Const.World.Spawn.Troops.RatWarrior,    Weight = 60 },
-                { Type = this.Const.World.Spawn.Troops.RatPackmaster, Weight = 15, MinR = 180, MaxCount = 1 },
-                { Type = this.Const.World.Spawn.Troops.RatEngineer,   Weight = 10, MinR = 150, MaxCount = 2, BodyOverride = "figure_tiefutu_03" }
+                { Type = this.Const.World.Spawn.Troops.RatPackmaster, Weight = 15, MinR = 180, MaxCount = 1, BodyOverride = "figure_rat_04" },
+                { Type = this.Const.World.Spawn.Troops.RatEngineer,   Weight = 10, MinR = 150, MaxCount = 2 }
             ]
         },
         {
