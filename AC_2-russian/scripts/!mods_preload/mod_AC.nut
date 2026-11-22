@@ -1389,16 +1389,24 @@
 				{
 					foreach(i, quirk in this.m.Quirks)
 					{
-						local getQuirk = new(quirk);
-						knownQuirks.push(getQuirk.getName());
+						knownQuirks.push(new(quirk));
 					}
 
-					knownQuirks.sort();
+					// сортировка по имени; вложенные ссылки на квирки — при установленном
+					// mod_reforged_lite (рендер стандартный: AC сам отключает свой tooltip-JS,
+					// когда в игре есть mod_nested_tooltips)
+					knownQuirks.sort(function(a, b) {
+						if (a.getName() == b.getName()) return 0;
+						return a.getName() < b.getName() ? -1 : 1;
+					});
+					local isRFLite = "ReforgedLite" in getroottable();
 					foreach(i, quirk in knownQuirks)
 					{
-						quirkString += quirk;
+						quirkString += isRFLite
+							? ::ReforgedLite.Mod.Tooltips.parseString(::ReforgedLite.NestedTooltips.getNestedSkillName(quirk))
+							: quirk.getName();
 
-						if (i < this.m.Quirks.len() - 1)
+						if (i < knownQuirks.len() - 1)
 						{
 							quirkString += ", ";
 						}

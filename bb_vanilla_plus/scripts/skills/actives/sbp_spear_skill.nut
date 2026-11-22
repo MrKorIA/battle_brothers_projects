@@ -5,7 +5,7 @@ this.sbp_spear_skill <- this.inherit("scripts/skills/skill", {
 		this.m.ID = "actives.sbp_spear_skill";
 		this.m.Name = "106. Стальной шип (пассивный)";
 		this.m.Icon = "ui/xxp4.png";
-		this.m.Description = "+15 к навыку ближнего боя и защите, когда у вас есть \'Стена копьев\' или \'Контратака\' бафф";
+		this.m.Description = "+15 к навыку ближнего боя и защите, когда на вас действуют \'Стена копий\' или \'Контратака\'";
 		this.m.Type = this.Const.SkillType.StatusEffect;
 		this.m.Order = this.Const.SkillOrder.VeryLast + 100;
 		this.m.IsActive = false;

@@ -12,6 +12,10 @@
 // Только вложенные ссылки — тексты скиллов не дублируются (см. tooltips/mod_skill_tooltips.nut).
 ::includeFiles(::IO.enumerateFiles("mod_reforged_lite/tooltips/hooks"));
 
+// Оверлей линкифайера поверх ванильного батча — ЯВНО после батча: порядок include = порядок
+// RawHooks, обёртка линкифайера должна оказаться внешней (закодированные батчем ссылки защищены)
+::include("mod_reforged_lite/tooltips/hooks/vanilla/batch_overlay");
+
 // Утилиты мира (имена/баннеры наёмных отрядов — охотники за головами)
 ::include("mod_reforged_lite/utils");
 

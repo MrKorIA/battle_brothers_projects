@@ -162,14 +162,17 @@
 
 	// Вложенные ссылки в тултипах перков экрана персонажа: ваниль строит их из perk-def
 	// (general_queryUIPerkTooltipData → perk.Tooltip), минуя getTooltip класса перка, —
-	// поэтому линкификация классов из tooltips/hooks/vanilla/registry.nut на этот экран
-	// не действует. Линкифицируем описание (запись id 2) базовым словарём на месте.
+	// поэтому линкификация классов из tooltips/hooks/** на этот экран не действует. Линкифицируем
+	// описание здесь; скоуп разрешается по perk.Script через реестр ClassScopes (скоупные термины
+	// мода работают в тултипах его перков; незнакомый скрипт — только глобальный словарь).
 	q.general_queryUIPerkTooltipData = @(__original) { function general_queryUIPerkTooltipData( _entityId, _perkId )
 	{
 		local ret = __original(_entityId, _perkId);
 		if (ret != null)
 		{
-			::ReforgedLite.ModSkillTooltips.linkifyTooltip(ret);
+			local perk = ::Const.Perks.findById(_perkId);
+			local scope = perk == null ? null : ::ReforgedLite.ModSkillTooltips.getScopeForScript(perk.Script);
+			::ReforgedLite.ModSkillTooltips.linkifyTooltip(ret, scope);
 		}
 		return ret;
 	}}.general_queryUIPerkTooltipData;

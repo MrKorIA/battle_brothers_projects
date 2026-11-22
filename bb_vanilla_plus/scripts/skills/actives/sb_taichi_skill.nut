@@ -7,7 +7,7 @@ this.sb_taichi_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.sb_taichi_skill";
 		this.m.Name = "70. Форма оружия тайцзи";
-		this.m.Description = "Получаете эффекты Контратака и Стена копий. Подвержен влиянию мастерства Меч и Копье. \n[color=#8f1e1e]Требование:[/color] Оружие ближнего боя"
+		this.m.Description = "Получаете эффекты \'Контратака\' и \'Стена копий\'. Подвержен влиянию мастерства Меч и Копье. \n[color=#8f1e1e]Требование:[/color] Оружие ближнего боя"
 		this.m.Icon = "ui/xx53.png";
 		this.m.IconDisabled = "ui/xx53_sw.png";
 		this.m.SoundOnUse = [

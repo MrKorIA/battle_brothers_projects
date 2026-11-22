@@ -7,7 +7,7 @@ this.sb_pull_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.sb_pull_skill";
 		this.m.Name = "Шаровая Молния";
-		this.m.Description = "Наносит небольшой урон по ОЗ и выносливости целям в зоне поражения и отталкивает их от центра. Ошеломляет цели и снимает защиту от стены щитов / стены копий / ответного удара.";
+		this.m.Description = "Наносит небольшой урон по ОЗ и выносливости целям в зоне поражения и отталкивает их от центра. Ошеломляет цели и снимает действие умений \'Стена щитов\', \'Стена копий\' и \'Контратака\'.";
 		this.m.Icon = "ui/xx57.png";
 		this.m.IconDisabled = "ui/xx57_sw.png";
 		this.m.Overlay = "active_rand";

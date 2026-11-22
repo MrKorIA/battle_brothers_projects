@@ -12,4 +12,11 @@ local scope = "ac_2";
 	"scripts/companions/quirks/companions_poisonous",
 	"scripts/companions/quirks/companions_regenerative",
 	"scripts/companions/quirks/companions_soften_blows",
+
+	// Активы компаньонов (onequip + skills): ссылочная стоимость и термины
+	"scripts/companions/onequip/companions_leash",
+	"scripts/companions/onequip/companions_raise",
+	"scripts/companions/onequip/companions_unleash",
+	"scripts/companions/skills/companions_nightmare_skill",
+	"scripts/companions/skills/companions_swallow_whole",
 ], scope);

@@ -39,7 +39,7 @@ this.ai_weak_effect <- this.inherit("scripts/skills/skill", {
 				id = 11,
 				type = "text",
 				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + this.Math.maxf(1, 1 * this.m.Count) + "%[/color] ближнего и дальнего боя."
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + this.Math.maxf(1, 1 * this.m.Count) + "%[/color] к ближнему и дальнему бою."
 			}
 		];
 	}

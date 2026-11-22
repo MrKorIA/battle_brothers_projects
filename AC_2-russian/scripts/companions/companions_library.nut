@@ -838,7 +838,7 @@ gt.Const.Companions.Library <- [
 		PartyStrength = 30,
 		MaxPerCompany = 2,
 		Variant = function() { return this.Math.rand(1, 2); },
-		BasicQuirks = ["scripts/skills/perks/perk_pathfinder", "scripts/skills/perks/perk_steel_brow"],
+		BasicQuirks = ["scripts/skills/perks/perk_pathfinder", "scripts/skills/perks/perk_steel_brow", "scripts/skills/perks/perk_battering_ram", "scripts/skills/perks/perk_crippling_strikes"],
 		BasicAttributes = { Hitpoints = 250, Stamina = 140, Bravery = 80, Initiative = 60, MeleeSkill = 55, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 15 },
 		PreferredAttribute = this.Const.Attributes.Hitpoints,
 		Script = "scripts/companions/types/companions_xxmob_toad",

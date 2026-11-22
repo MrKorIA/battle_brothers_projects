@@ -27,6 +27,7 @@
 
 ::ReforgedLite.ModSkillTooltips <- {
 	Terms = [], // { Term, Link, Scope = null|<ключ мода> } — отсортирован по убыванию длины термина
+	ClassScopes = {}, // script path -> scope (заполняется addSkill; perk-def обёртка резолвит скоуп)
 
 	function addTerms( _terms, _scope = null )
 	{
@@ -60,6 +61,7 @@
 			{ Term = "максимальная усталость", Link = "Concept.MaximumFatigue" },
 			{ Term = "решимости", Link = "Concept.Bravery" },
 			{ Term = "решимость", Link = "Concept.Bravery" },
+			{ Term = "Решимость", Link = "Concept.Bravery" },
 			{ Term = "инициативы", Link = "Concept.Initiative" },
 			{ Term = "инициатива", Link = "Concept.Initiative" },
 			{ Term = "инициативе", Link = "Concept.Initiative" },
@@ -131,6 +133,9 @@
 			{ Term = "Оглушен", Link = "Skill+stunned_effect" },
 			{ Term = "растерянности", Link = "Skill+dazed_effect" },
 			{ Term = "растерянность", Link = "Skill+dazed_effect" },
+			{ Term = "Ошеломляет", Link = "Skill+staggered_effect" },
+			{ Term = "ошеломляет", Link = "Skill+staggered_effect" },
+			{ Term = "Ошеломлён", Link = "Skill+staggered_effect" },
 			{ Term = "Выбит дух", Link = "Skill+dazed_effect" },
 			{ Term = "выбит дух", Link = "Skill+dazed_effect" },
 			{ Term = "выбить дух", Link = "Skill+dazed_effect" },
@@ -144,6 +149,19 @@
 
 	function addSkill( _src, _scope = null )
 	{
+		this.ClassScopes[_src] <- _scope; // perk-def обёртка резолвит скоуп по perk.Script
+
+		// Классы ВНЕ scripts/skills (напр. квирки AC в scripts/companions/**) отсутствуют в
+		// индексе mod_nested_tooltips — Skill+<имя> не резолвился бы (Key not found в
+		// getObjFromFilename при наведении на ссылку). Добавляем basename -> script path
+		// (ленивый ::new по первому клику); при коллизии имён существующая запись в приоритете.
+		if (_src.find("scripts/skills/") == null)
+		{
+			local key = split(_src, "/").pop();
+			if (!(key in ::MSU.NestedTooltips.SkillObjectsByFilename))
+				::MSU.NestedTooltips.SkillObjectsByFilename[key] <- _src;
+		}
+
 		local src = _src; // замыкание
 		::ReforgedLite.HooksMod.hook(src, function(q) {
 			q.getTooltip = @(__original) { function getTooltip()
@@ -152,6 +170,12 @@
 				return ::ReforgedLite.ModSkillTooltips.linkifyTooltip(ret, _scope);
 			}}.getTooltip;
 		});
+	}
+
+	// Скоуп класса по пути скрипта (для путей вне реестров — perk.Script и т.п.)
+	function getScopeForScript( _src )
+	{
+		return _src in this.ClassScopes ? this.ClassScopes[_src] : null;
 	}
 
 	function addSkills( _srcs, _scope = null )
@@ -202,7 +226,7 @@
 					break;
 
 				local end = idx + term.Len;
-				if ((idx == 0 || !this.isWordChar(_text[idx - 1])) && (end >= _text.len() || !this.isWordChar(_text[end])) && !this.isInsideRanges(idx, end, protectedRanges))
+				if ((idx == 0 || !this.isWordCharBefore(_text, idx)) && (end >= _text.len() || !this.isWordCharAfter(_text, end)) && !this.isInsideRanges(idx, end, protectedRanges))
 				{
 					matches.push({ Begin = idx, End = end, Link = term.Link });
 					start = end;
@@ -304,11 +328,26 @@
 		return false;
 	}
 
-	// Байт — буква: кириллица (UTF-8 ≥ 0x80 — в Squirrel байты строки SIGNED, т.е. < 0),
-	// латиница или цифра
-	function isWordChar( _c )
+	// Границы слов с учётом UTF-8 и SIGNED-байтов Squirrel. Проверяем ОДИН соседний символ:
+	// - перед совпадением смотрим ПОСЛЕДНИЙ байт предыдущего символа: ASCII — по диапазонам;
+	//   байт >= 0x80 (отрицательный) — это хвост многобайтового символа: буква только если
+	//   перед ним лид-байт кириллицы D0–D3 (иначе это «»—… и т.п. — НЕ буква);
+	// - после совпадения смотрим ПЕРВЫЙ байт следующего символа: буква = ASCII-диапазоны
+	//   или лид-байт кириллицы D0–D3 («» — C2, тире — E2 → не буквы).
+	function isWordCharBefore( _text, _idx )
 	{
-		return _c < 0 || (_c >= 0x30 && _c <= 0x39) || (_c >= 0x41 && _c <= 0x5A) || (_c >= 0x61 && _c <= 0x7A);
+		local c = _text[_idx - 1];
+		if (c >= 0)
+			return (c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x5A) || (c >= 0x61 && c <= 0x7A);
+		return _text[_idx - 2] >= -0x30 && _text[_idx - 2] <= -0x2D; // лид-байт D0–D3 (signed)
+	}
+
+	function isWordCharAfter( _text, _idx )
+	{
+		local c = _text[_idx];
+		if (c >= 0)
+			return (c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x5A) || (c >= 0x61 && c <= 0x7A);
+		return c >= -0x30 && c <= -0x2D; // лид-байт кириллицы D0–D3 (signed)
 	}
 
 	function sortByLengthDescending( _array )
