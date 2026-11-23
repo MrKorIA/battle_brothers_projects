@@ -14,7 +14,7 @@ this.rat_warpfire_throw_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.rat_warpfire_throw";
 		this.m.Name = "Выстрелить из метателя Варп-Огня";
-		this.m.Description = "Обрушить на врага струю концентрированного Варп-Огня. Может поразить несколько целей за один выстрел, но чем дальше они находятся, тем меньше шанс попадания. Поражённые цели заражаются чумой, а на пустых клетках может остаться горящий варп-огонь. Нельзя использовать, пока персонаж вовлечён в ближний бой.";
+		this.m.Description = "Обрушить на врага струю концентрированного Варп-Огня. Может поразить несколько целей за один выстрел, но чем дальше они находятся, тем меньше шанс попадания. Поражённые цели заражаются чумой, а клетки в зоне поражения вспыхивают варп-огнём, который горит вдвое дольше обычного огня и наносит вдвое больший урон. Нельзя использовать, пока персонаж вовлечён в ближний бой.";
 		this.m.Icon = "skills/active_203.png";
 		this.m.IconDisabled = "skills/active_203_sw.png";
 		this.m.Overlay = "rat_warpfire_throw";
@@ -50,7 +50,7 @@ this.rat_warpfire_throw_skill <- this.inherit("scripts/skills/skill", {
 		this.m.InjuriesOnBody = this.Const.Injury.Burning;
 		this.m.InjuriesOnHead = this.Const.Injury.Burning;
 		this.m.DirectDamageMult = 0.25;
-		this.m.ActionPointCost = 8;
+		this.m.ActionPointCost = 6;
 		this.m.FatigueCost = 20;
 		this.m.MinRange = 2;
 		this.m.MaxRange = 2;
@@ -103,7 +103,7 @@ this.rat_warpfire_throw_skill <- this.inherit("scripts/skills/skill", {
 			id = 10,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "На пустых поражённых клетках с шансом [color=" + this.Const.UI.Color.PositiveValue + "]30%[/color] остаётся варп-огонь"
+			text = "Все поражённые клетки вспыхивают варп-огнём: он горит в [color=" + this.Const.UI.Color.PositiveValue + "]2[/color] раза дольше обычного огня и выжигает в [color=" + this.Const.UI.Color.PositiveValue + "]2[/color] раза больше брони и плоти"
 		});
 		ret.push({
 			id = 10,
@@ -247,9 +247,9 @@ this.rat_warpfire_throw_skill <- this.inherit("scripts/skills/skill", {
 
 		foreach( t in affectedTiles )
 		{
-			for (local i = 0; i < this.Const.Tactical.WarpFireParticles.len(); i = ++i)
+			for (local i = 0; i < this.Const.Tactical.WarpFireBurstParticles.len(); i = ++i)
 			{
-				local effect = this.Const.Tactical.WarpFireParticles[i];
+				local effect = this.Const.Tactical.WarpFireBurstParticles[i];
 				this.Tactical.spawnParticleEffect(false, effect.Brushes, t, effect.Delay, effect.Quantity, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, this.createVec(0, 5));
 			}
 		}
@@ -270,13 +270,10 @@ this.rat_warpfire_throw_skill <- this.inherit("scripts/skills/skill", {
 
 		foreach( t in targets )
 		{
+			this.spawnWarpFireOnTile(t, user.isPlayerControlled(), true);
+
 			if (!t.IsOccupiedByActor)
 			{
-				if (this.Math.rand(1, 100) <= 30)
-				{
-					this.spawnWarpFireOnTile(t, user.isPlayerControlled());
-				}
-
 				continue;
 			}
 
@@ -295,7 +292,7 @@ this.rat_warpfire_throw_skill <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function spawnWarpFireOnTile( _tile, _playerApplied )
+	function spawnWarpFireOnTile( _tile, _playerApplied, _applyImmediately = false )
 	{
 		local subtypesToCheck = this.Tactical.Entities.getNonFlammableTileSubtypes();
 
@@ -340,6 +337,11 @@ this.rat_warpfire_throw_skill <- this.inherit("scripts/skills/skill", {
 		this.Tactical.State.spawnEffectOnTile(_tile, "warpfire", fire_effect, particles);
 		_tile.clear(this.Const.Tactical.DetailFlag.Scorchmark);
 		_tile.spawnDetail("impact_decal", this.Const.Tactical.DetailFlag.Scorchmark, false, true);
+
+		if (_applyImmediately && _tile.IsOccupiedByActor)
+		{
+			fire_effect.Callback(_tile, _tile.getEntity());
+		}
 	}
 
 	function onOverheatExplosion( _tag )

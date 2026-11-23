@@ -307,3 +307,135 @@
 		]
 	}
 ];
+
+// Варп-огонь: разовая вспышка выстрела/взрыва. У конфига выше LifeTimeQuantity = 0 —
+// это циклические партиклы тайл-эффекта, они гаснут через p.die(); для разовых
+// эффектов нужен конечный LifeTimeQuantity, иначе партиклы горят вечно.
+::Const.Tactical.WarpFireBurstParticles <- [
+	{
+		Delay = 100,
+		Quantity = 230,
+		LifeTimeQuantity = 230,
+		SpawnRate = 256,
+		Brushes = [
+			"effect_fire_01",
+			"effect_fire_02",
+			"effect_fire_03"
+		],
+		Stages = [
+			{
+				LifeTimeMin = 0.1,
+				LifeTimeMax = 0.1,
+				ColorMin = this.createColor("c8ffdc00"),
+				ColorMax = this.createColor("e6ffee00"),
+				ScaleMin = 0.5,
+				ScaleMax = 0.75,
+				RotationMin = 0,
+				RotationMax = 359,
+				VelocityMin = 200,
+				VelocityMax = 300,
+				DirectionMin = this.createVec(-0.4, 0.6),
+				DirectionMax = this.createVec(0.4, 0.6),
+				SpawnOffsetMin = this.createVec(-35, -45),
+				SpawnOffsetMax = this.createVec(35, 5),
+				ForceMin = this.createVec(0, 70),
+				ForceMax = this.createVec(0, 70)
+			},
+			{
+				LifeTimeMin = 0.2,
+				LifeTimeMax = 0.4,
+				ColorMin = this.createColor("3dff6dff"),
+				ColorMax = this.createColor("9dffbdff"),
+				ScaleMin = 0.5,
+				ScaleMax = 0.75,
+				RotationMin = 0,
+				RotationMax = 359,
+				VelocityMin = 200,
+				VelocityMax = 300,
+				DirectionMin = this.createVec(-0.4, 0.6),
+				DirectionMax = this.createVec(0.4, 0.6),
+				ForceMin = this.createVec(0, 70),
+				ForceMax = this.createVec(0, 70)
+			},
+			{
+				LifeTimeMin = 0.2,
+				LifeTimeMax = 0.4,
+				ColorMin = this.createColor("00e676f0"),
+				ColorMax = this.createColor("69f0aef0"),
+				ScaleMin = 0.75,
+				ScaleMax = 1.0,
+				RotationMin = 0,
+				RotationMax = 359,
+				VelocityMin = 200,
+				VelocityMax = 300,
+				ForceMin = this.createVec(0, 70),
+				ForceMax = this.createVec(0, 70)
+			},
+			{
+				LifeTimeMin = 0.1,
+				LifeTimeMax = 0.2,
+				ColorMin = this.createColor("1b5e2000"),
+				ColorMax = this.createColor("1b5e2000"),
+				ScaleMin = 0.75,
+				ScaleMax = 1.0,
+				RotationMin = 0,
+				RotationMax = 359,
+				VelocityMin = 200,
+				VelocityMax = 300,
+				ForceMin = this.createVec(0, 70),
+				ForceMax = this.createVec(0, 70)
+			}
+		]
+	},
+	{
+		Delay = 200,
+		Quantity = 50,
+		LifeTimeQuantity = 50,
+		SpawnRate = 21,
+		Brushes = [
+			"ash_01"
+		],
+		Stages = [
+			{
+				LifeTimeMin = 0.1,
+				LifeTimeMax = 0.2,
+				ColorMin = this.createColor("ccffdd00"),
+				ColorMax = this.createColor("ccffdd00"),
+				ScaleMin = 0.5,
+				ScaleMax = 0.5,
+				RotationMin = 0,
+				RotationMax = 359,
+				VelocityMin = 60,
+				VelocityMax = 100,
+				DirectionMin = this.createVec(-0.4, 0.6),
+				DirectionMax = this.createVec(0.4, 0.6),
+				SpawnOffsetMin = this.createVec(-35, -45),
+				SpawnOffsetMax = this.createVec(35, 0)
+			},
+			{
+				LifeTimeMin = 2.0,
+				LifeTimeMax = 3.0,
+				ColorMin = this.createColor("e6ffeeff"),
+				ColorMax = this.createColor("e6ffeeff"),
+				ScaleMin = 0.5,
+				ScaleMax = 0.75,
+				VelocityMin = 60,
+				VelocityMax = 100,
+				ForceMin = this.createVec(0, 0),
+				ForceMax = this.createVec(0, 10)
+			},
+			{
+				LifeTimeMin = 0.2,
+				LifeTimeMax = 0.3,
+				ColorMin = this.createColor("ccffdd00"),
+				ColorMax = this.createColor("ccffdd00"),
+				ScaleMin = 0.75,
+				ScaleMax = 1.0,
+				VelocityMin = 0,
+				VelocityMax = 0,
+				ForceMin = this.createVec(0, -80),
+				ForceMax = this.createVec(0, -80)
+			}
+		]
+	}
+];

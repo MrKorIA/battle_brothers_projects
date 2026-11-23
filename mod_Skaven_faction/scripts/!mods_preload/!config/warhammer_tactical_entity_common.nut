@@ -63,10 +63,10 @@
     this.Tactical.getCamera().quake(this.createVec(0, -1.0), 6.0, 0.16, 0.35);
     this.Sound.play("sounds/combat/dlc6/fire_mortar_impact_01.wav", 1.0, _tile.Pos);
 
-    for (local i = 0; i < this.Const.Tactical.WarpFireParticles.len(); i = ++i)
+    for (local i = 0; i < this.Const.Tactical.WarpFireBurstParticles.len(); i = ++i)
     {
-        local effect = this.Const.Tactical.WarpFireParticles[i];
-        this.Tactical.spawnParticleEffect(true, effect.Brushes, _tile, effect.Delay, effect.Quantity * 2, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, this.createVec(0, 0));
+        local effect = this.Const.Tactical.WarpFireBurstParticles[i];
+        this.Tactical.spawnParticleEffect(false, effect.Brushes, _tile, effect.Delay, effect.Quantity * 2, effect.LifeTimeQuantity * 2, effect.SpawnRate, effect.Stages, this.createVec(0, 0));
     }
 
     local tiles = [

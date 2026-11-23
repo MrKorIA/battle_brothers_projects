@@ -63,7 +63,7 @@ this.rat_god_camp_location <- this.inherit("scripts/entity/world/location", {
 	{
 		this.location.onInit();
 		local body = this.addSprite("body");
-		body.setBrush("world_rat_camp_03");
+		body.setBrush("rat_legendary_camp");
 	}
 
 });

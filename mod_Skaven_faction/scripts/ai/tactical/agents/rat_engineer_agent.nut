@@ -4,7 +4,7 @@ this.rat_engineer_agent <- this.inherit("scripts/ai/tactical/agent", {
 	{
 		this.agent.create();
 		this.m.ID = this.Const.AI.Agent.ID.RatEngineer;
-		this.m.Properties.BehaviorMult[this.Const.AI.Agent.ID.Defend] = 1.0;
+		this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Defend] = 1.0;
 		this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.EngageMelee] = 0.0;
 		this.m.Properties.IsRangedUnit = true;
 		this.m.Properties.TargetPriorityHitchanceMult = 0.5;
@@ -28,6 +28,7 @@ this.rat_engineer_agent <- this.inherit("scripts/ai/tactical/agent", {
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_retreat"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_defend"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_engage_ranged"));
+		this.getBehavior(this.Const.AI.Behavior.ID.EngageRanged).m.PossibleSkills.push("actives.rat_warpfire_throw");
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_break_free"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_wake_up_ally"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_disengage"));

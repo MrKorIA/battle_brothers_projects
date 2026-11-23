@@ -136,3 +136,38 @@
   `EngageRangeMax/Ideal = 3` по паттерну ванильного `ghost_agent`, иначе питомец идёт в рукопашку
   вплотную; осторожность при этом даёт `PreferCarefulEngage = true` (обход вредных тайлов/зон
   контроля) — компромисс «осторожный, но атакующий» (образец: `companions_xxmob_toad_agent`).
+
+## ИИ: движение к дистанции выстрела (`ai_engage_ranged`)
+
+- Ванильный `ai_engage_ranged` подбирает клетку под выстрел ТОЛЬКО по скиллам из своего
+  `m.PossibleSkills` (`quick_shot`, `fire_handgonne`, `miasma` и т.д.). Скилл кастомного оружия
+  там нет → `m.Skill == null` → условие выбора цели `m.Skill != null && onVerifyTarget(...)`
+  всегда ложно → кандидатов 0 → поведение вечный ноль: юнит стоит на месте, только defend/
+  retreat/disengage. Симптом: «стрелок/огнемётчик не подходит на дистанцию выстрела».
+- Лечение БЕЗ хука на класс (инстанс поведений своего агента): в `onAddBehaviors()` агента
+  после `addBehavior(ai_engage_ranged)` — `this.getBehavior(this.Const.AI.Behavior.ID.EngageRanged)
+  .m.PossibleSkills.push("actives.<id_скилла>")` (образец: `mod_Skaven_faction/scripts/ai/tactical/
+  agents/rat_engineer_agent.nut`). Прецедент глобального хука на класс — nggh (`mod_nggh/hooks/
+  ai/tactical/behaviors/ai_engage_ranged.nut`), но он бьёт по всем агентам игры.
+- Косвенные ручки агрессивности ванильного ranged-поведения: `EngageDangerTolerance`
+  (фильтр клеток `danger > CurrentDanger + 2 + tolerance`; дефолт 0 — не встаёт на клетку,
+  до которой враг дойдёт за ход), `OverallDefensivenessMult` (множитель бонуса укрытия за
+  союзниками/объектами и «отступления от опасности»). Проверка дальности у клетки идёт через
+  `skill.onVerifyTarget`/`isInRange` — `isUsable()` скилла при этом считается от ТЕКУЩЕГО
+  тайла юнита (ловушка: скилл, запрещённый «в зоне контроля», ломает оценку клеток, пока юнит
+  реально в ЗоК — эвакуацией из ЗоК занимается `ai_disengage`, у инженера скавенов есть footwork).
+
+## Партиклы: циклические конфиги vs разовые эффекты
+
+- В конфигах партиклей `LifeTimeQuantity = 0` означает БЕСКОНЕЧНОЕ горение. Ваниль использует
+  такие конфиги только для партиклей тайл-эффектов (`FireParticles`, `MiasmaParticles` — они
+  гаснут через `p.die()` при снятии эффекта `Tactical.Entities.removeTileEffect`/
+  `updateTileEffects`). Разовые вспышки (`spawnParticleEffect(false, ...)`) требуют конечного
+  lifetime: эталон one-shot конфига — `FireLanceRightParticles` (LifeTimeQuantity = Quantity = 230).
+  Передать циклический конфиг в one-shot = партиклы висят вечно (реальный кейс: варп-огонь
+  скавенов + `spawnWarpExplosion`). Образец one-shot конфига: `WarpFireBurstParticles`
+  (`mod_Skaven_faction/scripts/!mods_preload/!config/warhammer_tactical_particles.nut`).
+- Эффект огня на земле (эталон — огненная бомба, `throw_fire_bomb_skill.nut`): ставится на ВСЕ
+  тайлы зоны, включая занятые, с немедленным поджогом стоящих (`spawnFireOnTile(tile, player, true)`);
+  занятые тайлы пропускать или давать шанс <100% — значит в плотном бою огня не будет вовсе
+  (нет эффекта → нет тултипа тайла, нет урона в конце хода).

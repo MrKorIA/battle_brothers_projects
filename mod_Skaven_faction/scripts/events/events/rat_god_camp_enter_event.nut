@@ -9,7 +9,7 @@ this.rat_god_camp_enter_event <- this.inherit("scripts/events/event", {
 		this.m.IsSpecial = true;
 
 		this.m.Screens.push({
-			ID = "Start",
+			ID = "A",
 			Text = "[img]gfx/ui/events/rat_event_10.png[/img]{Лагерь открывается вашему взору целиком, едва отряд поднимается на гребень последнего холма. Это не просто стоянка, а два огромных стана, разбитых вплотную друг к другу. Северную сторону занимают варвары — грубые шатры из невыделанных шкур, тотемы из выбеленных костей, густой дым множества костров и рослые фигуры дикарей в рогатых шлемах. Восточную же часть захватили скавены: горы вонючего хлама, тошнотворный смрад гнили, непрерывный лязг железа и пронзительный писк, доносящийся даже сюда, а также юркие сгорбленные тени, снующие меж нагромождений краденых тюков и разбитых повозок.\n\nВаш взгляд невольно цепляется за две зловещие фигуры. В варварском стане, у самого главного костра, возвышается исполин — на голову выше любого из соплеменников. Он закован в шипастый доспех, отливающий болезненным зеленоватым свечением — диковинный металл инородной, явно не человеческой ковки. В лагере скавенов, на грубом алтаре из черепов, замерла другая тварь — рогатая, сутулая, с вытянутой крысиной мордой. Варвары и крысолюди по очереди склоняются перед ней, принося кровавые дары. Вожди обоих племён переговариваются через пламя костров, сбивают дикарей и крыс в единые боевые отряды и сверяют планы по расстеленной на земле медвежьей шкуре. Это не обычный привал — здесь собирается великий поход. Пока орда не набрала полную силу, пока её основные полчища ещё не выползли из подземных нор, у вас есть шанс нанести стремительный удар и разом обезглавить это нечестивое сборище.}",
 
 			Image = "",
@@ -119,7 +119,11 @@ this.rat_god_camp_enter_event <- this.inherit("scripts/events/event", {
 		p.TerrainTemplate = "tactical.plains";
 		p.LocationTemplate.Template[0] = "tactical.rat_camp";
 		p.Music = this.Const.Music.RatTracks;
-		p.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Custom;
+		// НЕ Auto: событийный бой без мировой клетки (Tile == null) падает в
+		// entity_manager на Tile.Type при авто-выборе развёртывания; Custom без
+		// PlayerDeploymentCallback никого не расставляет. Line — стандартная
+		// формация движка: центр карты, ближе к западу (x 12..13, y 11..19)
+		p.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Line;
 		p.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Center;
 		p.IsWithoutAmbience = true;
 		p.Entities = [];
@@ -132,9 +136,9 @@ this.rat_god_camp_enter_event <- this.inherit("scripts/events/event", {
 		local gear = this.createChampionGear();
 		local godEffect = this.new("scripts/skills/effects/rat_god_reincarnation_effect");
 
-		// варвары — север; скавены — восток. Координаты квадратные
-		// (getTileSquare). Спавним с fallback'ом: занятый тайл → свободный
-		// сосед из зоны (паттерн сбора площадок — khan enter event).
+		// варвары — север, скавены — восток. Координаты квадратные (getTileSquare),
+		// север = ВЫСОКИЙ y. Спавним с fallback'ом: занятый тайл → свободный
+		// из зоны (паттерн сбора площадок — khan enter event)
 		p.BeforeDeploymentCallback = function ()
 		{
 			local function freeTileIn( _x, _y, _x0, _x1, _y0, _y1 )
@@ -189,8 +193,9 @@ this.rat_god_camp_enter_event <- this.inherit("scripts/events/event", {
 				return e;
 			}
 
-			// ---- варвары, север (x 4..13, y 3..8) ----
-			local champion = spawnAt("scripts/entity/tactical/humans/barbarian_champion", 9, 5, 4, 13, 3, 8);
+			// ---- варвары, север (x 4..13, y 23..29; север карты — ВЫСОКИЙ y,
+			// низкий y — юг, проверено тестом) ----
+			local champion = spawnAt("scripts/entity/tactical/humans/barbarian_champion", 9, 26, 4, 13, 23, 29);
 
 			if (champion != null)
 			{
@@ -232,15 +237,15 @@ this.rat_god_camp_enter_event <- this.inherit("scripts/events/event", {
 				champion.setName(this.Const.Strings.BarbarianNames[this.Math.rand(0, this.Const.Strings.BarbarianNames.len() - 1)]);
 			}
 
-			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 6, 4, 4, 13, 3, 8);
-			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 12, 4, 4, 13, 3, 8);
-			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 7, 7, 4, 13, 3, 8);
-			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 11, 7, 4, 13, 3, 8);
-			spawnAt("scripts/entity/tactical/humans/barbarian_drummer", 9, 8, 4, 13, 3, 9);
-			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 5, 5, 4, 13, 3, 9);
-			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 5, 7, 4, 13, 3, 9);
-			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 13, 5, 4, 13, 3, 9);
-			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 13, 7, 4, 13, 3, 9);
+			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 6, 25, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 12, 25, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 7, 28, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_champion", 11, 28, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_drummer", 9, 29, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 5, 25, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 5, 28, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 13, 25, 4, 13, 23, 29);
+			spawnAt("scripts/entity/tactical/humans/barbarian_marauder", 13, 28, 4, 13, 23, 29);
 
 			// ---- скавены, восток (x 23..30, y 6..22) ----
 			local god = spawnAt("scripts/entity/tactical/enemies/rat_god_01", 27, 13, 23, 30, 6, 22);
@@ -257,90 +262,19 @@ this.rat_god_camp_enter_event <- this.inherit("scripts/events/event", {
 			spawnAt("scripts/entity/tactical/enemies/rat_warrior", 26, 8, 23, 30, 6, 22);
 			spawnAt("scripts/entity/tactical/enemies/rat_warrior", 26, 10, 23, 30, 6, 22);
 			spawnAt("scripts/entity/tactical/enemies/rat_warrior", 26, 16, 23, 30, 6, 22);
-			spawnAt("scripts/entity/tactical/enemies/rat_warrior", 26, 18, 23, 30, 6, 22);
+			spawnAt("scripts/entity/tactical/enemies/rat_clanrat", 26, 18, 23, 30, 6, 22);
 			spawnAt("scripts/entity/tactical/enemies/rat_clanrat", 25, 11, 23, 30, 6, 22);
-			spawnAt("scripts/entity/tactical/enemies/rat_clanrat", 25, 15, 23, 30, 6, 22);
-			spawnAt("scripts/entity/tactical/enemies/rat_clanrat", 28, 11, 23, 30, 6, 22);
-			spawnAt("scripts/entity/tactical/enemies/rat_clanrat", 28, 15, 23, 30, 6, 22);
+			spawnAt("scripts/entity/tactical/enemies/rat_engineer", 25, 15, 23, 30, 6, 22);
+			spawnAt("scripts/entity/tactical/enemies/rat_engineer", 28, 11, 23, 30, 6, 22);
+			spawnAt("scripts/entity/tactical/enemies/ratorge_armored", 28, 15, 23, 30, 6, 22);
 			spawnAt("scripts/entity/tactical/enemies/rat_monk", 24, 13, 23, 30, 6, 22);
 			spawnAt("scripts/entity/tactical/enemies/rat_packmaster", 29, 13, 23, 30, 6, 22);
 		};
 
 		p.AfterDeploymentCallback = function ()
 		{
-			// высадка отряда у южного края, паттерн tutorial_contract:
-			// addEntityToMap принимает ГЕКСОВЫЕ координаты (y - x/2)
-			local bros = this.World.getPlayerRoster().getAll();
-			local spots = [];
-			local function gatherSpots( _x0, _x1, _y0, _y1 )
-			{
-				for (local x = _x0; x <= _x1; x = ++x)
-				{
-					for (local y = _y0; y <= _y1; y = ++y)
-					{
-						if (!this.Tactical.isValidTileSquare(x, y))
-						{
-							continue;
-						}
-
-						local tile = this.Tactical.getTileSquare(x, y);
-
-						if (!tile.IsEmpty || tile.IsOccupiedByActor)
-						{
-							continue;
-						}
-
-						if (tile.IsSpecialTerrain || tile.Level != 0)
-						{
-							continue;
-						}
-
-						local dup = false;
-
-						foreach (s in spots)
-						{
-							if (s.ID == tile.ID)
-							{
-								dup = true;
-								break;
-							}
-						}
-
-						if (!dup)
-						{
-							spots.push(tile);
-						}
-					}
-				}
-			}
-			gatherSpots(10, 15, 24, 29);
-
-			if (spots.len() < this.World.Assets.getBrothersMaxInCombat())
-			{
-				gatherSpots(8, 17, 22, 30);
-			}
-
-			local num = 0;
-
-			foreach (bro in bros)
-			{
-				if (spots.len() == 0)
-				{
-					break;
-				}
-
-				local idx = this.Math.rand(0, spots.len() - 1);
-				local spot = spots[idx];
-				spots.remove(idx);
-				this.Tactical.addEntityToMap(bro, spot.SquareCoords.X, spot.SquareCoords.Y - spot.SquareCoords.X / 2);
-				num = ++num;
-
-				if (num >= this.World.Assets.getBrothersMaxInCombat())
-				{
-					break;
-				}
-			}
-
+			// высадкой отряда управляет движок (стандартное развёртывание — центр,
+			// ближе к западу); здесь только погода
 			local clouds = this.Tactical.getWeather().createCloudSettings();
 			clouds.Type = this.getconsttable().CloudType.Fog;
 			clouds.MinClouds = 15;
