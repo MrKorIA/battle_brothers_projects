@@ -5,14 +5,14 @@ this.xxsbook_se <- this.inherit("scripts/items/item", {
 		this.item.create();
 		this.m.ID = "misc.xxsbook_se";
 		this.m.Name = "Эпическая книга навыков";
-		this.m.Description = "Выберите одно специальное умение для изучения. Можно изучить максимум 2 специальных умения, и если этот лимит будет превышен, они будут сброшены. (Некоторые специальные наемники не могут использовать книги умений).";
+		this.m.Description = "При использовании даёт 2 очка навыков.";
 		this.m.Icon = "xx_item_04a_70x70.png";
 		this.m.SlotType = this.Const.ItemSlot.None;
 		this.m.ItemType = this.Const.Items.ItemType.Usable;
 		this.m.IsDroppedAsLoot = true;
 		this.m.IsAllowedInBag = false;
 		this.m.IsUsable = true;
-		this.m.Value = 2000;
+		this.m.Value = 7000;
 	}
 
 	function getTooltip()
@@ -56,7 +56,7 @@ this.xxsbook_se <- this.inherit("scripts/items/item", {
 		result.push({
 			id = 65,
 			type = "text",
-			text = "Используйте, щелкнув правой кнопкой мыши или перетащив на слот тела выбранного персонажа. Этот предмет будет израсходован в процессе."
+			text = "Нажмите ПКМ или перетащите на выбранного персонажа, чтобы прочитать книгу навыков. Исчезает после использования."
 		});
 		return result;
 	}
@@ -68,38 +68,7 @@ this.xxsbook_se <- this.inherit("scripts/items/item", {
 
 	function onUse( _actor, _item = null )
 	{
-		local chk = _actor.getSkills();
-		foreach ( s in this.FantasyChampList )
-		{
-			if (chk.hasSkill(s))
-			{
-				return false;
-			}
-		}
-
-		local ax = _actor.getFlags().getAsInt("xxSkillBookTraining");
-		if (ax < 9999989)
-		{
-		}
-		else
-		{
-			return false;
-		}
-		_actor.getFlags().increment("xxSkillBookTraining", 1);
-		local axd = 1;
-		if (chk.hasSkill("effects.xxzzlimitpotion_skill") || chk.hasSkill("actives.sbp_bondage_skill") || chk.hasSkill("actives.sbq1_propaganda_skill"))
-		{
-			axd = ++axd;
-		}
-		if (ax > axd)
-		{
-			_actor.getFlags().increment("xxSkillBookTraining", -1 * ax);
-			this.FantasySpellbookact(_actor);
-		}
-
-		chk.add(this.new("scripts/skills/actives/xxzzcheck_skill"));
-	        ::World.State.getMenuStack().popAll(true);
-		::World.Events.fire("event.xxzzskillbook_event");
+	    _actor.m.PerkPoints = _actor.m.PerkPoints + 2;
 		return true;
 	}
 
