@@ -223,6 +223,20 @@ this.zhujiancun03_building <- this.inherit("scripts/entity/world/settlements/bui
 			regular.remove(index);
 		}
 
+		if (::mods_getRegisteredMod("mod_location_maps") != null)
+		{
+			list.push({
+				R = ::LocationMaps.SamuraiShopRarity,
+				P = 1.0,
+				S = "misc/location_map_camp_item"
+			});
+			list.push({
+				R = ::LocationMaps.SamuraiShopRarity,
+				P = 1.0,
+				S = "misc/location_map_legendary_item"
+			});
+		}
+
 		list.push(rare[this.Math.rand(0, rare.len() - 1)]);
 		return list;
 	}

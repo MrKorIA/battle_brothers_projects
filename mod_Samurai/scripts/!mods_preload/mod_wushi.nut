@@ -6,7 +6,7 @@
 ::Wushi.HooksMod <- ::Hooks.register(::Wushi.ID, ::Wushi.Version, ::Wushi.Name);
 ::Wushi.HooksMod.require(["mod_msu"]);
 
-::Wushi.HooksMod.queue(">mod_msu", ">mod_fantasybro", function() {
+::Wushi.HooksMod.queue(">mod_msu", ">mod_fantasybro", ">mod_location_maps", function() {
 	::Wushi.Mod <- ::MSU.Class.Mod(::Wushi.ID, ::Wushi.Version, ::Wushi.Name);
 
 	::Wushi.HooksMod.hook("scripts/factions/faction_manager", function(q) {

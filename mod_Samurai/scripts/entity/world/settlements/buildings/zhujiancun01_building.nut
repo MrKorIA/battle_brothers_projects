@@ -79,7 +79,7 @@ this.zhujiancun01_building <- this.inherit("scripts/entity/world/settlements/bui
         {
             R = 0,
             P = 0.75,
-            S = "supplies/ground_grains_item"
+            S = "supplies/rice_item"
         },
         {
             R = 10,
