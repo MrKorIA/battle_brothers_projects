@@ -4,7 +4,7 @@ this.hemovores_avatar_scenario <- this.inherit("scripts/scenarios/world/starting
 	{
 		this.m.ID = "scenario.hemovores_avatar";
 		this.m.Name = "Первородная кровь"; //contains avatar
-		this.m.Description = "[p=c][img]gfx/ui/events/event_101.png[/img][/p][p]Вы уже прожили тысячу жизней, но те, кому повезло меньше, чем вам, нуждаются в вашем исправлении. \n[color=#bcad8c]Высокие ставки:[/color] Начните могущественным древним некросавантом, ненадёжным слугой и тремя неудачливыми наёмниками. Цены покупки и продажи хуже на 30%. \n[color=#bcad8c]Контроль сознания:[/color] Вы достаточно сильны, чтобы скрыть себя и свой род от глаз смертных. Любой смертный, присоединившийся к вам, готов умереть за вас - но если вы умрёте, ваш контроль над их разумом спадёт, и всё закончится.[/p]";
+		this.m.Description = "[p=c][img]gfx/ui/events/event_101.png[/img][/p][p]Вы уже прожили тысячу жизней, но те, кому повезло меньше, чем вам, нуждаются в твёрдой руке. \n[color=#bcad8c]Высокие ставки:[/color] Начните с могущественным древним некросавантом, ненадёжным слугой и тремя неудачливыми наёмниками. Цены покупки и продажи на 30% хуже обычного. \n[color=#bcad8c]Контроль сознания:[/color] Вы достаточно сильны, чтобы скрыть себя и свой род от глаз смертных. Любой смертный, присоединившийся к вам, готов умереть за вас - но если вы умрёте, ваша власть над их разумом рухнет, и всё закончится.[/p]";
 		this.m.Difficulty = 2;
 		this.m.Order = 50;
 		this.m.IsFixedLook = true;
@@ -68,7 +68,7 @@ this.hemovores_avatar_scenario <- this.inherit("scripts/scenarios/world/starting
 			"raider_background"
 		]);
 		bros[1].getSkills().add(this.new("scripts/skills/traits/enthralled_trait")); //merc
-		bros[1].getSkills().getAllSkillsOfType(this.Const.SkillType.Background)[0].m.RawDescription = "%name% был одним из самых сложных новобранцев в вашей коллекции, он яростно проклинал всё на свете, пока вы не заглянули в самые потаённые уголки его сознания. Там вы нащупали то, от чего этот смертный просто не смог отказаться.";
+		bros[1].getSkills().getAllSkillsOfType(this.Const.SkillType.Background)[0].m.RawDescription = "%name% был одним из самых сложных новобранцев в вашей коллекции: он яростно проклинал всё на свете, пока вы не заглянули в самые потаённые уголки его сознания. Там вы нащупали то, от чего этот смертный просто не смог отказаться.";
 		bros[1].setPlaceInFormation(4);
         bros[1].m.PerkPoints = 2;
         bros[1].m.LevelUps = 2;
@@ -96,7 +96,7 @@ this.hemovores_avatar_scenario <- this.inherit("scripts/scenarios/world/starting
 		]);
 		bros[3].getSkills().add(this.new("scripts/skills/traits/hemovore_trait")); //vampire racial stuff
  		bros[3].getSprite("socket").setBrush("bust_base_undead");
-		bros[3].getSkills().getAllSkillsOfType(this.Const.SkillType.Background)[0].m.RawDescription = "%name% уже некоторое время служит вам, когда-то давно будучи рабом вашей семьи, он поднялся по иерархии как в статусе, так и в мастерстве. Остаётся только вопрос, превзойдут ли его амбиции нынешнюю верность вам.";
+		bros[3].getSkills().getAllSkillsOfType(this.Const.SkillType.Background)[0].m.RawDescription = "%name% служит вам уже немало лет. Когда-то давно он был рабом вашей семьи, но поднялся по иерархии и в статусе, и в мастерстве. Остаётся только вопрос, превзойдут ли его амбиции нынешнюю верность вам.";
         bros[3].unlockPerk("perk.vampire_ancient_wisdom");
 		bros[3].setPlaceInFormation(12);
         bros[3].m.LevelUps = 1;
@@ -239,7 +239,7 @@ this.hemovores_avatar_scenario <- this.inherit("scripts/scenarios/world/starting
 		else //everyone else
 		{
 			_bro.getSkills().add(this.new("scripts/skills/traits/enthralled_trait"));
-			_bro.improveMood(3.0, "Всё, что я хочу, может быть моим... и даже больше!");
+			_bro.improveMood(3.0, "Всё, чего я хочу, может стать моим... и даже больше!");
 		}
 	}
 

@@ -3,8 +3,8 @@ this.ancient_wig <- this.inherit("scripts/items/helmets/helmet", {
 	function create() {
 		this.helmet.create();
 		this.m.ID = "armor.head.ancient_wig";
-		this.m.Name = "";
-		this.m.Description = "";
+		this.m.Name = "Древний парик";
+		this.m.Description = "Тщательно уложенный парик, переживший своего хозяина на столетия.";
 		this.m.ShowOnCharacter = true;
 		this.m.IsDroppedAsLoot = false;
 		this.m.HideHair = true;

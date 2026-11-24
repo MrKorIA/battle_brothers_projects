@@ -119,9 +119,11 @@ this.legend_banshee <- this.inherit("scripts/entity/tactical/actor", {
 		if (_killer == null || _killer.getFaction() == this.Const.Faction.Player || _killer.getFaction() == this.Const.Faction.PlayerAnimals)
 		{
 			local loot;
+
 			if (this.Math.rand(1, 100) <= 50)
 			{
-				loot = this.new("scripts/items/misc/legend_banshee_essence_item");
+				if (::mods_getRegisteredMod("mod_reforged_lite") != null) loot = this.new("scripts/items/loot/rf_geist_tear_item");
+				else loot = this.new("scripts/items/misc/legend_banshee_essence_item");
 				loot.drop(_tile);
 			}
 		}

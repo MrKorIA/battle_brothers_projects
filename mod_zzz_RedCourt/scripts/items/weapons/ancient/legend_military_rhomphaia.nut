@@ -5,7 +5,7 @@ this.legend_military_rhomphaia <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_military_rhomphaia";
         this.m.Name = "Украшенная ромфея";
-        this.m.Description = "Более прямая и тяжёлая, чем обычные ромфеи, - похоже, этот экземпляр специально сконструирован и доработан для дуэльных поединков. Оружие лишено рубящей кромки, но, несмотря на свой вес, заметно удобнее в обращении.";
+        this.m.Description = "Более прямая и тяжёлая, чем обычные ромфеи, - похоже, этот экземпляр специально изготовлен для дуэлей. Оружие лишено рубящей кромки, но, несмотря на свой вес, заметно удобнее в обращении.";
 		this.m.IconLarge = "weapons/melee/legend_military_rhompaia_01.png";
 		this.m.Icon = "weapons/melee/legend_military_rhompaia_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Sword;

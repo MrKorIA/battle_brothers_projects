@@ -8,7 +8,7 @@ this.legend_named_gladius <- this.inherit("scripts/items/weapons/named/named_wea
 		this.named_weapon.create();
 		this.m.ID = "weapon.legend_named_gladius";
 		this.m.NameList = this.Const.Strings.SwordNames;
-		this.m.Description = "Древний прямой клинок. Рукоять и навершие богато украшены и, скорее всего, принадлежали знатному вельможе.";
+		this.m.Description = "Древний прямой клинок. Рукоять и навершие богато украшены - скорее всего, меч принадлежал знатному вельможе.";
 		this.m.IconLarge = "weapons/melee/legend_gladius_named_01.png";
 		this.m.Icon = "weapons/melee/legend_gladius_named_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Sword;

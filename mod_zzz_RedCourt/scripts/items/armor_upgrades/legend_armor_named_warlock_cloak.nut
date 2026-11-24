@@ -5,8 +5,8 @@ this.legend_armor_named_warlock_cloak <- this.inherit("scripts/items/armor_upgra
 		this.armor_upgrade.create();
 		this.m.ID = "armor_upgrade.legend_named_warlock_cloak";
 		this.m.Name = "Плащ чернокнижника";
-		this.m.Description = "Плащ из кожи мертвецов и тёмной магии.";
-		this.m.ArmorDescription = "К этой броне прикреплён плащ из кожи мертвецов и тёмной магии. Благодаря чему добавляет носителю живучести и уверенности в своих силах.";
+		this.m.Description = "Плащ, сотканный из кожи мертвецов и тёмной магии.";
+		this.m.ArmorDescription = "К этой броне прикреплён плащ из кожи мертвецов и тёмной магии, что придаёт носителю живучести и уверенности в своих силах.";
 		this.m.Icon = "legend_armor/upgrade_cursed_cloak.png";
 		this.m.IconLarge = this.m.Icon;
 		this.m.OverlayIcon = "legend_armor/icon_cursed_cloak_01.png";

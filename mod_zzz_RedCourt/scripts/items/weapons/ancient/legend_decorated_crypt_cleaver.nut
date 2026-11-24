@@ -7,7 +7,7 @@ this.legend_decorated_crypt_cleaver <- this.inherit("scripts/items/weapons/weapo
 		this.weapon.create();
 		this.m.ID = "weapon.legend_decorated_crypt_cleaver";
         this.m.Name = "Украшенный тесак из склепа";
-        this.m.Description = "Облегчённая церемониальная версия двуручного тесака с изогнутым лезвием, украшенная золотыми инкрустациями и странными узорами.";
+        this.m.Description = "Облегчённая церемониальная разновидность двуручного тесака с изогнутым лезвием, украшенная золотыми инкрустациями и странными узорами.";
 		this.m.IconLarge = "weapons/melee/legend_decorated_crypt_cleaver_01.png";
 		this.m.Icon = "weapons/melee/legend_decorated_crypt_cleaver_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Cleaver;

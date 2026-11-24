@@ -5,7 +5,7 @@ this.legend_mage_swordstaff <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_mage_swordstaff";
         this.m.Name = "Магический меч-посох";
-        this.m.Description = "Природа создания этого оружия остаётся загадкой, но уникальный меч-посох пронизан магией. Клинок почти поёт в воздухе и рассекает доспехи, словно масло.";
+        this.m.Description = "Происхождение этого оружия остаётся загадкой, но уникальный меч-посох пронизан магией. Клинок поёт в воздухе и вспарывает доспехи без малейшего усилия.";
 		this.m.IconLarge = "weapons/melee/legend_swordstaff_01_legendary_01.png";
 		this.m.Icon = "weapons/melee/legend_swordstaff_01_legendary_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Sword | this.Const.Items.WeaponType.Polearm;

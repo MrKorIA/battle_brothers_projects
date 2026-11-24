@@ -5,7 +5,7 @@ this.legend_mummy_bandages <- this.inherit("scripts/items/armor/armor", {
 		this.armor.create();
 		this.m.ID = "armor.body.legend_mummy_bandages";
 		this.m.Name = "Древние южные повязки";
-		this.m.Description = "";
+		this.m.Description = "Истлевшие погребальные повязки, снятые с иссохшего тела.";
 		this.m.IsDroppedAsLoot = false;
 		this.m.ShowOnCharacter = true;
 		local variants = [

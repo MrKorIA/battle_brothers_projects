@@ -7,7 +7,7 @@ this.legend_decorated_rhomphaia <- this.inherit("scripts/items/weapons/weapon", 
 		this.weapon.create();
 		this.m.ID = "weapon.legend_decorated_rhomphaia";
         this.m.Name = "Украшенная ромфея";
-        this.m.Description = "Длинный изогнутый клинок с золотыми инкрустациями, на которых запечатлены самые разные сцены - от жатвы до битв. Оружие оказалось куда легче, чем можно предположить по виду, и явно служило церемониальным целям.";
+        this.m.Description = "Длинный изогнутый клинок с золотыми инкрустациями, на которых запечатлены самые разные сцены - от жатвы до битв. Оружие куда легче, чем можно предположить по виду, и явно предназначалось для церемоний.";
 		this.m.IconLarge = "weapons/melee/legend_decorated_rhompaia_01.png";
 		this.m.Icon = "weapons/melee/legend_decorated_rhompaia_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Sword;

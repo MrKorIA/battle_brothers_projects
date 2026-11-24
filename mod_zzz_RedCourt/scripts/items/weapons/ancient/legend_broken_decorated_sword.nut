@@ -7,7 +7,7 @@ this.legend_broken_decorated_sword <- this.inherit("scripts/items/weapons/weapon
 		this.weapon.create();
 		this.m.ID = "weapon.legend_broken_decorated_sword";
 		this.m.Name = "Сломанный древний украшенный меч";
-        this.m.Description = "Сломанный церемониальный меч, у которого, помимо места излома, почти не осталось острых кромок. Тем не менее, в руках умелого бойца он всё ещё представляет собой смертоносное оружие.";
+        this.m.Description = "Сломанный церемониальный меч, у которого, помимо места излома, почти не осталось острых кромок. Тем не менее в руках умелого бойца он всё ещё смертоносен.";
 		this.m.IconLarge = "weapons/melee/legend_broken_decorated_sword_01.png";
 		this.m.Icon = "weapons/melee/legend_broken_decorated_sword_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Dagger;

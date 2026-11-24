@@ -5,7 +5,7 @@ this.legend_fan_axe <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_fan_axe";
         this.m.Name = "Древний веерный топор";
-        this.m.Description = "Длинный двуручный топор, который также служит тяжёлым веером.";
+        this.m.Description = "Длинный двуручный топор, он же - тяжёлый веер.";
 		this.m.IconLarge = "weapons/melee/legend_fan_axe_01.png";
 		this.m.Icon = "weapons/melee/legend_fan_axe_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Axe;

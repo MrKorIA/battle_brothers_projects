@@ -5,7 +5,7 @@ this.legend_mummy_royal_plate <- this.inherit("scripts/items/armor/armor", {
 		this.armor.create();
 		this.m.ID = "armor.body.legend_mummy_royal_plate";
 		this.m.Name = "Древний южный царский доспех";
-		this.m.Description = "";
+		this.m.Description = "Царский доспех с древнего забальзамированного владыки.";
 		this.m.IsDroppedAsLoot = false;
 		this.m.ShowOnCharacter = true;
 		local variants = [

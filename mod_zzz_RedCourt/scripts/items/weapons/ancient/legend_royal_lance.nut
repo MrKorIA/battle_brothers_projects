@@ -5,7 +5,7 @@ this.legend_royal_lance <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_royal_lance";
         this.m.Name = "Имперский ланец";
-        this.m.Description = "Искусно скованное и пережившее века, это копьё способно впечатлить даже современных мастеров. Предназначено для нанесения колющих ударов с расстояния и сдерживания противника на дистанции.";
+        this.m.Description = "Искусно скованное и пережившее века, это копьё способно впечатлить даже современных мастеров. Позволяет наносить колющие удары с дистанции и держать противника на расстоянии.";
 		this.m.WeaponType = this.Const.Items.WeaponType.Spear;
 		this.m.SlotType = this.Const.ItemSlot.Mainhand;
 		this.m.BlockedSlotType = this.Const.ItemSlot.Offhand;

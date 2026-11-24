@@ -4,8 +4,8 @@ this.legend_mummy_bandage <- this.inherit("scripts/items/helmets/helmet", {
 	{
 		this.helmet.create();
 		this.m.ID = "armor.head.legend_mummy_bandage";
-		this.m.Name = "";
-		this.m.Description = "";
+		this.m.Name = "Головная пелена мумии";
+		this.m.Description = "Истлевшая погребальная пелена, обмотанная вокруг черепа древнего мертвеца.";
 		this.m.ShowOnCharacter = true;
 		this.m.IsDroppedAsLoot = false;
 		this.m.HideHair = false;

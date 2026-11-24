@@ -5,7 +5,7 @@ this.legend_broad_warscythe <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_broad_warscythe";
 		this.m.Name = "Древний боевой серп";
-        this.m.Description = "Широкий и тяжёлый боевой серп с удлинённым лезвием. Это оружие требует простора для замаха и непросто в обращении, однако сеет такой хаос среди врагов - будь то на двух ногах или на четырёх, - которому нет равных.";
+        this.m.Description = "Широкий и тяжёлый боевой серп с удлинённым лезвием. Это оружие требует простора для замаха и непросто в обращении, однако творит среди врагов - будь то на двух ногах или на четырёх - такое побоище, которому нет равных.";
 		this.m.Categories = "Тесак/древковое, двуручный";
 		this.m.IconLarge = "weapons/melee/legend_broad_warscythe_01.png";
 		this.m.Icon = "weapons/melee/legend_broad_warscythe_01_70x70.png";

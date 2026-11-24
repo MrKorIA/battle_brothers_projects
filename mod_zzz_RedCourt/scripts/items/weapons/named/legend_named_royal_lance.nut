@@ -7,7 +7,7 @@ this.legend_named_royal_lance <- this.inherit("scripts/items/weapons/named/named
 		this.m.NameList = this.Const.Strings.SpetumNames;
 		this.m.PrefixList = this.Const.Strings.SouthernPrefix;
 		this.m.SuffixList = this.Const.Strings.SouthernSuffix;
-		this.m.Description = "Это копьё отличается исключительным мастерством исполнения - оно пережило века, а его наконечник достоин даже знатного вельможи. Предназначено для нанесения колющих ударов с дистанции и сдерживания врага.";
+		this.m.Description = "Это копьё отличается исключительным мастерством исполнения - оно пережило века, а его наконечник достоин даже знатного вельможи. Позволяет наносить колющие удары с дистанции и держать врага на расстоянии.";
 		this.m.WeaponType = this.Const.Items.WeaponType.Spear;
 		this.m.SlotType = this.Const.ItemSlot.Mainhand;
 		this.m.BlockedSlotType = this.Const.ItemSlot.Offhand;

@@ -5,7 +5,7 @@ this.legend_mummy_dress <- this.inherit("scripts/items/armor/armor", {
 		this.armor.create();
 		this.m.ID = "armor.body.legend_mummy_dress";
 		this.m.Name = "Старинное южное платье";
-		this.m.Description = "";
+		this.m.Description = "Выцветшее шёлковое платье с древнего забальзамированного тела.";
 		this.m.IsDroppedAsLoot = false;
 		this.m.ShowOnCharacter = true;
 		local variants = [

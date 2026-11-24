@@ -5,7 +5,7 @@ this.legend_oxtongue_spear <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_oxtongue_spear";
         this.m.Name = "Древнее копьё \'Воловьий язык\'";
-        this.m.Description = "Двулезвийное копьё с обтекаемым, но широким по сравнению с другими копьями профилем. Оно превосходно пробивает доспехи, оставаясь при этом достаточно лёгким для манёвренного боя.";
+        this.m.Description = "Двулезвийное копьё с вытянутым, но широким по сравнению с другими копьями профилем. Оно превосходно пробивает доспехи, оставаясь при этом достаточно лёгким и послушным в бою.";
 		this.m.IconLarge = "weapons/melee/legend_oxtongue_spear_01.png";
 		this.m.Icon = "weapons/melee/legend_oxtongue_spear_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Spear;

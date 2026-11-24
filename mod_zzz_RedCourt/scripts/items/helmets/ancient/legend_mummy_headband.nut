@@ -4,8 +4,8 @@ this.legend_mummy_headband <- this.inherit("scripts/items/helmets/helmet", {
 	{
 		this.helmet.create();
 		this.m.ID = "armor.head.legend_mummy_headband";
-		this.m.Name = "";
-		this.m.Description = "";
+		this.m.Name = "Древний налобник";
+		this.m.Description = "Золотой налобник, украшавший чело древней мумии.";
 		this.m.ShowOnCharacter = true;
 		this.m.IsDroppedAsLoot = false;
 		this.m.HideHair = false;

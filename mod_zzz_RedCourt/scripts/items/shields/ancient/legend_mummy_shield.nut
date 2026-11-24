@@ -7,14 +7,15 @@ this.legend_mummy_shield <- this.inherit("scripts/items/shields/shield", {
 		this.shield.create();
 		this.m.ID = "shield.legend_mummy_shield";
         this.m.Name = "Древний южный щит";
-        this.m.Description = "Небольшой щит из дерева, укреплённый бронзой. Время не пощадило его - древесина стала хрупкой, но он всё ещё остаётся лёгким и удобным инструментом для блокирования ударов.";
+        this.m.Description = "Небольшой щит из дерева, укреплённый бронзой. Время не пощадило его - древесина стала хрупкой, но он всё ещё лёгок и удобен, чтобы отбивать вражеские удары.";
 		this.m.AddGenericSkill = true;
 		this.m.ShowOnCharacter = true;
 		local variants = [
 			1,
 			2,
 			3,
-			4
+			4,
+			5
 		];
 		this.m.Variant = variants[this.Math.rand(0, variants.len() - 1)];
 		this.updateVariant();

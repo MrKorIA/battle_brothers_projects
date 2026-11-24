@@ -5,7 +5,7 @@ this.legend_sica <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_sica";
         this.m.Name = "Древняя сика";
-        this.m.Description = "Древнее оружие, напоминающее помесь короткого меча и большого кинжала. Его истинное предназначение затерялось в веках, но боевая суть не утратила актуальности по сей день.";
+        this.m.Description = "Древнее оружие, напоминающее помесь короткого меча и большого кинжала. Его истинное предназначение затерялось в веках, но клинок по-прежнему смертоносен.";
 		this.m.IconLarge = "weapons/melee/legend_sica_01.png";
 		this.m.Icon = "weapons/melee/legend_sica_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Cleaver | this.Const.Items.WeaponType.Dagger;

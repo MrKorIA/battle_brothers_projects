@@ -5,7 +5,7 @@ this.legend_honed_warscythe <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_honed_warscythe";
         this.m.Name = "Древний заточенный боевой серп";
-        this.m.Description = "Боевой серп с более узким и изогнутым лезвием, идеально подходящим для поражения одиночных целей. Недостаток останавливающей силы компенсируется лёгкостью и точностью.";
+        this.m.Description = "Боевой серп с более узким и изогнутым лезвием, идеально подходящим для боя с одиночными целями. Недостаток останавливающей силы компенсируется лёгкостью и точностью.";
 		this.m.IconLarge = "weapons/melee/legend_honed_warscythe_01.png";
 		this.m.Icon = "weapons/melee/legend_honed_warscythe_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Cleaver | this.Const.Items.WeaponType.Polearm;

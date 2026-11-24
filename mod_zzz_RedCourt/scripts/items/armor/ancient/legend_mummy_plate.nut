@@ -5,7 +5,7 @@ this.legend_mummy_plate <- this.inherit("scripts/items/armor/armor", {
 		this.armor.create();
 		this.m.ID = "armor.body.legend_mummy_plate";
 		this.m.Name = "Древний южный доспех";
-		this.m.Description = "";
+		this.m.Description = "Доспех с древнего забальзамированного воина.";
 		this.m.IsDroppedAsLoot = false;
 		this.m.ShowOnCharacter = true;
 		local variants = [

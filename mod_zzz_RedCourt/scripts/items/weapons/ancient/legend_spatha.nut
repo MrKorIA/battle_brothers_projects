@@ -5,7 +5,7 @@ this.legend_spatha <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_spatha";
         this.m.Name = "Древний имперский меч";
-        this.m.Description = "Простой, но смертоносный прямой меч, который центурионы носили с собой, чтобы прорубаться сквозь десятки врагов. Его прочность кроется в массивности клинка, однако пробивной силой против доспехов он не отличается.";
+        this.m.Description = "Простой, но смертоносный прямой меч, который центурионы носили с собой, чтобы прорубаться сквозь десятки врагов. Его прочность кроется в массивности клинка, однако доспехи он пробивает плохо.";
 		this.m.IconLarge = "weapons/melee/legend_spatha_01.png";
 		this.m.Icon = "weapons/melee/legend_spatha_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Sword;

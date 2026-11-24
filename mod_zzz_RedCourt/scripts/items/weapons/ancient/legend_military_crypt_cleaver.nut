@@ -5,7 +5,7 @@ this.legend_military_crypt_cleaver <- this.inherit("scripts/items/weapons/weapon
 		this.weapon.create();
 		this.m.ID = "weapon.legend_military_crypt_cleaver";
         this.m.Name = "Боевой тесак из склепа";
-        this.m.Description = "Весьма увесистый двуручный тесак с изогнутым на конце лезвием. Несмотря на возраст, потёртости и затупленность, титанический вес оружия с лихвой компенсирует его почтенный возраст.";
+        this.m.Description = "Весьма увесистый двуручный тесак с изогнутым на конце лезвием. Несмотря на потёртости и затупленность, титанический вес оружия с лихвой компенсирует его почтенный возраст.";
 		this.m.IconLarge = "weapons/melee/legend_military_crypt_cleaver.png";
 		this.m.Icon = "weapons/melee/legend_military_crypt_cleaver_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Cleaver;

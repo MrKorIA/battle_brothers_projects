@@ -4,8 +4,8 @@ this.legend_mummy_crown <- this.inherit("scripts/items/helmets/helmet", {
 	{
 		this.helmet.create();
 		this.m.ID = "armor.head.legend_mummy_crown";
-		this.m.Name = "";
-		this.m.Description = "";
+		this.m.Name = "Погребальная корона";
+		this.m.Description = "Корона с древнего забальзамированного тела.";
 		this.m.ShowOnCharacter = true;
 		this.m.IsDroppedAsLoot = false;
 		this.m.HideHair = false;

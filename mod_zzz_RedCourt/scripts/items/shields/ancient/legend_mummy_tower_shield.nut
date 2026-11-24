@@ -5,14 +5,13 @@ this.legend_mummy_tower_shield <- this.inherit("scripts/items/shields/shield", {
 		this.shield.create();
 		this.m.ID = "shield.legend_mummy_tower_shield";
         this.m.Name = "Древний южный башенный щит";
-        this.m.Description = "Высокий и тяжёлый южный башенный щит, обеспечивающий надёжную защиту ценой своей громоздкости. Несмотря на узкий профиль, он с лёгкостью укрывает человека целиком.";
+        this.m.Description = "Высокий и тяжёлый южный башенный щит - надёжная защита, пусть и громоздкая. Несмотря на узкий профиль, он с лёгкостью укрывает человека целиком.";
 		this.m.AddGenericSkill = true;
 		this.m.ShowOnCharacter = true;
 		local variants = [
 			1,
 			2,
-			3,
-			4
+			3
 		];
 		this.m.Variant = variants[this.Math.rand(0, variants.len() - 1)];
 		this.updateVariant();

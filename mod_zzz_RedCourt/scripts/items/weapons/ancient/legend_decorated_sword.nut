@@ -7,7 +7,7 @@ this.legend_decorated_sword <- this.inherit("scripts/items/weapons/weapon", {
 		this.weapon.create();
 		this.m.ID = "weapon.legend_decorated_sword";
         this.m.Name = "Древний украшенный меч";
-        this.m.Description = "Прямой клинок древнего происхождения. Рукоять и навершие богато украшены, а балансировке меча уделено особое внимание - несмотря на то, что он явно предназначен для церемониальных целей.";
+        this.m.Description = "Прямой клинок древнего происхождения. Рукоять и навершие богато украшены, а баланс выверен с особой тщательностью - хотя меч явно создавался для церемоний.";
 		this.m.IconLarge = "weapons/melee/legend_decorated_sword_01.png";
 		this.m.Icon = "weapons/melee/legend_decorated_sword_01_70x70.png";
 		this.m.WeaponType = this.Const.Items.WeaponType.Sword;
