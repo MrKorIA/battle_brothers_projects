@@ -12,10 +12,10 @@ this.warp_shard_armor_03 <- this.inherit("scripts/items/armor/armor", {
 		this.m.ShowOnCharacter = true;
 		this.m.ImpactSound = this.Const.Sound.ArmorChainmailImpact;
 		this.m.InventorySound = this.Const.Sound.ArmorChainmailImpact;
-		this.m.Value = 1000;
-		this.m.Condition = 100;
-		this.m.ConditionMax = 100;
-		this.m.StaminaModifier = -18;
+		this.m.Value = 8000;
+		this.m.Condition = 340;
+		this.m.ConditionMax = 340;
+		this.m.StaminaModifier = -30;
 	}
 
 	function updateVariant()

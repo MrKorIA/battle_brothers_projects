@@ -15,7 +15,7 @@ this.warp_shard_armor_05 <- this.inherit("scripts/items/armor/armor", {
 		this.m.Value = 4200;
 		this.m.Condition = 265;
 		this.m.ConditionMax = 265;
-		this.m.StaminaModifier = -35;
+		this.m.StaminaModifier = -30;
 	}
 
 	function updateVariant()

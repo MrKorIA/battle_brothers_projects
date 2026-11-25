@@ -109,7 +109,15 @@ this.warp_shard_upgrade_effect <- this.inherit("scripts/skills/skill", {
 		local newItem = this.new(this.m.NextArmorScript);
 		newItem.setCondition(this.Math.max(1, this.Math.min(oldItem.getCondition(), newItem.getConditionMax())));
 		items.unequip(oldItem);
+        local upgrade = oldItem.getUpgrade();
+        if (upgrade != null)
+        {
+            oldItem.setUpgrade(null);
+            upgrade.setArmor(null);
+        }
 		oldItem.removeSelf();
+        if (upgrade != null)
+            newItem.setUpgrade(upgrade);
 		items.equip(newItem);
 		this.m.PendingUpgrade = false;
 	}
