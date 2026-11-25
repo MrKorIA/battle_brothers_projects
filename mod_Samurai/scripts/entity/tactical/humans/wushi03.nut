@@ -8,10 +8,10 @@ this.wushi03 <- this.inherit("scripts/entity/tactical/human", {
 		this.m.BloodType = this.Const.BloodType.Red;
 		this.m.XP = this.Const.Tactical.Actor.Wushi03.XP;
 		this.human.create();
-		this.m.Faces = this.Const.Faces.SouthernMale;
-		this.m.Hairs = this.Const.Hair.SouthernMale;
-		this.m.HairColors = this.Const.HairColors.Southern;
-		this.m.Beards = this.Const.Beards.SouthernUntidy;
+		this.m.Faces = this.Const.Faces.WushiMaleUniqBlack;
+		this.m.Hairs = null;
+		this.m.HairColors = null;
+		this.m.Beards = null;
 		this.m.BeardChance = 0;
 		this.m.SoundPitch = 0.95;
 		this.m.AIAgent = this.new("scripts/ai/tactical/agents/bandit_melee_agent");
@@ -29,22 +29,8 @@ this.wushi03 <- this.inherit("scripts/entity/tactical/human", {
 		this.setAppearance();
 		this.getSprite("socket").setBrush("bust_base_wushi");
 
-		if (this.Math.rand(1, 100) <= 15)
-		{
-			local pox = this.getSprite("tattoo_head");
-			pox.Visible = true;
-			pox.setBrush("bust_head_darkeyes_01");
-		}
-		else
-		{
-			local dirt = this.getSprite("dirt");
-			dirt.Visible = true;
-		}
-
-		if (this.Math.rand(1, 100) <= 25)
-		{
-			this.getSprite("eye_rings").Visible = true;
-		}
+        local dirt = this.getSprite("dirt");
+        dirt.Visible = true;
 
 		if (!this.m.IsLow)
 		{
@@ -98,25 +84,18 @@ this.wushi03 <- this.inherit("scripts/entity/tactical/human", {
 
 	function assignRandomEquipment()
 	{
-	    
 		local weapons = [
 		    "weapons/named/named_wushiweapon16",
-			
 		];
-        
-		
 		this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
-
-		
 
 		local armor = [
 			"armor/named/named_wushi_armor08",
-			
 		];
 		this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
+
 		local helmet = [
 			"helmets/named/named_wushi_helmet08",
-			
 		];
 		this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
 	}
@@ -130,10 +109,7 @@ this.wushi03 <- this.inherit("scripts/entity/tactical/human", {
 		this.getSprite("miniboss").setBrush("bust_miniboss");
 		local weapons = [
 			"weapons/named/named_wushiweapon16"
-			
-			
 		];
-		
 
 		if (this.Math.rand(1, 100) <= 99)
 		{

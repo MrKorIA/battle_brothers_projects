@@ -450,6 +450,14 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
 	"bust_head_wushi_03"
 ];
 
+::Const.Faces.WushiMaleUniqWhite <- [
+	"bust_head_wushi_04"
+];
+
+::Const.Faces.WushiMaleUniqBlack <- [
+	"bust_head_wushi_05"
+];
+
 ::Const.Hair.WushiMaleOnly <- [
 	"01_wushi",
 	"02_wushi",
