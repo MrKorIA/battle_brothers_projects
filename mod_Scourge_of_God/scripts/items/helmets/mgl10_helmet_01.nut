@@ -4,8 +4,8 @@ this.mgl10_helmet_01 <- this.inherit("scripts/items/helmets/helmet", {
 	{
 		this.helmet.create();
 		this.m.ID = "armor.head.mgl10_helmet_01";
-		this.m.Name = "Шлем сотника";
-		this.m.Description = "Шлем, носимый главой сотни.";
+		this.m.Name = "Шлем ханской гвардии";
+		this.m.Description = "Шлем, который носят гвардейцы хана";
 		this.m.ShowOnCharacter = true;
 		this.m.HideCharacterHead = false;
 		this.m.HideCorpseHead = false;
@@ -16,7 +16,7 @@ this.mgl10_helmet_01 <- this.inherit("scripts/items/helmets/helmet", {
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorLeatherImpact;
 		this.m.InventorySound = this.Const.Sound.ClothEquip;
-		this.m.Value = 2000;
+		this.m.Value = 2500;
 		this.m.Condition = 230;
 		this.m.ConditionMax = 230;
 		this.m.StaminaModifier = -17;

@@ -74,6 +74,16 @@ this.mgl_mumin <- this.inherit("scripts/entity/tactical/human", {
 			];
 			this.m.Items.equip(this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
 		}
+
+        local rand = this.Math.rand(1, 100);
+		if (rand <= 30)
+		{
+			this.m.Items.equip(this.new("scripts/items/helmets/mgl03_helmet_01"));
+		}
+		else if (rand <= 50)
+		{
+			this.m.Items.equip(this.new("scripts/items/helmets/mgl04_helmet_01"));
+		}
 	}
 
 });

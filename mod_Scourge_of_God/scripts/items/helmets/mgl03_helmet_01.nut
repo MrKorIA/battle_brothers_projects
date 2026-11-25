@@ -4,8 +4,8 @@ this.mgl03_helmet_01 <- this.inherit("scripts/items/helmets/helmet", {
 	{
 		this.helmet.create();
 		this.m.ID = "armor.head.mgl03_helmet_01";
-		this.m.Name = "Шлем берсерка";
-		this.m.Description = "Шлем, который носят берсерки.";
+		this.m.Name = "Шлем степняка";
+		this.m.Description = "Лёгкий шлем, с меховым подбоем.";
 		this.m.ShowOnCharacter = true;
 		this.m.HideCharacterHead = false;
 		this.m.HideCorpseHead = false;
@@ -16,11 +16,10 @@ this.mgl03_helmet_01 <- this.inherit("scripts/items/helmets/helmet", {
 		this.updateVariant();
 		this.m.ImpactSound = this.Const.Sound.ArmorLeatherImpact;
 		this.m.InventorySound = this.Const.Sound.ClothEquip;
-		this.m.Value = 2000;
-		this.m.Condition = 100;
-		this.m.ConditionMax = 100;
-		this.m.StaminaModifier = -6;
-		this.m.Vision = -1;
+		this.m.Value = 100;
+		this.m.Condition = 50;
+		this.m.ConditionMax = 50;
+		this.m.StaminaModifier = -2;
 	}
 
 	function updateVariant()

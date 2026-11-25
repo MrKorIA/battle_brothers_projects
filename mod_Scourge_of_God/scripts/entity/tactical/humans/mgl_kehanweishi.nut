@@ -130,7 +130,8 @@ this.mgl_kehanweishi <- this.inherit("scripts/entity/tactical/human", {
 		if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Head) && this.Math.rand(1, 100) <= 80)
 		{
 			local helmet = [
-				"helmets/mgl06_helmet_01"
+				"helmets/mgl06_helmet_01",
+				"helmets/mgl10_helmet_01"
 			];
 			this.m.Items.equip(this.new("scripts/items/" + helmet[this.Math.rand(0, helmet.len() - 1)]));
 		}
