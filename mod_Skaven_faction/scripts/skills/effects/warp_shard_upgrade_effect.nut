@@ -82,6 +82,7 @@ this.warp_shard_upgrade_effect <- this.inherit("scripts/skills/skill", {
 		{
 			return;
 		}
+		this.m.PendingUpgrade = false;
 
 		local actor = this.getContainer().getActor();
 
@@ -97,28 +98,18 @@ this.warp_shard_upgrade_effect <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		local items = actor.getItems();
-
-		// броня должна быть надета ИМЕННО на этого актёра (защита от сиротского
-		// эффекта, оставшегося после снятия брони вне unequip)
-		if (oldItem.getContainer() != items)
-		{
-			return;
-		}
-
 		local newItem = this.new(this.m.NextArmorScript);
 		newItem.setCondition(this.Math.max(1, this.Math.min(oldItem.getCondition(), newItem.getConditionMax())));
-		items.unequip(oldItem);
+		actor.getItems().unequip(oldItem);
         local upgrade = oldItem.getUpgrade();
+
         if (upgrade != null)
         {
             oldItem.setUpgrade(null);
-            upgrade.setArmor(null);
+            newItem.setUpgrade(upgrade);
         }
 		oldItem.removeSelf();
-        if (upgrade != null)
-            newItem.setUpgrade(upgrade);
-		items.equip(newItem);
+		actor.getItems().equip(newItem);
 		this.m.PendingUpgrade = false;
 	}
 
