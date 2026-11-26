@@ -30,6 +30,7 @@ this.sb_pull_skill <- this.inherit("scripts/skills/skill", {
 		this.m.FatigueCost = 25;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 6;
+		this.m.MaxLevelDifference = 4;
 	}
 
 	function getTooltip()
