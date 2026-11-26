@@ -10,7 +10,7 @@ this.wushi02 <- this.inherit("scripts/entity/tactical/human", {
 		this.human.create();
 		this.m.Faces = this.Const.Faces.WushiMaleUniqWhite;
 		this.m.Hairs = null;
-		this.m.HairColors = null;
+		this.m.HairColors = this.Const.HairColors.All;
 		this.m.Beards = null;
 		this.m.BeardChance = 0;
 		this.m.SoundPitch = 0.95;
