@@ -50,13 +50,13 @@ this.sb_manaforce_skill <- this.inherit("scripts/skills/skill", {
 			id = 5,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Targets with soaked or similar debuffs take 50% more damage."
+			text = "Цели под эффекатами \'Промок\', \'Экстремальные погодные условия\', \'Окроплён святой водой\' получают на 50% больше урона."
 		});
 		ret.push({
 			id = 6,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Cooldown: 3 turn \nCooldown left: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] turn"
+			text = "Перезарядка: 3 хода \nОсталось: [color=#8f1e1e]" + this.Math.max(0, (this.m.Cooldown - this.m.Skillcool)) + "[/color] ход(а)"
 		});
 		return ret;
 	}

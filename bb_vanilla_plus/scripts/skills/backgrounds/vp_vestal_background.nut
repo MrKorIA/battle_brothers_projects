@@ -13,7 +13,7 @@ this.vp_vestal_background <- this.inherit("scripts/skills/backgrounds/character_
         this.m.HiringCost = 500;
         this.m.DailyCost = 15;
         this.m.ExcludedTalents = [
-            ::Const.Attributes.Hitpoints
+            ::Const.Attributes.RangedDefense
         ];
         this.m.Excluded = [
             "trait.dumb"

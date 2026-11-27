@@ -46,9 +46,9 @@ this.bounty_hunter_background <- this.inherit("scripts/skills/backgrounds/charac
 			"Охотник",
 			"Охотник за головами",
 			"Неумолимый",
-			"Гончая",
-			"Пес",
-			"Орел",
+			"Гончий",
+			"Пёс",
+			"Орёл",
 			"Жнец",
 			"Настойчивый",
 			"Следопыт"

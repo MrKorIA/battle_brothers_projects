@@ -13,7 +13,7 @@ this.vp_demon_background <- this.inherit("scripts/skills/backgrounds/character_b
         this.m.HiringCost = 1000;
         this.m.DailyCost = 15;
         this.m.ExcludedTalents = [
-            ::Const.Attributes.Hitpoints
+            ::Const.Attributes.Fatigue
         ];
         this.m.Excluded = [
             "trait.iron_jaw"
@@ -127,7 +127,7 @@ this.vp_demon_background <- this.inherit("scripts/skills/backgrounds/character_b
 		}
 		else
 		{
-			xhead.Color = this.createColor("#784b2f");
+			xhead.Color = this.createColor("#575059");
 			xhead.Saturation = 0.9;
 		}
 		xbody.Color = xhead.Color;
