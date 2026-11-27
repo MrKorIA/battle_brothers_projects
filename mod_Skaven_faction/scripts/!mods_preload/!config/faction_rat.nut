@@ -495,8 +495,8 @@ addEntityType("RatTretch", "Треч Трусливый Хвост", "Треч �
 	{
 		ID = this.Const.EntityType.RatClanrat,
 		Variant = 0,
-		Strength = 8,
-		Cost = 8,
+		Strength = 5,
+		Cost = 5,
 		Row = 0,
 		Script = "scripts/entity/tactical/enemies/rat_clanrat",
 		TitleList = null

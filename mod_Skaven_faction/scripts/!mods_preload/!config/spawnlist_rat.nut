@@ -548,6 +548,7 @@ this.Const.World.Spawn.RatRaiders <- buildSpawnArray({
             MaxR = 620,
             Units = [
                 { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
+                { Type = this.Const.World.Spawn.Troops.RatSwarm,      Weight = 60 },
                 { Type = this.Const.World.Spawn.Troops.RatAssassin,   Weight = 40, MaxCount = 4 },
                 { Type = this.Const.World.Spawn.Troops.RatWarrior,    Weight = 60 },
                 { Type = this.Const.World.Spawn.Troops.RatPackmaster, Weight = 15, MinR = 180, MaxCount = 1, BodyOverride = "figure_rat_04" },
@@ -574,6 +575,7 @@ this.Const.World.Spawn.RatRaiders <- buildSpawnArray({
             Units = [
                 { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatWarrior,    Weight = 100 },
+                { Type = this.Const.World.Spawn.Troops.RatSwarm,      Weight = 60 },
                 { Type = this.Const.World.Spawn.Troops.RatAssassin,   Weight = 40, MaxCount = 4 },
                 { Type = this.Const.World.Spawn.Troops.RatWarlord,    Weight = 200, MaxCount = 1 },
                 { Type = this.Const.World.Spawn.Troops.RatBannerMen,  Weight = 15, MaxCount = 1 },
@@ -606,6 +608,7 @@ this.Const.World.Spawn.RatDefenders <- buildSpawnArray({
             MinR = 35,
             MaxR = 195,
             Units = [
+                { Type = this.Const.World.Spawn.Troops.RatClanrat, Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatMonk,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatWarrior, Weight = 55 },
                 { Type = this.Const.World.Spawn.Troops.RatAssassin, Weight = 20, MinR = 80, MaxCount = 2 }
@@ -617,6 +620,7 @@ this.Const.World.Spawn.RatDefenders <- buildSpawnArray({
             MinR = 95,
             MaxR = 380,
             Units = [
+                { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatMonk,       Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatWarrior,    Weight = 55 },
                 { Type = this.Const.World.Spawn.Troops.RatAssassin,   Weight = 20, MinR = 100, MaxCount = 2 },
@@ -630,6 +634,7 @@ this.Const.World.Spawn.RatDefenders <- buildSpawnArray({
             MinR = 280,
             MaxR = 860,
             Units = [
+                { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatMonk,       Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatWarrior,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatWarlord,    Weight = 200, MaxCount = 1 },
@@ -656,6 +661,7 @@ this.Const.World.Spawn.RatDefenders <- buildSpawnArray({
             MovementSpeedMult = 1.1,
             MinR = 350,
             Units = [
+                { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatMonk,        Weight = 80 },
                 { Type = this.Const.World.Spawn.Troops.RatOrge,        Weight = 200, MaxCount = 2 },
                 { Type = this.Const.World.Spawn.Troops.RatOrgeArmored, Weight = 150, MaxCount = 1 },
@@ -670,6 +676,7 @@ this.Const.World.Spawn.RatDefenders <- buildSpawnArray({
             MovementSpeedMult = 1.1,
             MinR = 380,
             Units = [
+                { Type = this.Const.World.Spawn.Troops.RatClanrat,    Weight = 100 },
                 { Type = this.Const.World.Spawn.Troops.RatOrgeArmored, Weight = 200, MaxCount = 1 },
                 { Type = this.Const.World.Spawn.Troops.RatOrge,        Weight = 150, MaxCount = 2 },
                 { Type = this.Const.World.Spawn.Troops.RatWarrior,     Weight = 100 },
