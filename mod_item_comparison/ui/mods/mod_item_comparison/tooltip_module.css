@@ -1,0 +1,358 @@
+.tooltip-module.mod-item-comparison
+{
+    width: 68.4rem;
+    max-width: 68.4rem;
+    padding: 1.0rem 1.2rem 1.2rem;
+    border: 0;
+    background-image: none;
+    box-shadow: none;
+}
+
+.mod-item-comparison .item-comparison-background
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.mod-item-comparison .item-comparison-content
+{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 0.6rem 0.8rem 0.7rem;
+    float: left;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.mod-item-comparison .item-comparison-content *
+{
+    box-sizing: border-box;
+}
+
+.mod-item-comparison .comparison-header,
+.mod-item-comparison .comparison-icons,
+.mod-item-comparison .comparison-skill-columns
+{
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+.mod-item-comparison .comparison-item-header,
+.mod-item-comparison .comparison-skill-column
+{
+    width: 29.0rem;
+    min-width: 0;
+}
+
+.mod-item-comparison .comparison-caption
+{
+    position: relative;
+    margin-bottom: 0.35rem;
+    padding: 0.25rem 0.6rem;
+    color: #d7b174;
+    border-top: 1px solid rgba(196, 151, 86, 0.78);
+    border-bottom: 1px solid rgba(196, 151, 86, 0.78);
+    background-color: rgba(43, 26, 15, 0.94);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.06rem;
+    font-weight: bold;
+}
+
+.mod-item-comparison .comparison-caption:before,
+.mod-item-comparison .comparison-caption:after
+{
+    content: "◆";
+    position: absolute;
+    top: 50%;
+    color: #c49a5f;
+    font-size: 1.0rem;
+    transform: translateY(-50%);
+}
+
+.mod-item-comparison .comparison-caption:before
+{
+    left: -0.8rem;
+}
+
+.mod-item-comparison .comparison-caption:after
+{
+    right: -0.8rem;
+}
+
+.mod-item-comparison .comparison-item-name
+{
+    min-height: 3.8rem;
+    margin-top: 0.35rem;
+    color: #20164b;
+    font-size: 1.9rem;
+    line-height: 1.15;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.mod-item-comparison .comparison-vs
+{
+    position: relative;
+    width: 6.4rem;
+    height: 4.6rem;
+    margin-top: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d7b174;
+    text-shadow: 0 1px 0 #000;
+}
+
+.mod-item-comparison .comparison-vs:before
+{
+    content: "";
+    position: absolute;
+    width: 3.4rem;
+    height: 3.4rem;
+    left: 50%;
+    top: 50%;
+    border: 1px solid #b38a54;
+    background-color: #2d1b10;
+    box-shadow: 0 0 0 1px #160d07, 0 0 1.0rem rgba(0, 0, 0, 0.45);
+    transform: translate(-50%, -50%) rotate(45deg);
+    transform-origin: center;
+}
+
+.mod-item-comparison .comparison-vs span
+{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    line-height: 1;
+    text-align: center;
+}
+
+.mod-item-comparison .comparison-icons
+{
+    min-height: 10.8rem;
+    margin: 0.2rem 0 0.5rem;
+}
+
+.mod-item-comparison .comparison-item-icon-container
+{
+    width: 29.0rem;
+    height: 10.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mod-item-comparison .comparison-item-icon-frame
+{
+    position: relative;
+    width: 10.2rem;
+    height: 10.2rem;
+    padding: 0.4rem;
+    border: 2px solid #b38a54;
+    background-color: rgba(48, 29, 16, 0.96);
+    box-shadow: 0 0 0 1px #24150b, inset 0 0 0.8rem rgba(0, 0, 0, 0.65), 0 0 0.7rem rgba(35, 18, 8, 0.45);
+}
+
+.mod-item-comparison .comparison-item-icon
+{
+    display: block;
+    width: 9.0rem;
+    height: 9.0rem;
+    margin: 0.1rem;
+}
+
+.mod-item-comparison .comparison-item-icon-overlay
+{
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    width: 9.0rem;
+    height: 9.0rem;
+    pointer-events: none;
+}
+
+.mod-item-comparison .comparison-icon-spacer,
+.mod-item-comparison .comparison-skill-divider
+{
+    width: 6.4rem;
+    min-width: 6.4rem;
+}
+
+.mod-item-comparison .comparison-section
+{
+    width: 100%;
+    margin-top: 0.45rem;
+    float: left;
+}
+
+.mod-item-comparison .comparison-section-title
+{
+    width: 100%;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    color: #d7b174;
+    text-align: center;
+}
+
+.mod-item-comparison .comparison-section-title:before,
+.mod-item-comparison .comparison-section-title:after
+{
+    content: "";
+    height: 1px;
+    flex: 1;
+    background-color: rgba(116, 78, 40, 0.58);
+}
+
+.mod-item-comparison .comparison-section-title span
+{
+    min-width: 23.0rem;
+    padding: 0.28rem 0.9rem;
+    text-align: center;
+    border-top: 1px solid rgba(196, 151, 86, 0.78);
+    border-bottom: 1px solid rgba(196, 151, 86, 0.78);
+    background-color: rgba(43, 26, 15, 0.94);
+    box-shadow: 0 0 0.5rem rgba(25, 12, 6, 0.35);
+    white-space: nowrap;
+}
+
+.mod-item-comparison .comparison-attribute-row
+{
+    width: 100%;
+    min-height: 2.9rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(69, 45, 25, 0.13);
+}
+
+.mod-item-comparison .comparison-attribute-row:last-child
+{
+    border-bottom: 0;
+}
+
+.mod-item-comparison .comparison-attribute-value
+{
+    width: 19.3rem;
+    min-width: 19.3rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.mod-item-comparison .comparison-attribute-center
+{
+    width: 25.8rem;
+    min-width: 25.8rem;
+    font-size: 1.5rem;
+    padding: 0 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mod-item-comparison .comparison-attribute-label
+{
+    color: #2b2118;
+    font-size: 1.4rem;
+    font-weight: bold;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.mod-item-comparison .comparison-difference
+{
+    min-width: 0;
+    margin: 0;
+    padding-left: 0.7rem;
+    color: #1d2f68;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.mod-item-comparison .comparison-value.is-better
+{
+    color: #356b2a;
+}
+
+.mod-item-comparison .comparison-value.is-worse
+{
+    color: #a03028;
+}
+
+.mod-item-comparison .comparison-value.is-equal,
+.mod-item-comparison .value-separator
+{
+    color: #2b2118;
+}
+
+.mod-item-comparison .comparison-skill-columns
+{
+    align-items: flex-start;
+}
+
+.mod-item-comparison .comparison-skill-column
+{
+    padding: 0.25rem 0.6rem;
+}
+
+.mod-item-comparison .comparison-skill-divider
+{
+    position: relative;
+    align-self: stretch;
+}
+
+.mod-item-comparison .comparison-skill-divider:before
+{
+    content: "";
+    position: absolute;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    left: 50%;
+    width: 1px;
+    background-color: rgba(74, 48, 28, 0.45);
+}
+
+.mod-item-comparison .comparison-skill-row
+{
+    width: 100%;
+    min-height: 3.2rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.15rem;
+}
+
+.mod-item-comparison .comparison-skill-icon
+{
+    width: 2.8rem;
+    height: 2.8rem;
+    margin-right: 0.8rem;
+    flex-shrink: 0;
+}
+
+.mod-item-comparison .comparison-skill-name
+{
+    color: #2c1e14;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.mod-item-comparison .comparison-no-skills
+{
+    padding-top: 0.5rem;
+    color: #2b2118;
+    text-align: left;
+    font-style: italic;
+}
