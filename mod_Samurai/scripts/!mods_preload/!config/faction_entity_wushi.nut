@@ -132,9 +132,9 @@ addEntityType("Renzhe", "Шинобу", "шинобу", "renzhe02_orientation");
 addEntityType("Renzhe02", "Ниндзя", "ниндзя", "renzhe_orientation");
 addEntityType("Sengbing", "Сохэй", "сохэев", "sengbing_orientation");
 addEntityType("Wushi", "Самурай", "самураев", "wushi_orientation");
-addEntityType("Wushi02", "Тадахиса Исикава", "Тадахис Исикав", "wushi_orientation");
-addEntityType("Wushi03", "Уэда Такеши", "Уэд Такеш", "wushi_orientation");
-addEntityType("Wushi04", "Хидэо Ямада", "Хидэо Ямад", "wushi02_orientation");
+addEntityType("Wushi02", "Тадахиса Исикава", "Тадахис Исикав", "wushi02_orientation");
+addEntityType("Wushi03", "Уэда Такеши", "Уэд Такеш", "wushi03_orientation");
+addEntityType("Wushi04", "Хидэо Ямада", "Хидэо Ямад", "wushi04_orientation");
 addEntityType("Wushi05", "Онимуша", "Онимуш", "guiwushi_orientation");
 addEntityType("Zuqing", "Асигару", "асигар", "zuqing_orientation");
 

@@ -352,7 +352,7 @@ if (::mods_getRegisteredMod("mod_mgl") != null && "Mgl" in ::Const.Faction)
     Row = 1,
     Script = "scripts/entity/tactical/humans/wushi02",
     NameList = [
-        "Хидэо Ямада"
+        "Тадахиса Исикава"
     ],
     TitleList = null
 };
