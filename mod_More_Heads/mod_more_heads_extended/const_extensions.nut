@@ -33,7 +33,8 @@ local NEW_ASIAN_HEADS = [
 	"bust_head_604", "bust_head_605", "bust_head_606", "bust_head_607",
 	"bust_head_608", "bust_head_609", "bust_head_610", "bust_head_611",
 	"bust_head_612", "bust_head_613", "bust_head_614", "bust_head_615",
-	"bust_head_616"
+	"bust_head_616", "bust_head_617", "bust_head_618", "bust_head_619",
+	"bust_head_620", "bust_head_621", "bust_head_622", "bust_head_623"
 ];
 local NEW_SMART_HEADS = [
 	"bust_head_33", "bust_head_39", "bust_head_41", "bust_head_42", "bust_head_706"
