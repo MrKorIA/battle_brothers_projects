@@ -1,7 +1,7 @@
 ::ArrowDecalFlip <- {
 	ID = "mod_arrow_decal_flip",
 	Name = "Arrow Decal Flip",
-	Version = "1.0.0"
+	Version = "1.0.1"
 }
 
 ::ArrowDecalFlip.HooksMod <- ::Hooks.register(::ArrowDecalFlip.ID, ::ArrowDecalFlip.Version, ::ArrowDecalFlip.Name);
@@ -20,14 +20,16 @@
 			for( local n = this.Const.Combat.SpawnArrowDecalAttempts; n != 0;  )
 			{
 				local decal = this.Const.ProjectileDecals[_info.Skill.getProjectileType()][this.Math.rand(0, this.Const.ProjectileDecals[_info.Skill.getProjectileType()].len() - 1)];
+				local detail = _info.TileHit.spawnDetail(decal, 0, flip);
 
-				if (!_info.TileHit.spawnDetail(decal, 0, flip))
+				if (detail == null)
 				{
 					n = --n;
 					continue;
 				}
 				else
 				{
+					detail.setHorizontalFlipping(flip);
 					local quantityMult = 0.5;
 
 					if (_info.TileHit.IsVisibleForPlayer && this.Const.Tactical.TerrainDropdownParticles[_info.TileHit.Subtype].len() != 0)
