@@ -89,3 +89,12 @@ if (::mods_getRegisteredMod("mod_wushi") != null)
         Footprint = this.Const.World.FootprintsType.Brigands,
     }
 }
+if (::mods_getRegisteredMod("mod_reforged_lite") != null)
+{
+    ::Stronghold.FactionDefs[this.Const.FactionType.RF_Draugr] <- {
+        Name = "Армия курганников",
+        Spawnlist = this.Const.World.Spawn.RF_DraugrFane,
+        Description = "Армия курганников, покинувших свою крипту.",
+        Footprint = this.Const.World.FootprintsType.Undead,
+    }
+}

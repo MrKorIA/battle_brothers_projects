@@ -327,6 +327,8 @@ this.stronghold_defeat_assailant_contract <- this.inherit("scripts/contracts/con
 		    allSettlements.extend(this.World.FactionManager.getFactionOfType(this.Const.FactionType.Mgl).getSettlements())
 		if (::mods_getRegisteredMod("mod_wushi") != null)
 		    allSettlements.extend(this.World.FactionManager.getFactionOfType(this.Const.FactionType.Wushi).getSettlements())
+		if (::mods_getRegisteredMod("mod_reforged_lite") != null)
+		    allSettlements.extend(this.World.FactionManager.getFactionOfType(this.Const.FactionType.RF_Draugr).getSettlements())
 
 		allSettlements.extend(this.World.FactionManager.getFactionOfType(this.Const.FactionType.Zombies).getSettlements())
 		foreach (noble in  this.World.FactionManager.getFactionsOfType(this.Const.FactionType.NobleHouse)){
